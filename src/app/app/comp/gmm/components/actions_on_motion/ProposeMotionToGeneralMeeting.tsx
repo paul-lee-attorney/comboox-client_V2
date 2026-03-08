@@ -3,7 +3,7 @@ import { Box, Collapse, Paper, Stack, Switch, Toolbar, Typography } from "@mui/m
 import { EmojiPeople, } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-import { useCompKeeperProposeMotionToGeneralMeeting } from "../../../../../../../generated";
+import { useIgmmKeeperProposeMotionToGeneralMeeting } from "../../../../../../../generated";
 import { HexType } from "../../../../common";
 import { refreshAfterTx } from "../../../../common/toolsKit";
 
@@ -27,7 +27,7 @@ export function ProposeMotionToGeneralMeeting({ motion, setOpen, refresh }: Acti
   const {
     isLoading: proposeMotionToGmLoading,
     write: proposeMotionToGm,
-  } = useCompKeeperProposeMotionToGeneralMeeting({
+  } = useIgmmKeeperProposeMotionToGeneralMeeting({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

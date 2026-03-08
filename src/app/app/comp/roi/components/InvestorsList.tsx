@@ -1,6 +1,6 @@
 import { Chip, Paper, Stack, Toolbar, Typography, } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Investor } from "../roi";
 import { Dispatch, SetStateAction } from "react";
 import { CopyLongStrSpan } from "../../../common/CopyLongStr";
@@ -22,7 +22,7 @@ export function InvestorsList({list, setAcct}:OrdersListProps) {
     {
       field: 'userNo',
       headerName: 'UserNo',
-      valueGetter: p => longSnParser(p.row.userNo.toString()),
+      valueGetter: p => userNoParser(p.row.userNo.toString(16)),
       headerAlign: 'center',
       align:'center',      
       width: 218,
@@ -30,7 +30,7 @@ export function InvestorsList({list, setAcct}:OrdersListProps) {
     {
       field: 'groupRep',
       headerName: 'GroupRep',
-      valueGetter: p => longSnParser(p.row.groupRep.toString()),
+      valueGetter: p => userNoParser(p.row.groupRep.toString(16)),
       headerAlign: 'center',
       align:'center',      
       width: 218,
@@ -46,7 +46,7 @@ export function InvestorsList({list, setAcct}:OrdersListProps) {
     {
       field: 'verifier',
       headerName: 'Verifier',
-      valueGetter: p => longSnParser(p.row.verifier.toString()),
+      valueGetter: p => userNoParser(p.row.verifier.toString(16)),
       headerAlign: 'center',
       align:'center',      
       width: 218,

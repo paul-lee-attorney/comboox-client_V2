@@ -16,7 +16,7 @@ import {
 import { Close, PersonRemove }  from '@mui/icons-material';
 
 import { 
-  useDraftControlRevokeRole,
+  useIDraftControlRevokeRole,
 } from '../../../../../../../../generated';
 
 import { AddrZero, HexType } from '../../../../../common';
@@ -52,7 +52,7 @@ export function RemoveAttorney({ addr }: AccessControlProps) {
   const {
     isLoading: removeAttorneyLoading,
     write: removeAttorney,
-  } = useDraftControlRevokeRole({
+  } = useIDraftControlRevokeRole({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

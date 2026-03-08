@@ -1,5 +1,5 @@
 import { readContract } from "@wagmi/core";
-import { registerOfInvestorsABI } from "../../../../../generated";
+import { iRegisterOfInvestorsABI } from "../../../../../generated";
 import { HexType } from "../../common";
 
 
@@ -26,7 +26,7 @@ export interface Investor {
 export async function isInvestor(addr: HexType,  userNo: number):Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: registerOfInvestorsABI,
+    abi: iRegisterOfInvestorsABI,
     functionName: 'isInvestor',
     args: [ BigInt(userNo) ]
   });
@@ -37,7 +37,7 @@ export async function isInvestor(addr: HexType,  userNo: number):Promise<boolean
 export async function getInvestor(addr: HexType,  userNo: number):Promise<Investor>{
   let res = await readContract({
     address: addr,
-    abi: registerOfInvestorsABI,
+    abi: iRegisterOfInvestorsABI,
     functionName: 'getInvestor',
     args: [ BigInt(userNo) ]
   });
@@ -48,7 +48,7 @@ export async function getInvestor(addr: HexType,  userNo: number):Promise<Invest
 export async function getQtyOfInvestors(addr: HexType):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfInvestorsABI,
+    abi: iRegisterOfInvestorsABI,
     functionName: 'getQtyOfInvestors',
   });
 
@@ -58,7 +58,7 @@ export async function getQtyOfInvestors(addr: HexType):Promise<bigint>{
 export async function investorList(addr: HexType):Promise<readonly bigint[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfInvestorsABI,
+    abi: iRegisterOfInvestorsABI,
     functionName: 'investorList',
   });
 
@@ -68,7 +68,7 @@ export async function investorList(addr: HexType):Promise<readonly bigint[]>{
 export async function investorInfoList(addr: HexType):Promise<readonly Investor[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfInvestorsABI,
+    abi: iRegisterOfInvestorsABI,
     functionName: 'investorInfoList',
   });
 

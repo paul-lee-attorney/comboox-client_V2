@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCompKeeperExtendPledge } from "../../../../../../../generated";
+import { useIropKeeperExtendPledge } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { Start } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -26,7 +26,7 @@ export function ExtendPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: extendPledgeLoading,
     write: extendPledge,
-  } = useCompKeeperExtendPledge({
+  } = useIropKeeperExtendPledge({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

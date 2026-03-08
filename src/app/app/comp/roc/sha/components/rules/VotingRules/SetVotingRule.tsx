@@ -9,7 +9,7 @@ import { ListAlt } from '@mui/icons-material';
 import { AddRule } from '../AddRule';
 
 import { HexType, MaxByte, MaxRatio, MaxSeqNo, MaxUserNo } from '../../../../../../common';
-import { FormResults, defFormResults, longSnParser, onlyInt, onlyNum, } from '../../../../../../common/toolsKit';
+import { FormResults, defFormResults, longSnParser, onlyHex, onlyInt, onlyNum, userNoCodifier, userNoParser, } from '../../../../../../common/toolsKit';
 import { getRule } from '../../../sha';
 import { RulesEditProps } from '../GovernanceRules/SetGovernanceRule';
 
@@ -35,7 +35,7 @@ export interface VotingRule {
   votingDays: string;
   execDaysForPutOpt: string;
   vetoers: readonly string[];
-  para: string;
+  class: string;
 }
 
 export interface OrgVotingRule {
@@ -57,7 +57,7 @@ export interface OrgVotingRule {
   votingDays: number;
   execDaysForPutOpt: number;
   vetoers: readonly number[];
-  para: number;
+  class: number;
 }
 
 export function vrParser(hexVr: HexType):VotingRule {
@@ -79,8 +79,11 @@ export function vrParser(hexVr: HexType):VotingRule {
     votePrepareDays: parseInt(hexVr.substring(36, 38), 16).toString(),
     votingDays: parseInt(hexVr.substring(38, 40), 16).toString(),
     execDaysForPutOpt: parseInt(hexVr.substring(40, 42), 16).toString(),
-    vetoers: [parseInt(hexVr.substring(42, 52), 16).toString(), parseInt(hexVr.substring(52, 62), 16).toString()],
-    para: parseInt(hexVr.substring(62, 66), 16).toString(),
+    vetoers: [
+      userNoParser(hexVr.substring(42, 52)),
+      userNoParser(hexVr.substring(52, 62))
+    ],
+    class: parseInt(hexVr.substring(62, 66), 16).toString(),
   }
   return rule;
 }
@@ -104,9 +107,9 @@ export function vrCodifier(objVr: VotingRule, seq: number ): HexType {
     (Number(objVr.votePrepareDays).toString(16).padStart(2, '0')) +
     (Number(objVr.votingDays).toString(16).padStart(2, '0')) +
     (Number(objVr.execDaysForPutOpt).toString(16).padStart(2, '0')) +
-    (Number(objVr.vetoers[0]).toString(16).padStart(10, '0')) +
-    (Number(objVr.vetoers[1]).toString(16).padStart(10, '0')) +
-    (Number(objVr.para).toString(16).padStart(4, '0')) 
+    userNoCodifier(objVr.vetoers[0]) +
+    userNoCodifier(objVr.vetoers[1]) +
+    (Number(objVr.class).toString(16).padStart(4, '0')) 
   }`;
   return hexVr;
 }
@@ -149,8 +152,8 @@ export function SetVotingRule({ sha, seq, isFinalized, time, refresh }: RulesEdi
         votePrepareDays: '0',
         votingDays: '0',
         execDaysForPutOpt: '0',
-        vetoers: ['0','0'],
-        para: '0',
+        vetoers: ['0', '0'],
+        class: '0',
       };
 
   let subTitle: string = (seq < 13) ? subTitles[seq - 1] : subTitles[12];
@@ -204,7 +207,8 @@ export function SetVotingRule({ sha, seq, isFinalized, time, refresh }: RulesEdi
 
               {!isFinalized && (
                 <AddRule 
-                  sha={ sha } 
+                  sha={ sha }
+                  seqOfRule={ seq }
                   rule={ vrCodifier(objVR, seq) } 
                   isFinalized={ isFinalized }
                   valid={valid}
@@ -323,10 +327,10 @@ export function SetVotingRule({ sha, seq, isFinalized, time, refresh }: RulesEdi
                     onlyInt('Class', input, MaxSeqNo, setValid);
                     setObjVR((v) => ({
                       ...v,
-                      para: input,
+                      class: input,
                     }));
                   }}
-                  value={ objVR.para } 
+                  value={ objVR.class } 
                 />
 
               </Stack>
@@ -422,14 +426,14 @@ export function SetVotingRule({ sha, seq, isFinalized, time, refresh }: RulesEdi
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Vetoer_1', input, MaxUserNo, setValid);
+                    onlyHex('Vetoer_1', input, 10, setValid);
                     setObjVR((v) => {
                       let arr = [...v.vetoers];
                       arr[0] = input;
                       return {...v, vetoers:arr};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objVR.vetoers[0]) : objVR.vetoers[0] }   
+                  value={ objVR.vetoers[0] }   
                 />
 
                 <TextField 
@@ -445,14 +449,14 @@ export function SetVotingRule({ sha, seq, isFinalized, time, refresh }: RulesEdi
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Vetoer_2', input, MaxUserNo, setValid);
+                    onlyHex('Vetoer_2', input, 10, setValid);
                     setObjVR((v) => {
                       let arr = [...v.vetoers];
                       arr[1] = input;
                       return {...v, vetoers:arr};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objVR.vetoers[1]) : objVR.vetoers[1] }
+                  value={ objVR.vetoers[1] }
                 />
 
               </Stack>

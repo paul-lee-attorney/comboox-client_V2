@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bytes32Zero, HexType } from "../../../../common";
 
-import { useCompKeeperExecAction } from "../../../../../../../generated";
+import { useIbmmKeeperExecAction } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 
@@ -36,7 +36,7 @@ export function ExecAction({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: execActionLoading,
     write: execAction,
-  } = useCompKeeperExecAction({
+  } = useIbmmKeeperExecAction({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

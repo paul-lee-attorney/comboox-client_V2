@@ -1,4 +1,4 @@
-import { useCompKeeperTakeSeat } from "../../../../../../../generated";
+import { useIrodKeeperTakeSeat } from "../../../../../../../generated";
 import { HexType } from "../../../../common";
 import { Paper } from "@mui/material";
 import { Chair } from "@mui/icons-material";
@@ -22,7 +22,7 @@ export function TakeSeat({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: takeSeatLoading,
     write: takeSeat,
-  } = useCompKeeperTakeSeat({
+  } = useIrodKeeperTakeSeat({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

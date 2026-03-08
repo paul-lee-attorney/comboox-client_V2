@@ -1,4 +1,4 @@
-import { useCompKeeperRevokePledge } from "../../../../../../../generated";
+import { useIropKeeperRevokePledge } from "../../../../../../../generated";
 import { Paper, Stack } from "@mui/material";
 import { Block } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -22,7 +22,7 @@ export function RevokePledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: revokePledgeLoading,
     write: revokePledge,
-  } = useCompKeeperRevokePledge({
+  } = useIropKeeperRevokePledge({
     address: gk,
     args: [BigInt(pld.head.seqOfShare), BigInt(pld.head.seqOfPld)],
     onError(err) {

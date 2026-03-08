@@ -3,8 +3,8 @@ import { useState } from "react";
 import { HexType, booxMap } from "../../../../common";
 
 import { 
-  useCompKeeperRequestPaidInCapital,
-  useRegisterOfSharesGetLocker, 
+  useIromKeeperRequestPaidInCapital,
+  useIRegisterOfSharesGetLocker, 
 } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { LockOpen } from "@mui/icons-material";
@@ -37,7 +37,7 @@ export function RequestPaidInCap({ share, setDialogOpen, refresh }: ActionsOfCap
 
   const {
     refetch: getLocker
-  } = useRegisterOfSharesGetLocker({
+  } = useIRegisterOfSharesGetLocker({
     address: boox ? boox[booxMap.ROS] : undefined,
     args: [ locker.hashLock ],
     onError(err) {
@@ -57,7 +57,7 @@ export function RequestPaidInCap({ share, setDialogOpen, refresh }: ActionsOfCap
   const {
     isLoading: requestPaidInCapitalLoading,
     write: requestPaidInCapital,
-  } = useCompKeeperRequestPaidInCapital({
+  } = useIromKeeperRequestPaidInCapital({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

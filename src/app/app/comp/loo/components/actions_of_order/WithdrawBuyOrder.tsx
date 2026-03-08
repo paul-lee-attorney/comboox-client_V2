@@ -2,13 +2,13 @@ import { Paper, Stack, TextField } from "@mui/material";
 
 import { RedoOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { useCompKeeperWithdrawBuyOrder } from "../../../../../../../generated";
+import { useIlooKeeperWithdrawBuyOrder } from "../../../../../../../generated";
 import { ActionsOfOrderProps } from "../ActionsOfOrder";
 import { HexType, MaxPrice } from "../../../../common";
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { defaultOffer, InitOffer } from "../../../../compV1/loe/loe";
+import { defaultOffer, InitOffer } from "../../loo";
 
 
 export function WithdrawBuyOrder({ classOfShare, refresh }: ActionsOfOrderProps) {
@@ -26,7 +26,7 @@ export function WithdrawBuyOrder({ classOfShare, refresh }: ActionsOfOrderProps)
   const {
     isLoading: withdrawBuyOrderLoading,
     write:withdrawBuyOrder,
-  } = useCompKeeperWithdrawBuyOrder({
+  } = useIlooKeeperWithdrawBuyOrder({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

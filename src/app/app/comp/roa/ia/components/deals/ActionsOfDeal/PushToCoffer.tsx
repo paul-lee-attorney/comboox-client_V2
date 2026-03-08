@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Bytes32Zero, HexType } from "../../../../../../common";
 import { defaultDeal } from "../../../ia";
 
-import { useCompKeeperPushToCoffer } from "../../../../../../../../../generated";
+import { useIroaKeeperPushToCoffer } from "../../../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { DateTimeField } from "@mui/x-date-pickers";
 import { LockClock } from "@mui/icons-material";
@@ -31,7 +31,7 @@ export function PushToCoffer({addr, deal, setOpen, setDeal, refresh}:ActionsOfDe
   const {
     isLoading: pushToCofferLoading,
     write: pushToCoffer,
-  } = useCompKeeperPushToCoffer({
+  } = useIroaKeeperPushToCoffer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -108,13 +108,8 @@ export function PushToCoffer({addr, deal, setOpen, setDeal, refresh}:ActionsOfDe
           Lock Share
         </LoadingButton>
 
-
       </Stack>
-
     </Paper>
-
-
-
   );
   
 }

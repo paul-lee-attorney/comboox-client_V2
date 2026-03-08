@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { AddrZero, Bytes32Zero, HexType } from "../../../common";
-import { shareholdersAgreementABI } from "../../../../../../generated";
+import { iShareholdersAgreementABI } from "../../../../../../generated";
 import { FirstRefusalRule, frParser } from "./components/rules/FirstRefusalRules/SetFirstRefusalRule";
 import { membersList } from "../../rom/rom";
 import { getParties, isSigner } from "./components/sigPage/sigPage";
@@ -13,7 +13,7 @@ export const defaultTerms:HexType[] = [
 export async function hasTitle(sha: HexType, title: number): Promise<boolean> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'hasTitle',
     args: [ BigInt(title) ]
   });
@@ -24,7 +24,7 @@ export async function hasTitle(sha: HexType, title: number): Promise<boolean> {
 export async function qtyOfTerms(sha: HexType): Promise<bigint> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'qtyOfTerms',
   });
 
@@ -34,7 +34,7 @@ export async function qtyOfTerms(sha: HexType): Promise<bigint> {
 export async function getTitles(sha: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'getTitles',
   });
 
@@ -45,7 +45,7 @@ export async function getTerm(addr: HexType, title: number): Promise<HexType> {
 
   let addrOfTerm = await readContract({
     address: addr,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'getTerm',
     args: [BigInt(title)],
   });
@@ -56,7 +56,7 @@ export async function getTerm(addr: HexType, title: number): Promise<HexType> {
 export async function hasRule(sha: HexType, seq: number): Promise<boolean> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'hasRule',
     args: [ BigInt(seq) ]
   });
@@ -67,7 +67,7 @@ export async function hasRule(sha: HexType, seq: number): Promise<boolean> {
 export async function qtyOfRules(sha: HexType): Promise<bigint> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'qtyOfRules',
   });
 
@@ -77,7 +77,7 @@ export async function qtyOfRules(sha: HexType): Promise<bigint> {
 export async function getRules(sha: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'getRules',
   });
 
@@ -87,7 +87,7 @@ export async function getRules(sha: HexType): Promise<readonly bigint[]> {
 export async function getRule(sha: HexType, seq: number): Promise<HexType> {
   let rule = await readContract({
     address: sha,
-    abi: shareholdersAgreementABI,
+    abi: iShareholdersAgreementABI,
     functionName: 'getRule',
     args: [BigInt(seq)],
   });

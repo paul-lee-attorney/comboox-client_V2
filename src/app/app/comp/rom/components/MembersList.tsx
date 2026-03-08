@@ -1,16 +1,19 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Paper, Box, TextField, Button, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { History } from '@mui/icons-material';
+import { AccountCircle, History } from '@mui/icons-material';
 
 import { booxMap } from '../../../common';
 import { baseToDollar, bigIntToStrNum, dateParser, 
-  longDataParser, longSnParser, splitStrArr 
+  longDataParser, longSnParser, splitStrArr, 
+  userNoParser
 } from '../../../common/toolsKit';
 
 import { MemberShareClip, getEquityList, sortedMembersList } from '../rom';
 
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
+import copy from 'copy-to-clipboard';
+import { ToClipboard } from '../../../common/ToClipboard';
 
 interface MembersEquityListProps{
   setAcct: Dispatch<SetStateAction<number>>;
@@ -38,8 +41,13 @@ export function MembersEquityList( {setAcct, setOpen}:MembersEquityListProps ) {
     {
       field: 'usrNo',
       headerName: 'UserNo',
-      valueGetter: (p) => longSnParser(p.row.acct.toString()),
-      width: 168,    
+      valueGetter: (p) => p.row.acct.toString(16),
+      width: 188, 
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: ({value}) => (
+        <ToClipboard icon={<AccountCircle />} info={ value } />
+      ),
     },
     {
       field: 'sharesInHand',

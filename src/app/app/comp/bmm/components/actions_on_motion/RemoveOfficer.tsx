@@ -1,5 +1,5 @@
 import { 
-  useCompKeeperRemoveOfficer, 
+  useIrodKeeperRemoveOfficer, 
 } from "../../../../../../../generated";
 
 import { Paper } from "@mui/material";
@@ -25,7 +25,7 @@ export function RemoveOfficer({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: removeOfficerLoading,
     write: removeOfficer,
-  } = useCompKeeperRemoveOfficer({
+  } = useIrodKeeperRemoveOfficer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

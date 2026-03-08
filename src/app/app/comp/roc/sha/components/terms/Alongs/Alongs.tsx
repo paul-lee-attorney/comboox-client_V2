@@ -30,18 +30,25 @@ import {
 } from "@mui/icons-material"
 
 import {
-  useAlongsAddDragger,
-  useAlongsRemoveDragger,
-  useAlongsAddFollower,
-  useAlongsRemoveFollower,
+  useIAlongsAddDragger,
+  useIAlongsRemoveDragger,
+  useIAlongsAddFollower,
+  useIAlongsRemoveFollower,
 } from "../../../../../../../../../generated";
 
 import { DateTimeField } from "@mui/x-date-pickers";
 import { AlongLinks } from "./AlongLinks";
 import { AddTerm } from "../AddTerm";
 import { CopyLongStrSpan } from "../../../../../../common/CopyLongStr";
-import { AlongLink, LinkRule, defaultLinkRule, getLinks, linkRuleCodifier, triggerTypes } from "./da";
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, utcToStamp } from "../../../../../../common/toolsKit";
+import { 
+  AlongLink, LinkRule, defaultLinkRule, getLinks,
+  linkRuleCodifier, triggerTypes 
+} from "./da";
+import { 
+  FormResults, defFormResults, hasError, hexToBigInt, 
+  onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, 
+  utcToStamp 
+} from "../../../../../../common/toolsKit";
 import { SetShaTermProps } from "../AntiDilution/AntiDilution";
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 
@@ -70,7 +77,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const { 
     isLoading: addLinkLoading,
     write: addLink 
-  } = useAlongsAddDragger({
+  } = useIAlongsAddDragger({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -86,8 +93,8 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
     addLink({
       args: [ 
         linkRuleCodifier(rule), 
-        BigInt(drager)
-      ], 
+        hexToBigInt(drager)
+      ],
     })
   }
 
@@ -100,7 +107,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const { 
     isLoading: removeLinkLoading, 
     write: removeLink, 
-  } = useAlongsRemoveDragger({
+  } = useIAlongsRemoveDragger({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -114,7 +121,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
 
   const removeLinkClick = ()=>{
     removeLink({
-      args: [BigInt(drager)],      
+      args: [hexToBigInt(drager)],      
     })
   }
 
@@ -129,7 +136,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const { 
     isLoading: addFollowerLoading, 
     write: addFollower, 
-  } = useAlongsAddFollower({
+  } = useIAlongsAddFollower({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -144,8 +151,8 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const addFollowerClick = ()=>{
     addFollower({
       args: [ 
-        BigInt(drager),
-        BigInt(follower)
+        hexToBigInt(drager),
+        hexToBigInt(follower)
       ],
     });
   };
@@ -159,7 +166,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const { 
     isLoading: removeFollowerLoading, 
     write: removeFollower 
-  } = useAlongsRemoveFollower({
+  } = useIAlongsRemoveFollower({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -174,8 +181,8 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
   const removeFollowerClick = ()=>{
     removeFollower({
       args: [ 
-        BigInt(drager), 
-        BigInt(follower)
+        hexToBigInt(drager), 
+        hexToBigInt(follower)
       ], 
     });
   };
@@ -395,7 +402,7 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
                       }}
                       onChange={(e) => {
                         let input = e.target.value;
-                        onlyInt('Drager', input, MaxUserNo, setValid);
+                        onlyHex('Drager', input, 10, setValid);
                         setDrager(input);
                       }}
                       value={ drager }              
@@ -444,10 +451,10 @@ export function Alongs({ sha, term, setTerms, isFinalized, seqOfTitle }: AlongsP
                       }}
                       onChange={(e) => {
                         let input = e.target.value;
-                        onlyInt('Follower', input, MaxUserNo, setValid);
+                        onlyHex('Follower', input, 10, setValid);
                         setFollower(input);
                       }}
-                      value={ follower }              
+                      value={ follower }
                     />
 
                     <Tooltip

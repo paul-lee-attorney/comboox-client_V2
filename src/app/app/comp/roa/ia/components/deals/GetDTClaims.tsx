@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Stack, TextField, Toolbar } from "@mui/material";
 import { HandshakeOutlined, ListAltOutlined } from "@mui/icons-material";
-import { useCompKeeperAcceptAlongDeal, } from "../../../../../../../../generated";
-import { HexParser, baseToDollar, dateParser, longSnParser, refreshAfterTx } from "../../../../../common/toolsKit";
+import { useIshaKeeperAcceptAlongDeal, } from "../../../../../../../../generated";
+import { HexParser, baseToDollar, dateParser, longSnParser, refreshAfterTx, userNoParser } from "../../../../../common/toolsKit";
 import { ActionsOfDealCenterProps } from "./ActionsOfDeal";
 import { DTClaim, getDTClaimsOfDeal, hasDTClaims } from "../../../roa";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -63,7 +63,7 @@ export function GetDTClaims({addr, deal, setOpen, setDeal, refresh, timeline, ti
     { 
       field: 'claimer', 
       headerName: 'Claimer',
-      valueGetter: p => longSnParser(p.row.claimer.toString()) ,
+      valueGetter: p => userNoParser(p.row.claimer.toString(16)) ,
       headerAlign:'center',
       align: 'center',
       width: 218,
@@ -120,7 +120,7 @@ export function GetDTClaims({addr, deal, setOpen, setDeal, refresh, timeline, ti
   const {
     isLoading: acceptAlongDealLoading,
     write: acceptAlongDeal,
-  } = useCompKeeperAcceptAlongDeal({
+  } = useIshaKeeperAcceptAlongDeal({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

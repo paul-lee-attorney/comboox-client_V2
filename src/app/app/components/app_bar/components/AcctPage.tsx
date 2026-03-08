@@ -2,7 +2,7 @@ import { AccountCircle, BorderColor } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 import Link from "next/link";
-import { longSnParser, refreshAfterTx } from "../../../common/toolsKit";
+import { longSnParser, refreshAfterTx, userNoParser } from "../../../common/toolsKit";
 import { useWalletClient } from "wagmi";
 import { AddrOfRegCenter, HexType } from "../../../common";
 import { useRegCenterGetMyUserNo, useRegCenterRegUser } from "../../../../../../generated";
@@ -26,9 +26,6 @@ export function AcctPage({ flag }:AcctPageProps) {
   } = useRegCenterGetMyUserNo({
     address: AddrOfRegCenter,
     account: signer?.account,
-    // onError(err) {
-    //   setErrMsg(err.message);
-    // },
     onSuccess(res) {
       if (signer) setUserNo(res);
       else setUserNo(undefined);
@@ -62,7 +59,6 @@ export function AcctPage({ flag }:AcctPageProps) {
         href={{
           pathname: flag ? `/app/users` : '/app' ,
         }}
-        // as={`/app/center/users`}
       >
 
         <Button
@@ -71,7 +67,7 @@ export function AcctPage({ flag }:AcctPageProps) {
           startIcon={<AccountCircle />}
           sx={{ minWidth:218  }}
         >
-          {longSnParser(userNo?.toString() ?? '0')}
+          {userNoParser(userNo?.toString(16) ?? '0')}
         </Button>
       
       </Link>

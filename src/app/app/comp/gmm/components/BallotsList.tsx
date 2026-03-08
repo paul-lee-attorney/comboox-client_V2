@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Chip } from "@mui/material";
 import { LinearProgress, Typography } from "@mui/joy";
 
-import { baseToDollar, dateParser, longDataParser, longSnParser } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, longDataParser, userNoParser } from "../../../common/toolsKit";
 import { Bytes32Zero, HexType } from "../../../common";
 import { useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -11,7 +11,7 @@ const columns: GridColDef[] = [
   { 
     field: 'acct', 
     headerName: 'UserNo.',
-    valueGetter: p => longSnParser(p.row.acct.toString()),
+    valueGetter: p => userNoParser(p.row.acct.toString(16)),
     width: 180,
   },
   { 

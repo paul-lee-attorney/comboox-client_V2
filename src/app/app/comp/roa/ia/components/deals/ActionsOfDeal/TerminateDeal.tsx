@@ -1,6 +1,6 @@
 import { Paper, Stack } from "@mui/material";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperTerminateDeal } from "../../../../../../../../../generated";
+import { useIroaKeeperTerminateDeal } from "../../../../../../../../../generated";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import {  DirectionsRun } from "@mui/icons-material";
 import { HexType } from "../../../../../../common";
@@ -25,7 +25,7 @@ export function TerminateDeal({ addr, deal, setOpen, setDeal, refresh}: ActionsO
   const {
     isLoading: terminateDealLoading,
     write: terminateDeal
-  } = useCompKeeperTerminateDeal({
+  } = useIroaKeeperTerminateDeal({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

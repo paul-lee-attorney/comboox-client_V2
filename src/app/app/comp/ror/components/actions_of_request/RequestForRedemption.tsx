@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Paper, Stack, TextField } from "@mui/material";
 
 import { EmojiPeopleOutlined } from "@mui/icons-material";
-import { useFundKeeperRequestForRedemption } from "../../../../../../../generated";
+import { useIrorKeeperRequestForRedemption } from "../../../../../../../generated";
 
 import { FormResults, defFormResults, hasError, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 
@@ -29,7 +29,7 @@ export function RequestForRedemption({ classOfShare, refresh }: ActionsOfRequest
   const {
     isLoading: requestForRedemptionLoading,
     write:requestForRedemption,
-  } = useFundKeeperRequestForRedemption({
+  } = useIrorKeeperRequestForRedemption({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

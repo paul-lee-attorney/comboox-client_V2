@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { HexType, MaxPrice, MaxUserNo } from "../../../../common";
 
-import { useCompKeeperDistributeProfits, useCompKeeperDistributeIncome } from "../../../../../../../generated";
+import { useIAccountantDistrProfits, useIAccountantDistrIncome } from "../../../../../../../generated";
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { SoupKitchenOutlined } from "@mui/icons-material";
@@ -37,7 +37,7 @@ export function DistributeUsd({ motion, setOpen, refresh }:ActionsOnMotionProps)
   const {
     isLoading: distributeProfitsLoading,
     write: distributeProfits,
-  } = useCompKeeperDistributeProfits({
+  } = useIAccountantDistrProfits({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -52,7 +52,7 @@ export function DistributeUsd({ motion, setOpen, refresh }:ActionsOnMotionProps)
   const {
     isLoading: distributeIncomeLoading,
     write: distributeIncome,
-  } = useCompKeeperDistributeIncome({
+  } = useIAccountantDistrIncome({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

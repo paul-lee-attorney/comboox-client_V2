@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useCompKeeperCreatePledge } from "../../../../../../generated";
+import { useIropKeeperCreatePledge } from "../../../../../../generated";
 import { StrBody, StrHead, codifyHeadOfPledge, defaultStrBody, defaultStrHead } from "../rop";
 import { Divider, Paper, Stack, TextField, Toolbar, Typography } from "@mui/material";
 import { getShare } from "../../ros/ros";
 import { Create } from "@mui/icons-material";
 import { HexType, MaxData, MaxPrice, MaxSeqNo, MaxUserNo, booxMap } from "../../../common";
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 
@@ -36,7 +36,7 @@ export function CreatePledge({refresh}:CreatePledgeProps) {
   const {
     isLoading: createPledgeLoading,
     write: createPledge,
-  } = useCompKeeperCreatePledge({
+  } = useIropKeeperCreatePledge({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -177,7 +177,7 @@ export function CreatePledge({refresh}:CreatePledgeProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Creditor', input, MaxUserNo, setValid);
+                onlyHex('Creditor', input, 10, setValid);
                 setHead((v) => ({
                   ...v,
                   creditor: input,
@@ -203,7 +203,7 @@ export function CreatePledge({refresh}:CreatePledgeProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Pledgor', input, MaxUserNo, setValid);
+                onlyHex('Pledgor', input, 10, setValid);
                 setHead((v) => ({
                   ...v,
                   pledgor: input,
@@ -291,7 +291,7 @@ export function CreatePledge({refresh}:CreatePledgeProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Debtor', input, MaxData, setValid);
+                onlyHex('Debtor', input, 10, setValid);
                 setHead((v) => ({
                   ...v,
                   debtor: input,

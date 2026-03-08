@@ -13,7 +13,7 @@ import {
 
 import { Create } from "@mui/icons-material";
 
-import { useCompKeeperCreateIa } from "../../../../../generated";
+import { useIroaKeeperCreateIa } from "../../../../../generated";
 
 import { InfoOfFile, getFilesListWithInfo } from "../roc/components/filesFolder";
 
@@ -21,7 +21,7 @@ import { GetFilesList } from "../roc/components/GetFilesList";
 import { CopyLongStrTF } from "../../common/CopyLongStr";
 import { IndexCard } from "../roc/components/IndexCard";
 import { AddrZero, HexType, booxMap } from "../../common";
-import { refreshAfterTx } from "../../common/toolsKit";
+import { getTypeByName, refreshAfterTx } from "../../common/toolsKit";
 
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
@@ -46,7 +46,7 @@ function RegisterOfAgreements() {
   const [ version, setVersion ] = useState<string>('1');
 
   useEffect(()=>{
-    counterOfVersions(21n).then(
+    counterOfVersions(getTypeByName("InvestmentAgreement")).then(
       vr => setVersion(vr.toString())
     );
   }, [time]);
@@ -54,7 +54,7 @@ function RegisterOfAgreements() {
   const {
     isLoading: createIaLoading, 
     write: createIa,
-  } = useCompKeeperCreateIa({
+  } = useIroaKeeperCreateIa({
     address: gk,
     onError(err){
       setErrMsg(err.message);

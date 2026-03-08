@@ -4,16 +4,16 @@ import { Stack, TextField } from "@mui/material";
 import { Delete, PlaylistAdd } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-import { AddrZero, HexType, MaxPrice } from "../../../../../common";
+import { AddrZero, HexType } from "../../../../../common";
 
 import { 
-  useShareholdersAgreementCreateTerm, 
-  useShareholdersAgreementRemoveTerm 
+  useIShareholdersAgreementCreateTerm, 
+  useIShareholdersAgreementRemoveTerm 
 } from "../../../../../../../../generated";
 
-import { counterOfVersions, getDocAddr } from "../../../../../rc";
+import { counterOfVersions, getCloneAddr, getDocAddr } from "../../../../../rc";
 
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../../common/toolsKit";
+import { FormResults, defFormResults, getTypeByName, hasError, refreshAfterTx } from "../../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../../_providers/ComBooxContextProvider";
 
 interface AddTermProps {
@@ -31,9 +31,11 @@ export function AddTerm({sha, title, setTerms, isCreated}: AddTermProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
 
+  const terms = ["AntiDilution", "LockUp", "Alongs", "Alongs", "Options", "Options"];
+
   // uint typeOfDoc = title > 3 ? 21 + title : 22 + title;
   useEffect(()=>{
-    let typeOfDoc = BigInt(title > 3 ? 21 + title : 22 + title);
+    let typeOfDoc = getTypeByName(terms[title-1]);
     counterOfVersions(typeOfDoc).then(
       vr => setVersion(vr.toString())
     )
@@ -42,7 +44,7 @@ export function AddTerm({sha, title, setTerms, isCreated}: AddTermProps) {
   const {
     isLoading: createTermLoading,
     write: createTerm,
-  } = useShareholdersAgreementCreateTerm({
+  } = useIShareholdersAgreementCreateTerm({
     address: sha,
     onError(err) {
       setErrMsg(err.message);
@@ -50,7 +52,7 @@ export function AddTerm({sha, title, setTerms, isCreated}: AddTermProps) {
     onSuccess(data) {
       setLoading(true);
       let hash:HexType = data.hash;
-      getDocAddr(hash).
+      getCloneAddr(hash).
         then(addrOfTerm => {
           setLoading(false);
           setTerms(v => {
@@ -83,7 +85,7 @@ export function AddTerm({sha, title, setTerms, isCreated}: AddTermProps) {
   const {
     isLoading: removeTermLoading,
     write: removeTerm,
-  } = useShareholdersAgreementRemoveTerm({
+  } = useIShareholdersAgreementRemoveTerm({
     address: sha,
     onError(err) {
       setErrMsg(err.message);

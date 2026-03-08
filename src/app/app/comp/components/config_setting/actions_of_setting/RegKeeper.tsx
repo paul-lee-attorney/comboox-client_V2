@@ -14,7 +14,7 @@ import { titleOfKeepers } from "../../../gk";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../common/toolsKit";
 import { HexType } from "../../../../common";
 
-import { useCompKeeperRegKeeper } from "../../../../../../../generated";
+import { useIGeneralKeeperRegKeeper } from "../../../../../../../generated";
 
 export function RegKeeper({title, book, setTitle, setBook, setOpen}:RegBookProps) {
   const { gk, setErrMsg } = useComBooxContext();
@@ -30,7 +30,7 @@ export function RegKeeper({title, book, setTitle, setBook, setOpen}:RegBookProps
   const {
     isLoading: regKeeperLoading,
     write: regKeeper,
-  } = useCompKeeperRegKeeper({
+  } = useIGeneralKeeperRegKeeper({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

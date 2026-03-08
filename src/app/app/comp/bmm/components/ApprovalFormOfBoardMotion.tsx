@@ -11,7 +11,7 @@ import Link from "next/link";
 import { HexType, booxMap } from "../../../common";
 
 import { Article } from "@mui/icons-material";
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Motion, motionType, statesOfMotion, voteEnded } from "../../gmm/meetingMinutes";
 import { getSnOfFile } from "../../roc/components/filesFolder";
 import { VoteResult } from "../../gmm/components/VoteResult";
@@ -97,7 +97,7 @@ export function ApprovalFormOfBoardMotion({minutes, open, motion, setOpen, refre
                 id="tfCreator" 
                 label="Creator" 
                 variant="outlined"
-                value = { longSnParser(motion.head.creator.toString()) }
+                value = { userNoParser(motion.head.creator.toString(16)) }
                 size='small'
               />
             </Grid>
@@ -121,7 +121,7 @@ export function ApprovalFormOfBoardMotion({minutes, open, motion, setOpen, refre
                 id="tfProposer" 
                 label="Proposer" 
                 variant="outlined"
-                value = { longSnParser(motion.body.proposer.toString()) }
+                value = { userNoParser(motion.body.proposer.toString(16)) }
                 size='small'
               />
             </Grid>
@@ -202,7 +202,7 @@ export function ApprovalFormOfBoardMotion({minutes, open, motion, setOpen, refre
                 id="tfExectuor" 
                 label={ motion.head.typeOfMotion == 1 ? "Candidate" : "Executor" } 
                 variant="outlined"
-                value = { longSnParser(motion.head.executor.toString()) }
+                value = { userNoParser(motion.head.executor.toString(16)) }
                 size='small'
               />
             </Grid>

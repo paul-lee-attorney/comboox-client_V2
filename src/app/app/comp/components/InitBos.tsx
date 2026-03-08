@@ -6,10 +6,10 @@ import { TextField, Paper, Stack, Divider, Typography,
 import { AddCircle, ArrowDownward, ArrowUpward, RemoveCircle }  from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 
-import { useRegisterOfSharesIssueShare, useRegisterOfSharesDecreaseCapital } from '../../../../../generated';
+import { useIRegisterOfSharesIssueShare, useIRegisterOfSharesDecreaseCapital } from '../../../../../generated';
 
 import { HexType, MaxData, MaxPrice, MaxSeqNo, MaxUserNo, booxMap } from '../../common';
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from '../../common/toolsKit';
+import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, userNoParser, utcToStamp } from '../../common/toolsKit';
 
 import { DateTimeField } from '@mui/x-date-pickers';
 
@@ -40,7 +40,7 @@ export function InitBos({nextStep}: InitCompProps) {
   const {
     isLoading: issueShareLoading,
     write: issueShare,
-  } = useRegisterOfSharesIssueShare({
+  } = useIRegisterOfSharesIssueShare({
     address: boox ? boox[booxMap.ROS] : undefined,
     onError(err) {
       setErrMsg(err.message);
@@ -73,7 +73,7 @@ export function InitBos({nextStep}: InitCompProps) {
   const {
     isLoading: delShareLoading,
     write: delShare
-  } = useRegisterOfSharesDecreaseCapital({
+  } = useIRegisterOfSharesDecreaseCapital({
     address: boox ? boox[booxMap.ROS] : undefined,
     onError(err) {
       setErrMsg(err.message);
@@ -197,7 +197,7 @@ export function InitBos({nextStep}: InitCompProps) {
                   helperText={ valid['Shareholder']?.helpTx ?? ' ' }
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Shareholder', input, MaxUserNo, setValid);
+                    onlyHex('Shareholder', input, 10, setValid);
                     setShare(v => ({
                       head: {
                         ...v.head,
@@ -206,7 +206,7 @@ export function InitBos({nextStep}: InitCompProps) {
                       body: v.body,
                     }));
                   }}
-                  value = {share.head.shareholder}
+                  value = { share.head.shareholder }
                   size='small'
                 />
 

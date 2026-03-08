@@ -2,7 +2,7 @@ import { Chip,Paper,Typography } from '@mui/material';
 
 import { DataGrid, GridColDef, GridEventListener } from '@mui/x-data-grid'
 
-import { baseToDollar, dateParser, longDataParser, longSnParser } from '../../../common/toolsKit';
+import { baseToDollar, dateParser, longDataParser, longSnParser, userNoParser } from '../../../common/toolsKit';
 
 import { Share } from '../ros';
 
@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
   { 
     field: 'shareholder', 
     headerName: 'Shareholder',
-    valueGetter: p => longSnParser(p.row.head.shareholder.toString()),
+    valueGetter: p => userNoParser(p.row.head.shareholder.toString(16)),
     headerAlign: 'center',
     align: 'center',
     width: 128,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCompKeeperReleasePledge } from "../../../../../../../generated";
+import { useIropKeeperReleasePledge } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { Key } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -24,7 +24,7 @@ export function ReleasePledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: releasePledgeLoading,
     write: releasePledge,
-  } = useCompKeeperReleasePledge({
+  } = useIropKeeperReleasePledge({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

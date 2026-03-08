@@ -15,7 +15,7 @@ import {
   ListAlt,
 } from "@mui/icons-material"
 
-import { bigIntToStrNum, longDataParser, } from "../../../../../../common/toolsKit";
+import { bigIntToStrNum, } from "../../../../../../common/toolsKit";
 import { Cond, comOps, logOps } from "../../../../../roo/roo";
 
 export const statesOfOpt = ['Pending', 'Issued', 'Executed', 'Closed'];

@@ -6,9 +6,8 @@ import { Paper, Stepper, Step, StepLabel, StepContent } from "@mui/material";
 
 import { useComBooxContext } from "../../_providers/ComBooxContextProvider";
 
-import { AddrOfRegCenter, booxMap } from "../common";
+import { booxMap } from "../common";
 import { getDK } from "./common/draftControl";
-import { getKeeper } from "./gk";
 
 import { SetMaxQtyOfMembers } from "./components/SetMaxQtyOfMembers";
 import { InitBos } from "./components/InitBos";
@@ -24,14 +23,13 @@ function HomePage() {
   const [ activeStep, setActiveStep ] = useState<number>(4);
 
   useEffect(()=>{
-    if (boox) {
+    if (boox && gk) {
       getDK(boox[booxMap.ROM]).then(
         dk => {
-          if (gk) {
-            getKeeper(gk, booxMap.ROM).then(
-              romKeeper => {
-                if (romKeeper != dk) setActiveStep(0);
-    })}})}
+          if (gk.toLowerCase() != dk.toLowerCase() ) setActiveStep(0);
+        }
+      );
+    }
   }, [boox, gk]);
 
   useEffect(()=>{

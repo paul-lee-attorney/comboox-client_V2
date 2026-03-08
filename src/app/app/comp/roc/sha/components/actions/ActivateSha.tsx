@@ -5,7 +5,7 @@ import { LightMode } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import { 
-  useCompKeeperActivateSha,
+  useIrocKeeperActivateSha,
 } from "../../../../../../../../generated";
 
 import { FileHistoryProps } from "./CirculateSha";
@@ -28,7 +28,7 @@ export function ActivateSha({ addr, setNextStep }: FileHistoryProps) {
   const {
     isLoading,
     write,
-  } = useCompKeeperActivateSha({
+  } = useIrocKeeperActivateSha({
     address: gk,
     args: [ addr ],
     onError(err) {

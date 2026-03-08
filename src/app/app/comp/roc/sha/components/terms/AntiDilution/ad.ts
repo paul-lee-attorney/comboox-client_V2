@@ -1,7 +1,7 @@
 import { readContract } from "@wagmi/core";
-import { antiDilutionABI } from "../../../../../../../../../generated";
+import { iAntiDilutionABI } from "../../../../../../../../../generated";
 import { HexType } from "../../../../../../common";
-import { bigIntToNum, longDataParser, longSnParser, strNumToBigInt } from "../../../../../../common/toolsKit";
+import { bigIntToNum, longDataParser, longSnParser, strNumToBigInt, userNoParser } from "../../../../../../common/toolsKit";
 import { Deal } from "../../../../../roa/ia/ia";
 
 export interface BenchmarkType {
@@ -13,7 +13,7 @@ export interface BenchmarkType {
 export async function isMarked(addr: HexType, classOfShare: number): Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'isMarked',
     args: [ BigInt(classOfShare)],
   })
@@ -24,7 +24,7 @@ export async function isMarked(addr: HexType, classOfShare: number): Promise<boo
 export async function getClasses(addr: HexType): Promise<readonly bigint[]>{
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'getClasses',
   })
 
@@ -35,7 +35,7 @@ export async function getFloorPriceOfClass(addr: HexType, classOfShare: number):
   
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'getFloorPriceOfClass',
     args: [ BigInt(classOfShare) ],
   })
@@ -47,7 +47,7 @@ export async function getObligorsOfAD(addr: HexType, classOfShare: number): Prom
   
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'getObligorsOfAD',
     args: [ BigInt(classOfShare) ],
   })
@@ -59,7 +59,7 @@ export async function isObligor(addr: HexType, classOfShare: number, acct: numbe
   
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'isObligor',
     args: [ BigInt(classOfShare), BigInt(acct) ],
   })
@@ -71,7 +71,7 @@ export async function getGiftPaid(addr: HexType, ia: HexType, seqOfDeal: number,
   
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'getGiftPaid',
     args: [ ia, BigInt(seqOfDeal), BigInt(seqOfShare) ],
   })
@@ -83,7 +83,7 @@ export async function isTriggered(addr: HexType, deal: Deal, seqOfShare: number)
   
   let res = await readContract({
     address: addr,
-    abi: antiDilutionABI,
+    abi: iAntiDilutionABI,
     functionName: 'isTriggered',
     args: [ deal, BigInt(seqOfShare) ],
   })
@@ -109,7 +109,7 @@ export async function getBenchmarks(addr: HexType): Promise<BenchmarkType[]> {
     let strObligors = '';
 
     obligors.map(v => {
-      strObligors += longSnParser(v.toString()) + `\n`;
+      strObligors += userNoParser(v.toString(16)) + `\n`;
     });
 
     let item: BenchmarkType = {

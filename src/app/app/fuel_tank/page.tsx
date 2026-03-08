@@ -1,11 +1,17 @@
 "use client"
 
-import { useState } from "react";
-import { AddrOfRegCenter, AddrOfTank, AddrZero, HexType } from "../common";
+import { useEffect, useState } from "react";
+import { AddrOfRegCenter, AddrZero, HexType } from "../common";
 import { Divider, Paper, Stack, TextField, Toolbar } from "@mui/material";
-import { bigIntToStrNum, getEthPart, getGWeiPart, getWeiPart, longDataParser, } from "../common/toolsKit";
+import { 
+  bigIntToStrNum, getEthPart, getGWeiPart, 
+  getWeiPart, longDataParser 
+} from "../common/toolsKit";
 
-import { useUsdFuelTankGetOwner, useRegCenterBalanceOf, useUsdFuelTankRate, useUsdFuelTankCashier, useUsdFuelTankSum, useUsdFuelTankGetRegCenter } from "../../../../generated";
+import { 
+  useRegCenterBalanceOf, useUsdFuelTankRate, useUsdFuelTankCashier, 
+  useUsdFuelTankSum, useUsdFuelTankRc 
+} from "../../../../generated";
 
 import { useWalletClient } from "wagmi";
 
@@ -13,6 +19,8 @@ import { CopyLongStrSpan, CopyLongStrTF } from "../common/CopyLongStr";
 import { useComBooxContext } from "../../_providers/ComBooxContextProvider";
 import { ActionsOfFuel } from "./ActionsOfFuel";
 import { balanceOfUsd } from "../usdc";
+import { useRegCenterGetOwner } from "../../../../generated-v1";
+import { getFuelTankAddr } from "./ft";
 
 function FuelTank() {
 
@@ -21,10 +29,20 @@ function FuelTank() {
   const [ owner, setOwner ] = useState<HexType>(AddrZero);
   const [ isOwner, setIsOwner ] = useState(false);
   const { data: signer } = useWalletClient();
+
+  const [ addrFT, setAddrFT ] = useState<HexType>(AddrZero);
+  useEffect(() => {
+    const getFTAddr = async () => {
+      const addr = await getFuelTankAddr();
+      setAddrFT(addr);
+    }
+    getFTAddr();
+  });
+
   const {
     refetch: getOwner
-  } = useUsdFuelTankGetOwner ({
-    address: AddrOfTank,
+  } = useRegCenterGetOwner ({
+    address: AddrOfRegCenter,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -39,8 +57,8 @@ function FuelTank() {
   const [ regCenter, setRegCenter ] = useState<HexType>(AddrZero);
   const {
     refetch: getRegCenter
-  } = useUsdFuelTankGetRegCenter({
-    address: AddrOfTank,
+  } = useUsdFuelTankRc({
+    address: addrFT,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -53,7 +71,7 @@ function FuelTank() {
   const {
     refetch: getCashier
   } = useUsdFuelTankCashier({
-    address: AddrOfTank,
+    address: addrFT,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -66,7 +84,7 @@ function FuelTank() {
   const {
     refetch: getRate
   } = useUsdFuelTankRate({
-    address: AddrOfTank,
+    address: addrFT,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -87,7 +105,7 @@ function FuelTank() {
     refetch: getCbpOfTank
   } = useRegCenterBalanceOf({
     address: AddrOfRegCenter,
-    args: [ AddrOfTank ],
+    args: [ addrFT ],
     onError(err) {
       setErrMsg(err.message);
     },
@@ -100,7 +118,7 @@ function FuelTank() {
   const {
     refetch: getSum
   } = useUsdFuelTankSum({
-    address: AddrOfTank,
+    address: addrFT,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -125,7 +143,7 @@ function FuelTank() {
 
   const [ usdcOfUser, setUsdcOfUser ] = useState<string>('0');
   const getUsdcOfUser = ()=>{
-    if (signer) {
+    if (signer && signer.account.address) {
       balanceOfUsd(signer.account.address).then(
         res => setUsdcOfUser(res.toString())
       )
@@ -140,8 +158,6 @@ function FuelTank() {
     getUsdcOfUser();
   }
 
-  const [ open, setOpen ] = useState(false);
-
   return (
     <Paper elevation={3} sx={{alignContent:'center', justifyContent:'center', m:1, p:2, border:1, borderColor:'divider', width:'fit-content' }} >
 
@@ -151,78 +167,80 @@ function FuelTank() {
           <b>Fuel Tank</b>
         </Toolbar>
 
-        <CopyLongStrSpan title="Addr" src={AddrOfTank} />
+        <CopyLongStrSpan title="Addr" src={addrFT.toLocaleLowerCase()} />
 
       </Stack>
 
-      {signer && (
-        <table >
-          <thead />
+      <table >
+        <thead >
+          <tr>
+            <td>
+              <CopyLongStrTF title='Owner' src={owner.toLowerCase() ?? '-'} />
+            </td>
+            <td>
+              <CopyLongStrTF title='RegCenter' src={regCenter.toLowerCase() ?? '-'} />
+            </td>
+            <td>
+              <CopyLongStrTF title='Cashier' src={cashier.toLowerCase() ?? '-'} />
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <TextField 
+                size="small"
+                variant='outlined'
+                label='BalanceOfTank (CBP)'
+                inputProps={{readOnly: true}}
+                fullWidth
+                sx={{
+                  m:1,
+                  minWidth: 218,
+                }}
+                value={ cbpOfTank }
+              />
+            </td>
+            <td>
+              <TextField 
+                size="small"
+                variant='outlined'
+                label='SumOfSold (CBP)'
+                inputProps={{readOnly: true}}
+                fullWidth
+                sx={{
+                  m:1,
+                  minWidth: 218,
+                }}
+                value={ sum }
+              />
+            </td>
+            <td>
+              <TextField 
+                size="small"
+                variant='outlined'
+                label='Price (CBP/USD)'
+                inputProps={{readOnly: true}}
+                fullWidth
+                sx={{
+                  m:1,
+                  minWidth: 218,
+                }}
+                value={ rate }
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td colSpan={ 3 } >
+              <Divider orientation="horizontal" sx={{ m:1 }} flexItem />
+            </td>
+          </tr>
+
+        </thead>
+
+        {signer && (
 
           <tbody>
-            <tr>
-              <td>
-                <CopyLongStrTF title='Owner' src={owner.toLowerCase() ?? '-'} />
-              </td>
-              <td>
-                <CopyLongStrTF title='RegCenter' src={regCenter.toLowerCase() ?? '-'} />
-              </td>
-              <td>
-                <CopyLongStrTF title='Cashier' src={cashier.toLowerCase() ?? '-'} />
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <TextField 
-                  size="small"
-                  variant='outlined'
-                  label='BalanceOfTank (CBP)'
-                  inputProps={{readOnly: true}}
-                  fullWidth
-                  sx={{
-                    m:1,
-                    minWidth: 218,
-                  }}
-                  value={ cbpOfTank }
-                />
-              </td>
-              <td>
-                <TextField 
-                  size="small"
-                  variant='outlined'
-                  label='SumOfSold (CBP)'
-                  inputProps={{readOnly: true}}
-                  fullWidth
-                  sx={{
-                    m:1,
-                    minWidth: 218,
-                  }}
-                  value={ sum }
-                />
-              </td>
-              <td>
-                <TextField 
-                  size="small"
-                  variant='outlined'
-                  label='Price (CBP/USD)'
-                  inputProps={{readOnly: true}}
-                  fullWidth
-                  sx={{
-                    m:1,
-                    minWidth: 218,
-                  }}
-                  value={ rate }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <td colSpan={ 3 } >
-                <Divider orientation="horizontal" sx={{ m:1 }} flexItem />
-              </td>
-            </tr>
-
             <tr>
               <td>
                 <TextField 
@@ -327,13 +345,14 @@ function FuelTank() {
 
             <tr>
               <td colSpan={ 3 }>
-                <ActionsOfFuel user={signer.account.address} isOwner={isOwner} getFinInfo={getFinInfo} getSetting={getSetting} />
+                <ActionsOfFuel addrFT={addrFT} user={signer.account.address} isOwner={isOwner} getFinInfo={getFinInfo} getSetting={getSetting} />
               </td>
             </tr>
-
           </tbody>
-        </table>
-      )}
+
+        )}
+
+      </table>
 
     </Paper>
   );

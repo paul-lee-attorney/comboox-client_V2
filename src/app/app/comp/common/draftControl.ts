@@ -1,15 +1,15 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../common";
-import { draftControlABI } from "../../../../../generated";
-import { accessControlABI } from "../../../../../generated-v1";
+import { iAccessControlABI, iDraftControlABI } from "../../../../../generated";
+import { keccak256, toUtf8Bytes } from "ethers";
+import { HexParser } from "../../common/toolsKit";
 
-export const ATTORNEYS:HexType = `0x${'4174746f726e657973' + '0'.padEnd(46, '0')}`;
-
+export const ATTORNEYS = HexParser(keccak256(toUtf8Bytes("Attorneys")));
 
 export async function getGeneralCounsel(addr: HexType): Promise<HexType> {
   let gc = await readContract({
     address: addr,
-    abi: draftControlABI,
+    abi: iDraftControlABI,
     functionName: 'getRoleAdmin',
     args: [ATTORNEYS]
   });
@@ -20,7 +20,7 @@ export async function getGeneralCounsel(addr: HexType): Promise<HexType> {
 export async function isFinalized(addr: HexType): Promise<boolean>{
   let flag: boolean = await readContract({
     address: addr,
-    abi: draftControlABI,
+    abi: iDraftControlABI,
     functionName: 'isFinalized',
   })
   
@@ -30,7 +30,7 @@ export async function isFinalized(addr: HexType): Promise<boolean>{
 export async function getDK(addr: HexType): Promise<HexType>{
   let keeper: HexType = await readContract({
     address: addr,
-    abi: accessControlABI,
+    abi: iAccessControlABI,
     functionName: 'getDK',
   })
 
@@ -40,7 +40,7 @@ export async function getDK(addr: HexType): Promise<HexType>{
 export async function hasRole(addr: HexType, role: HexType, acct: HexType): Promise<boolean> {
   let flag = await readContract({
     address: addr,
-    abi: draftControlABI,
+    abi: iDraftControlABI,
     functionName: 'hasRole',
     args: [role, acct],
   });

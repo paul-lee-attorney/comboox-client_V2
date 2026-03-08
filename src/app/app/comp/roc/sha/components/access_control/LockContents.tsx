@@ -7,7 +7,7 @@ import { Lock }  from '@mui/icons-material';
 
 
 import { 
-  useDraftControlLockContents,
+  useIDraftControlLockContents,
 } from '../../../../../../../../generated';
 import { HexType } from '../../../../../common';
 import { refreshAfterTx } from '../../../../../common/toolsKit';
@@ -36,7 +36,7 @@ export function LockContents({ addr, setIsFinalized, setNextStep }: LockContents
   const {
     isLoading: lockContentsLoading,
     write: lockContents,
-  } = useDraftControlLockContents({
+  } = useIDraftControlLockContents({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

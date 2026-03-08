@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Divider, Paper, Stack, TextField } from "@mui/material";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperExecDragAlong } from "../../../../../../../../../generated";
+import { useIshaKeeperExecAlongRight } from "../../../../../../../../../generated";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import {  AgricultureOutlined } from "@mui/icons-material";
 import { TargetShare, defaultTargetShare } from "./ExecTagAlong";
@@ -12,6 +12,7 @@ import { FormResults, HexParser, defFormResults, hasError, onlyHex,
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 import { Bytes32Zero, HexType, MaxData, MaxPrice } from "../../../../../../common";
+import { dtClaimCodifier } from "../../../../roa";
 
 export function ExecDragAlong({ addr, deal, setOpen, setDeal, refresh}: ActionsOfDealProps ) {
   const { gk, setErrMsg } = useComBooxContext();
@@ -31,7 +32,7 @@ export function ExecDragAlong({ addr, deal, setOpen, setDeal, refresh}: ActionsO
   const {
     isLoading: execDragAlongLoading,
     write: execDragAlong,
-  } = useCompKeeperExecDragAlong({
+  } = useIshaKeeperExecAlongRight({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -43,14 +44,19 @@ export function ExecDragAlong({ addr, deal, setOpen, setDeal, refresh}: ActionsO
     }
   });
 
+  let hexDtClaim = dtClaimCodifier(
+    deal.head.seqOfDeal, 
+    true, 
+    Number(targetShare.seqOfShare),
+    strNumToBigInt(targetShare.paid, 4),
+    strNumToBigInt(targetShare.par, 4)
+  );
+
   const handleClick = ()=> {
     execDragAlong({
       args: [ 
           addr, 
-          BigInt(deal.head.seqOfDeal), 
-          BigInt(targetShare.seqOfShare),
-          strNumToBigInt(targetShare.paid, 4),
-          strNumToBigInt(targetShare.par, 4),
+          hexDtClaim,
           sigHash
       ],
     });

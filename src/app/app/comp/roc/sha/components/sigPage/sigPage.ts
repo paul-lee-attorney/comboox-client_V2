@@ -1,6 +1,6 @@
 import { HexType } from "../../../../../common";
 import { readContract } from "@wagmi/core";
-import { sigPageABI } from "../../../../../../../../generated";
+import { iSigPageABI } from "../../../../../../../../generated";
 
 export interface Sig{
   signer: number;
@@ -53,7 +53,7 @@ export async function getParasOfPage(addr:HexType, initPage:boolean): Promise<Si
 
   let paras: Sig = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getParasOfPage',
     args: [initPage],
   })
@@ -65,7 +65,7 @@ export async function circulated(addr:HexType): Promise<boolean>{
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'circulated',
   })
 
@@ -76,7 +76,7 @@ export async function established(addr:HexType): Promise<boolean>{
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'established',
   })
 
@@ -87,7 +87,7 @@ export async function getCirculateDate(addr:HexType): Promise<number>{
 
   let date: number = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getCirculateDate',
   })
 
@@ -98,7 +98,7 @@ export async function getSigningDays(addr:HexType): Promise<number>{
 
   let days: number = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getSigningDays',
   })
 
@@ -109,7 +109,7 @@ export async function getClosingDays(addr:HexType): Promise<number>{
 
   let days: number = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getClosingDays',
   })
 
@@ -120,7 +120,7 @@ export async function getSigDeadline(addr:HexType): Promise<number>{
 
   let deadline: number = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getSigDeadline',
   })
 
@@ -131,7 +131,7 @@ export async function getClosingDeadline(addr:HexType): Promise<number>{
 
   let deadline: number = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getClosingDeadline',
   })
 
@@ -142,7 +142,7 @@ export async function isBuyer(addr:HexType, initPage:boolean, acct: bigint): Pro
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'isBuyer',
     args: [initPage, acct],
   })
@@ -154,7 +154,7 @@ export async function isSeller(addr:HexType, initPage:boolean, acct: bigint): Pr
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'isSeller',
     args: [initPage, acct],
   })
@@ -166,7 +166,7 @@ export async function isParty(addr:HexType, acct: bigint): Promise<boolean>{
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'isParty',
     args: [acct],
   })
@@ -178,7 +178,7 @@ export async function isInitSigner(addr:HexType, acct: bigint): Promise<boolean>
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'isInitSigner',
     args: [acct],
   })
@@ -190,7 +190,7 @@ export async function isSigner(addr:HexType, acct: bigint): Promise<boolean>{
 
   let flag: boolean = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'isSigner',
     args: [acct],
   })
@@ -202,7 +202,7 @@ export async function getBuyers(addr:HexType, initPage: boolean): Promise<readon
 
   let buyers: readonly bigint[] = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getBuyers',
     args: [initPage],
   })
@@ -214,7 +214,7 @@ export async function getSellers(addr:HexType, initPage: boolean): Promise<reado
 
   let sellers: readonly bigint[] = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getSellers',
     args: [initPage],
   })
@@ -226,7 +226,7 @@ export async function getParties(addr:HexType): Promise<readonly bigint[]>{
 
   let parties: readonly bigint[] = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getParties',
   })
 
@@ -237,7 +237,7 @@ export async function getSigOfParty(addr:HexType, initPage: boolean, acct: bigin
     
   let res = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getSigOfParty',
     args: [initPage, acct],
   });
@@ -259,7 +259,7 @@ export async function getSigsOfPage(addr:HexType, initPage: boolean): Promise<[r
     
   [sigsOfBuyers, sigsOfSellers] = await readContract({
     address: addr,
-    abi: sigPageABI,
+    abi: iSigPageABI,
     functionName: 'getSigsOfPage',
     args: [initPage],
   })

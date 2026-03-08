@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { booxMap } from '../../../common';
-import { baseToDollar, bigIntToNum, dateParser, longDataParser, longSnParser } from '../../../common/toolsKit';
+import { baseToDollar, bigIntToNum, dateParser, longDataParser, longSnParser, userNoParser } from '../../../common/toolsKit';
 
 import { ShareClip, votesHistory } from '../rom';
 
@@ -79,12 +79,12 @@ export function InvHistoryOfMember({acct, open, setOpen}: InvHistoryOfMemberProp
       aria-labelledby="dialog-title" 
     >
       <DialogTitle id="dialog-title" sx={{ mx:2, textDecoration:'underline' }} >
-        <b>Investment History of Member - {longSnParser(acct.toString())}</b>
+        <b>Investment History of Member - ({userNoParser(acct.toString(16))})</b>
       </DialogTitle>
 
       <DialogContent>
 
-        {invHistory && (
+        {invHistory && (  
           <DataGrid
             initialState={{pagination:{paginationModel:{pageSize: 5}}}}
             pageSizeOptions={[5, 10, 15, 20]}

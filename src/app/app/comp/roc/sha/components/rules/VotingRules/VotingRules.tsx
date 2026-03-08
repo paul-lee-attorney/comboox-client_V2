@@ -12,7 +12,7 @@ import { SetVotingRule, VotingRule } from "./SetVotingRule";
 import { HexType } from "../../../../../../common";
 import { refreshAfterTx } from "../../../../../../common/toolsKit";
 
-import { useShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
+import { useIShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
 
 export interface VotingRuleWrap {
   subTitle: string,
@@ -76,7 +76,7 @@ export function VotingRules({sha, initSeqList, isFinalized, time, refresh}: Grou
   const {
     isLoading: removeRuleLoading,
     write: removeRule,
-  } = useShareholdersAgreementRemoveRule({
+  } = useIShareholdersAgreementRemoveRule({
     address: sha,
     args: [BigInt(cp[cp.length - 1])],
     onError(err) {

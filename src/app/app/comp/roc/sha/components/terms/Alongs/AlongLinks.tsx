@@ -4,7 +4,7 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { longSnParser, splitStrArr } from '../../../../../../common/toolsKit';
+import { splitStrArr, userNoParser } from '../../../../../../common/toolsKit';
 import { LinkRuleEditor } from './LinkRuleEditor';
 import { AlongLink } from './da';
 
@@ -27,7 +27,7 @@ export function AlongLinks({ link }: AlongLinksProps) {
       <Stack direction={'row'} sx={{ alignItems: 'center' }} >
 
         <Chip 
-          label={ 'Drager: ' + longSnParser(link.drager.toString()) }
+          label={ 'Drager: ' + userNoParser(Number(link.drager).toString(16)) }
           color='primary' 
           sx={{ m:1, minWidth:128 }} 
         />
@@ -45,7 +45,7 @@ export function AlongLinks({ link }: AlongLinksProps) {
           }}
           multiline
           rows={1}
-          value={ splitStrArr(link.followers.map(v => longSnParser(v.toString()))) }
+          value={ splitStrArr(link.followers.map(v => userNoParser(Number(v).toString(16)))) }
         />
 
       </Stack>

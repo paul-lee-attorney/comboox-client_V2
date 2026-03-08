@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
-import { balanceOf, balanceOfWei } from "../../../rc";
+import { balanceOf } from "../../../rc";
 import { balanceOfComp, totalEscrow, totalUsdDeposits } from "../../cashier";
 import { booxMap } from "../../../common";
 import { Divider, Grid, Paper, Stack, TextField, Typography } from "@mui/material";

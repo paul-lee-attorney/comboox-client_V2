@@ -21,7 +21,8 @@ export function DocsSetting() {
   const [ temps, setTemps ] = useState<DocItem[]>([]);
   const [ docs, setDocs ] = useState<DocItem[]>([]);
   
-  const [ typeOfDoc, setTypeOfDoc ] = useState(1);
+  const [ typeOfDoc, setTypeOfDoc ] = useState(0);
+  const [ titleOfTemp, setTitleOfTemp ] = useState('');
   const [ version, setVersion ] = useState(1);
   const [ addr, setAddr ] = useState(AddrZero);
   
@@ -32,18 +33,11 @@ export function DocsSetting() {
   }, [time]);
 
   useEffect(()=>{
-    
-    let snOfDoc:HexType = `0x${
-      typeOfDoc.toString(16).padStart(8, '0') +
-      version.toString(16).padStart(8, '0') + 
-      '0'.padEnd(48, '0')
-    }`;
-
-    getDocsList(snOfDoc).then(
+    getDocsList(BigInt(typeOfDoc), titleOfTemp, BigInt(version)).then(
       ls => setDocs(ls)
     );
 
-  }, [typeOfDoc, version, time]);
+  }, [typeOfDoc, titleOfTemp, version, time]);
 
   const [ owner, setOwner ] = useState(AddrZero);
   const [ keeper, setKeeper ] = useState(AddrZero);
@@ -111,11 +105,11 @@ export function DocsSetting() {
 
             </Stack>
 
-            <DocsList title='Templates' list={temps} typeOfDoc={typeOfDoc} version={version} setAddr={setAddr} setTypeOfDoc={setTypeOfDoc} setVersion={setVersion} />
+            <DocsList title='Templates' list={temps} titleOfTemp={titleOfTemp} typeOfDoc={typeOfDoc} version={version} setAddr={setAddr} setTypeOfDoc={setTypeOfDoc} setVersion={setVersion} setTitleOfTemp={setTitleOfTemp} />
 
-            <DocsList title='Documents' list={docs} typeOfDoc={typeOfDoc} version={version} setAddr={setAddr} setTypeOfDoc={setTypeOfDoc} setVersion={setVersion} />
+            <DocsList title='Documents' list={docs} titleOfTemp={titleOfTemp} typeOfDoc={typeOfDoc} version={version} setAddr={setAddr} setTypeOfDoc={setTypeOfDoc} setVersion={setVersion} setTitleOfTemp={setTitleOfTemp} />
 
-            <ActionsOfSetting typeOfDoc={typeOfDoc} version={version} addr={addr} setTime={setTime} setOpen={setOpen} />
+            <ActionsOfSetting  titleOfTemp={titleOfTemp} typeOfDoc={typeOfDoc} version={version} addr={addr} setTime={setTime} setOpen={setOpen} />
 
           </Stack>
 

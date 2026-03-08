@@ -8,12 +8,12 @@ import { LoadingButton } from '@mui/lab';
 import { Update, ArrowUpward, ArrowDownward }  from '@mui/icons-material';
 
 import { 
-  useCompKeeperSetCompInfo,
+  useIGeneralKeeperSetCompInfo,
 } from '../../../../../generated';
 
 import { CompInfo, getCompInfo } from '../gk';
 import { HexType, currencies } from '../../common';
-import { dateParser, longDataParser, refreshAfterTx, toAscii, } from '../../common/toolsKit';
+import { dateParser, longDataParser, refreshAfterTx, toAscii, userNoParser, } from '../../common/toolsKit';
 
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 import { typesOfEntity } from '../../rc';
@@ -37,7 +37,7 @@ export function SetCompInfo({nextStep}: InitCompProps) {
   const [compInfo, setCompInfo] = useState<CompInfo>(defaultInfo);  
   const [ newInfo, setNewInfo] = useState<CompInfo>(defaultInfo);
 
-  const { gk, setErrMsg } = useComBooxContext();
+  const { gk, setErrMsg, setCompInfo: setGlobalCompInfo } = useComBooxContext();
   const [ time, setTime ] = useState(0);
   
   const [ loading, setLoading ] = useState(false);
@@ -50,7 +50,7 @@ export function SetCompInfo({nextStep}: InitCompProps) {
   const {
     isLoading: setInfoLoading,
     write: setInfo, 
-   } = useCompKeeperSetCompInfo({
+   } = useIGeneralKeeperSetCompInfo({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -75,10 +75,13 @@ export function SetCompInfo({nextStep}: InitCompProps) {
   useEffect(()=>{
     if (gk) {
       getCompInfo(gk).then(
-        info => setNewInfo(info)
+        info => {
+          setNewInfo(info);
+          setGlobalCompInfo(info);
+        }
       )
     }
-  }, [gk, time]);
+  }, [gk, setNewInfo, setGlobalCompInfo, time]);
 
   return (
 
@@ -126,7 +129,7 @@ export function SetCompInfo({nextStep}: InitCompProps) {
           <Card variant='outlined' sx={{m:1, mr:3, width:'100%' }}>
             <CardContent>
               <Typography variant="body1" sx={{ m:1 }} >
-                RegNum: { longDataParser(newInfo.regNum.toString()) }
+                RegNum: { userNoParser(newInfo.regNum.toString(16)) }
               </Typography>
               <Typography variant="body1" sx={{ m:1 }} >
                 RegDate: {  dateParser(newInfo.regDate.toString()) }

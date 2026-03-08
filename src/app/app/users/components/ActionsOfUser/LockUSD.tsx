@@ -1,12 +1,16 @@
 
 import { Divider, Paper, Stack, TextField } from '@mui/material';
 
-import { AddrOfCL, AddrZero, Bytes32Zero, HexType } from '../../../common';
+import { AddrZero, Bytes32Zero, HexType } from '../../../common';
 import { LockClockOutlined, } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DateTimeField } from '@mui/x-date-pickers';
 
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from '../../../common/toolsKit';
+import { 
+  FormResults, HexParser, defFormResults, hasError, onlyHex, 
+  onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp 
+} from '../../../common/toolsKit';
+
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
 import { ActionsOfUserProps } from '../ActionsOfUser';
@@ -15,6 +19,7 @@ import { verifyAuthorization } from '../../../components/usdc_auth/authVerifier'
 import { AuthSig } from '../../../components/usdc_auth/typedData';
 import { GenerateAuth } from '../../../components/usdc_auth/GenerateAuth';
 import { useCashLockersLockUsd } from '../../../../../../generated';
+import { getCashLockersAddr } from '../../../cl';
 
 
 export function LockUSD({refresh}:ActionsOfUserProps) {
@@ -39,11 +44,24 @@ export function LockUSD({refresh}:ActionsOfUserProps) {
     setLoading(false);
   }
 
+  const [ addrCashLockers, setAddrCashLockers ] = useState<HexType>(AddrZero);
+  useEffect(()=>{
+    getCashLockersAddr().then(
+      addr => {
+        if (addr != AddrZero) {
+          setAddrCashLockers(addr);
+        } else {
+          setErrMsg('CashLockers contract is not deployed yet.');
+        }
+      }
+    ) 
+  }, [setErrMsg]);
+
   const {
     isLoading: lockUSDLoading,
     write: lockUSD,
   } = useCashLockersLockUsd({
-    address: AddrOfCL,
+    address: addrCashLockers,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -160,7 +178,7 @@ export function LockUSD({refresh}:ActionsOfUserProps) {
 
         <Divider orientation='vertical' sx={{m:1}} flexItem />
 
-        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={AddrOfCL} setAuth={setAuth} />
+        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={addrCashLockers} setAuth={setAuth} />
 
         <LoadingButton 
           disabled={ !auth || lockUSDLoading || hasError(valid)} 

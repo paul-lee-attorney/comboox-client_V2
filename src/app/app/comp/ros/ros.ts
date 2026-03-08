@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../common";
-import { registerOfSharesABI } from "../../../../../generated";
+import { iRegisterOfSharesABI } from "../../../../../generated";
 import { StrLocker, parasParser } from "../../rc";
 import { bigIntToStrNum, strNumToBigInt } from "../../common/toolsKit";
 
@@ -132,7 +132,7 @@ export function codifyHeadOfStrShare(head: StrHead): HexType {
     Number(head.seqOfShare).toString(16).padStart(8, '0') +
     Number(head.preSeq).toString(16).padStart(8, '0') +
     Number(head.issueDate).toString(16).padStart(12, '0') +
-    Number(head.shareholder).toString(16).padStart(10, '0') +
+    head.shareholder.padStart(10, '0') +
     (strNumToBigInt(head.priceOfPaid, 4).toString(16).padStart(8, '0')) +
     (strNumToBigInt(head.priceOfPar, 4).toString(16).padStart(8, '0')) +
     Number(head.votingWeight).toString(16).padStart(4, '0') +
@@ -162,7 +162,7 @@ export async function counterOfShares(ros: HexType): Promise<number>{
 
   let counter = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'counterOfShares',
   })
 
@@ -173,7 +173,7 @@ export async function counterOfClasses(ros: HexType): Promise<number>{
 
   let counter = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'counterOfClasses',
   })
 
@@ -184,7 +184,7 @@ export async function isShare(ros: HexType, seqOfShare: string): Promise<boolean
 
   let flag = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'isShare',
     args: [BigInt(seqOfShare)],
   })
@@ -196,7 +196,7 @@ export async function getShare(ros: HexType, seq: string): Promise<Share> {
 
   let share = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getShare',
     args: [BigInt(seq)],
   });
@@ -208,7 +208,7 @@ export async function getQtyOfShares(ros: HexType): Promise<bigint>{
 
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getQtyOfShares',
   })
 
@@ -219,7 +219,7 @@ export async function getSeqListOfShares(ros: HexType): Promise<readonly bigint[
 
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getSeqListOfShares',
   })
 
@@ -229,7 +229,7 @@ export async function getSeqListOfShares(ros: HexType): Promise<readonly bigint[
 export async function getSharesList(ros: HexType): Promise<readonly Share[]> {
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getSharesList',
   })
 
@@ -241,7 +241,7 @@ export async function getSharesList(ros: HexType): Promise<readonly Share[]> {
 export async function getQtyOfSharesInClass(ros: HexType, classOfShare: string): Promise<bigint> {
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getQtyOfSharesInClass',
     args: [ BigInt(classOfShare) ]
   })
@@ -252,7 +252,7 @@ export async function getQtyOfSharesInClass(ros: HexType, classOfShare: string):
 export async function getSeqListOfClass(ros: HexType, classOfShare: string): Promise<readonly bigint[]> {
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getSeqListOfClass',
     args: [ BigInt(classOfShare) ]
   })
@@ -263,7 +263,7 @@ export async function getSeqListOfClass(ros: HexType, classOfShare: string): Pro
 export async function getInfoOfClass(ros: HexType, classOfShare: bigint): Promise<Share> {
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getInfoOfClass',
     args: [ classOfShare ]
   })
@@ -275,7 +275,7 @@ export async function getSharesOfClass(ros: HexType, classOfShare: string): Prom
 
   let list = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getSharesOfClass',
     args: [ BigInt(classOfShare) ],
   })
@@ -287,7 +287,7 @@ export async function getPremium(ros: HexType): Promise<bigint>{
 
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getPremium',
   })
   
@@ -314,7 +314,7 @@ export async function getLocker(ros: HexType, hashLock: HexType): Promise<StrLoc
 
   let res = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getLocker',
     args: [ hashLock ],
   })
@@ -342,7 +342,7 @@ export async function getLocksList(ros: HexType): Promise<readonly HexType[]>{
 
   let list = await readContract({
     address: ros,
-    abi: registerOfSharesABI,
+    abi: iRegisterOfSharesABI,
     functionName: 'getLocksList',
   })
   

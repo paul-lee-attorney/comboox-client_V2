@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 
-import { baseToDollar, bigIntToStrNum, dateParser, longDataParser, longSnParser, } from "../../../common/toolsKit";
+import { baseToDollar, bigIntToStrNum, dateParser, longDataParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Share, codifyHeadOfShare } from "../ros";
 
 import { ActionsOfCap } from "./ActionsOfCap";
@@ -188,7 +188,7 @@ export function CertificateOfContribution({open, share, setOpen, refresh}: Certi
                     id="tfShareholder" 
                     label="Shareholder" 
                     variant="outlined"
-                    value = { longSnParser(share.head.shareholder.toString()) }
+                    value = { userNoParser(share.head.shareholder.toString(16)) }
                     size='small'
                   />
                 </td>

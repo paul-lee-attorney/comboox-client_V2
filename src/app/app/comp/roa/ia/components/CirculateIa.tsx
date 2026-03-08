@@ -1,5 +1,5 @@
 import { Divider, Stack, TextField } from "@mui/material";
-import { useCompKeeperCirculateIa } from "../../../../../../../generated";
+import { useIroaKeeperCirculateIa } from "../../../../../../../generated";
 import { Bytes32Zero, HexType, } from "../../../../common";
 import { Recycling } from "@mui/icons-material";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export function CirculateIa({ addr, setNextStep }: FileHistoryProps) {
   const {
     isLoading,
     write
-  } = useCompKeeperCirculateIa({
+  } = useIroaKeeperCirculateIa({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

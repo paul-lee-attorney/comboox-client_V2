@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Paper, Select, Stack, } from "@mui/material";
 
 import { PaymentsOutlined } from "@mui/icons-material";
-import { useFundKeeperRedeem } from "../../../../../../../generated";
+import { useIrorKeeperRedeem } from "../../../../../../../generated";
 
 import { refreshAfterTx } from "../../../../common/toolsKit";
 
@@ -41,7 +41,7 @@ export function Redeem({ classOfShare, refresh }: ActionsOfRequestProps) {
   const {
     isLoading: redeemLoading,
     write:redeem,
-  } = useFundKeeperRedeem({
+  } = useIrorKeeperRedeem({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

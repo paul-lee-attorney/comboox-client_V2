@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Paper, Stack, TextField } from "@mui/material";
 
 import { AddCircleOutline } from "@mui/icons-material";
-import { useFundKeeperAddRedeemableClass } from "../../../../../../../generated";
+import { useIrorKeeperAddRedeemableClass } from "../../../../../../../generated";
 
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 
@@ -29,7 +29,7 @@ export function AddRedeemableClass({ refresh }: ActionsOfRequestProps) {
   const {
     isLoading: addClassLoading,
     write:addClass,
-  } = useFundKeeperAddRedeemableClass({
+  } = useIrorKeeperAddRedeemableClass({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

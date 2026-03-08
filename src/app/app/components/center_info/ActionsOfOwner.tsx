@@ -8,7 +8,6 @@ import { Collapse, FormControl, FormHelperText,
 import { SetPlatformRule } from "./actions_of_owner/SetPlatformRule";
 import { TransferOwnership } from "./actions_of_owner/TransferOwnership";
 import { HandoverCenterKey } from "./actions_of_owner/HandoverCenterKey";
-import { SetFeedRegistry } from "./actions_of_owner/SetFeedRegitry";
 
 export interface ActionsOfOwnerProps{
   refresh: ()=>void;
@@ -24,7 +23,6 @@ export function ActionsOfOwner({ refresh }: ActionsOfOwnerProps) {
 
   const compsOfAction = [
     <SetPlatformRule key={0} refresh={refresh} />,
-    <SetFeedRegistry key={1} refresh={refresh} />,
     <TransferOwnership key={2} refresh={refresh} />,
     <HandoverCenterKey key={3} refresh={refresh} />
   ]

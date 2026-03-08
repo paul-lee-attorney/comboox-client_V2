@@ -3,7 +3,7 @@ import { Alert, Collapse, IconButton, Paper, Stack, TextField } from '@mui/mater
 
 import { useRegCenterTransfer } from '../../../../../generated';
 
-import { AddrOfRegCenter, AddrOfTank, HexType } from '../../common';
+import { AddrOfRegCenter, HexType } from '../../common';
 import { Close, OilBarrelOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { getReceipt } from '../../common/toolsKit';
@@ -13,7 +13,7 @@ import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 import { Receipt } from '../../users/components/ActionsOfUser/TransferPoints';
 
-export function FillTank({ refresh }: ActionOfFuelProps) {
+export function FillTank({ addrFT, refresh }: ActionOfFuelProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -44,7 +44,7 @@ export function FillTank({ refresh }: ActionOfFuelProps) {
             let rpt:Receipt = {
               from: r.logs[0].topics[1],
               to: r.logs[0].topics[2],
-              amt: BigInt(r.logs[0].topics[3]).toString(),
+              amt: BigInt(r.logs[0].data).toString(),
               };
             setReceipt(rpt);
             setOpen(true);
@@ -59,7 +59,7 @@ export function FillTank({ refresh }: ActionOfFuelProps) {
   const fillTankClick = ()=>{
     fillTank({
       args:[
-        AddrOfTank,
+        addrFT,
         strNumToBigInt(amt, 9) * (10n ** 9n)
       ]
     });

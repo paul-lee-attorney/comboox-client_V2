@@ -2,14 +2,14 @@ import { Paper, Stack, TextField } from "@mui/material";
 
 import { Loyalty } from "@mui/icons-material";
 import { useState } from "react";
-import { useCompKeeperPlaceInitialOffer } from "../../../../../../../generated";
+import { useIlooKeeperPlaceInitialOffer } from "../../../../../../../generated";
 import { ActionsOfOrderProps } from "../ActionsOfOrder";
 
 import { HexType, MaxData, MaxPrice, MaxSeqNo } from "../../../../common";
 import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { defaultOffer, InitOffer } from "../../../../compV1/loe/loe";
+import { defaultOffer, InitOffer } from "../../loo";
 
 
 export function PlaceInitialOffer({ classOfShare, refresh }: ActionsOfOrderProps) {
@@ -27,7 +27,7 @@ export function PlaceInitialOffer({ classOfShare, refresh }: ActionsOfOrderProps
   const {
     isLoading: placeInitOfferLoading,
     write:placeInitOffer,
-  } = useCompKeeperPlaceInitialOffer({
+  } = useIlooKeeperPlaceInitialOffer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -87,8 +87,8 @@ export function PlaceInitialOffer({ classOfShare, refresh }: ActionsOfOrderProps
           variant='outlined'
           size="small"
           label='SeqOfListingRule'
-          error={ valid['SetOfLR']?.error }
-          helperText={ valid['SetOfLR']?.helpTx ?? ' ' }
+          error={ valid['SeqOfLR']?.error }
+          helperText={ valid['SeqOfLR']?.helpTx ?? ' ' }
           sx={{
             m:1,
             minWidth: 218,

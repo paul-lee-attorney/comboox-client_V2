@@ -15,7 +15,12 @@ import { SetBookAddr } from "../../components/SetBookAddr";
 import { getClassesList, getInfoOfClass, RequestProps, Request, getAllRequests, requestParser } from "./ror";
 import { RequestsList } from "./components/RequestsList";
 import { usePublicClient } from "wagmi";
-import { ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, getAllLogs, getTopBlkOf, setLogs, setTopBlkOf, upsertMenuOfLogs } from "../../../api/firebase/arbiScanLogsTool";
+
+import { 
+  ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, 
+  getAllLogs, getTopBlkOf, setLogs, setTopBlkOf, upsertMenuOfLogs 
+} from "../../../api/firebase/arbiScanLogsTool";
+
 import { Hex, keccak256, toHex } from "viem";
 
 function RegisterOfRedemptions() {

@@ -16,7 +16,7 @@ import {
 import { Approval, Close }  from '@mui/icons-material';
 
 import {
-  useDraftControlSetRoleAdmin,
+  useIDraftControlSetRoleAdmin,
 } from '../../../../../../../../generated';
 
 import { AddrZero, HexType } from '../../../../../common';
@@ -60,7 +60,7 @@ export function SetGeneralCounsel({ addr }: AccessControlProps) {
   const {
     isLoading: setGeneralCounselLoading,
     write: setGeneralCounsel,
-  } = useDraftControlSetRoleAdmin({
+  } = useIDraftControlSetRoleAdmin({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

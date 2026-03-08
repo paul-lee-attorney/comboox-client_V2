@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useCompKeeperCastVoteOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperCastVoteOfGm } from "../../../../../../../generated";
 
 import { Box, Collapse, FormControl, FormHelperText, InputLabel, MenuItem, 
   Paper, Select, Stack, Switch, TextField, Toolbar, Typography 
@@ -38,7 +38,7 @@ export function CastVoteOfGm({ motion, setOpen, refresh }: ActionsOnMotionProps)
   const {
     isLoading: castVoteLoading,
     write: castVote,
-  } = useCompKeeperCastVoteOfGm({
+  } = useIgmmKeeperCastVoteOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

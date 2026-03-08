@@ -9,7 +9,7 @@ import {
   TextField 
 } from "@mui/material";
 
-import { baseToDollar, dateParser, longSnParser } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Pledge } from "../rop";
 import { statesOfPld } from "./PledgesList";
 import { ActionsOfPledge } from "./ActionsOfPledge";
@@ -147,7 +147,7 @@ export function CertificateOfPledge({open, pld, setOpen, refresh}: CertificateOf
                     id="tfCreditor" 
                     label="Creditor" 
                     variant="outlined"
-                    value = { longSnParser(pld.head.creditor.toString()) }
+                    value = { userNoParser(pld.head.creditor.toString(16)) }
                     size='small'
                   />
                 </td>
@@ -159,7 +159,7 @@ export function CertificateOfPledge({open, pld, setOpen, refresh}: CertificateOf
                     id="tfDebtor" 
                     label="Debtor" 
                     variant="outlined"
-                    value = { longSnParser(pld.head.debtor.toString()) }
+                    value = { userNoParser(pld.head.debtor.toString(16)) }
                     size='small'
                   />
                 </td>
@@ -171,7 +171,7 @@ export function CertificateOfPledge({open, pld, setOpen, refresh}: CertificateOf
                     id="tfPledgor" 
                     label="Pledgor" 
                     variant="outlined"
-                    value = { longSnParser(pld.head.pledgor.toString()) }
+                    value = { userNoParser(pld.head.pledgor.toString(16)) }
                     size='small'
                   />
                 </td>                

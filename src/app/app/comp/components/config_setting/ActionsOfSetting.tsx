@@ -12,8 +12,6 @@ import { RegKeeper } from "./actions_of_setting/RegKeeper";
 import { RegBook } from "./actions_of_setting/RegBook";
 import { TakeBackKeys } from "./actions_of_setting/TakeBackKeys";
 import { InitKeepers } from "./actions_of_setting/InitKeepers";
-import { SetNewGK } from "./actions_of_setting/SetNewGK";
-
 export interface ActionsOfSettingProps{
   title: number;
   addr: HexType;
@@ -29,7 +27,7 @@ export function ActionsOfSetting({ title, addr, setTitle, setAddr, setOpen, setT
 
   const actionsOfSetting = [
     'SetCompInfo', 'SetOwner', 'SetDK', 'TakeBackKeys', 
-    'RegKeeper', 'RegBook',  'InitKeepers', 'SetNewGK' 
+    'RegKeeper', 'RegBook',  'InitKeepers'
   ]
 
   const compsOfSetting = [
@@ -40,7 +38,6 @@ export function ActionsOfSetting({ title, addr, setTitle, setAddr, setOpen, setT
     <RegKeeper key={4} title={title} book={addr} setTitle={setTitle} setBook={setAddr} setOpen={setOpen} />,
     <RegBook key={5} title={title} book={addr} setTitle={setTitle} setBook={setAddr} setOpen={setOpen} />,
     <InitKeepers key={6} docAddr={addr} setDocAddr={setAddr} setOpen={setOpen} />,
-    <SetNewGK key={7} docAddr={addr} setDocAddr={setAddr} setOpen={setOpen} />,
   ]
 
   return(

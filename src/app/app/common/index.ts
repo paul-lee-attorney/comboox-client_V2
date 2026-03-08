@@ -48,10 +48,8 @@ interface BooxMap {
   ROS: number;
   LOO: number;
   ROI: number;
-  WTF: number;
   Cashier: number;
   USDC: number;
-  UsdLOO: number;
   ROR: number;
 }
 
@@ -68,54 +66,8 @@ export const booxMap:BooxMap = {
   LOO: 10,
   ROI: 11,
   USDC: 12,
-  UsdLOO: 13,
-  WTF: 14,
   Cashier: 15,
   ROR: 16,
-}
-
-interface KeepersMap {
-  ROCKeeper: number;
-  RODKeeper: number;
-  BMMKeeper: number;
-  ROMKeeper: number;
-  GMMKeeper: number;
-  ROAKeeper: number;
-  ROOKeeper: number;
-  ROPKeeper: number;
-  SHAKeeper: number;
-  LOOKeeper: number;
-  UsdROMKeeper: number;
-  UsdROAKeeper: number;
-  UsdLOOKeeper: number;
-  UsdROOKeeper: number;
-  UsdKeeper: number;
-  ROIKeeper: number;
-  WTFKeeper: number;
-  Accountant: number;
-  RORKeeper: number;
-}
-
-export const keepersMap:KeepersMap = {
-  ROCKeeper: 1,
-  RODKeeper: 2,
-  BMMKeeper: 3,
-  ROMKeeper: 4,
-  GMMKeeper: 5, 
-  ROAKeeper: 6,
-  ROOKeeper: 7,
-  ROPKeeper: 8,
-  SHAKeeper: 9,
-  LOOKeeper: 10,
-  UsdROMKeeper: 11,
-  UsdROAKeeper: 12,
-  UsdLOOKeeper: 13,
-  UsdROOKeeper: 14,
-  UsdKeeper: 15,
-  ROIKeeper: 11,
-  WTFKeeper: 14,
-  Accountant: 12,
-  RORKeeper: 16,
 }
 
 export const currencies:string[] = [

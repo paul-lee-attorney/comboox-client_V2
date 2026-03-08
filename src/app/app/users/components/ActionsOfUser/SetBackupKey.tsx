@@ -6,15 +6,17 @@ import {
 } from '../../../../../../generated';
 
 import { AddrOfRegCenter, AddrZero, HexType } from '../../../common';
-import { BorderColor } from '@mui/icons-material';
+import { BorderColor, Update } from '@mui/icons-material';
 import { useState } from 'react';
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from '../../../common/toolsKit';
-import { ActionsOfUserProps } from '.';
+
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
+import { ActionsOfUserProps } from '../ActionsOfUser';
+import { getMyUser } from '../../../rc';
 
 
-export function SetBackupKey({ refreshList, getUser }:ActionsOfUserProps) {
+export function SetBackupKey({ refresh }:ActionsOfUserProps) {
 
   const { setErrMsg } = useComBooxContext();
   
@@ -22,9 +24,8 @@ export function SetBackupKey({ refreshList, getUser }:ActionsOfUserProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [loading, setLoading] = useState(false);
 
-  const refresh = () => {
-    getUser();
-    refreshList();
+  const updateResults = () => {
+    refresh();
     setLoading(false);
   }
 
@@ -39,7 +40,7 @@ export function SetBackupKey({ refreshList, getUser }:ActionsOfUserProps) {
     onSuccess(data) {
       setLoading(true);
       let hash: HexType = data.hash;
-      refreshAfterTx(hash, refresh);
+      refreshAfterTx(hash, updateResults);
     }
   })
 

@@ -10,7 +10,7 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { AddrZero, HexType } from "../../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../common/toolsKit";
 
-import { useOwnableSetNewOwner } from "../../../../../../../generated";
+import { useIOwnableSetNewOwner } from "../../../../../../../generated";
 
 export interface AccessControlProps{
   docAddr: HexType;
@@ -34,7 +34,7 @@ export function SetOwner({docAddr, setDocAddr, setOpen}:AccessControlProps) {
   const {
     isLoading: updateOwnerLoading,
     write: updateOwner,
-  } = useOwnableSetNewOwner({
+  } = useIOwnableSetNewOwner({
     address: docAddr,
     onError(err) {
       setErrMsg(err.message);

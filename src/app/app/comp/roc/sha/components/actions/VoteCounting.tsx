@@ -6,7 +6,7 @@ import { Calculate } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 import { 
-  useCompKeeperVoteCountingOfGm, 
+  useIgmmKeeperVoteCountingOfGm, 
 } from "../../../../../../../../generated";
 
 import { HexType, booxMap } from "../../../../../common";
@@ -37,7 +37,7 @@ export function VoteCounting({ seqOfMotion, sha, setNextStep }: VoteCountingProp
   const {
     isLoading,
     write
-  } = useCompKeeperVoteCountingOfGm({
+  } = useIgmmKeeperVoteCountingOfGm({
     address: gk,
     args: seqOfMotion ? [ seqOfMotion ] : undefined,
     onError(err) {

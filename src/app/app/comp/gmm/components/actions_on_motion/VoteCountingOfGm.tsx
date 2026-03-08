@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
 import { Paper } from "@mui/material";
-import { useCompKeeperVoteCountingOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperVoteCountingOfGm } from "../../../../../../../generated";
 
 import { Calculate } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -42,7 +42,7 @@ export function VoteCountingOfGm({ seqOfMotion, setResult, setNextStep, setOpen,
   const {
     isLoading,
     write
-  } = useCompKeeperVoteCountingOfGm({
+  } = useIgmmKeeperVoteCountingOfGm({
     address: gk,
     args: [ seqOfMotion ],
     onError(err) {

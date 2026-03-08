@@ -5,7 +5,7 @@ import { Alert, Box, Stack, TextField } from "@mui/material";
 import { DriveFileRenameOutline } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-import { useCompKeeperSignSha } from "../../../../../../../../generated";
+import { useIrocKeeperSignSha } from "../../../../../../../../generated";
 
 import { Bytes32Zero, HexType } from "../../../../../common";
 
@@ -34,7 +34,7 @@ export function SignSha({ addr, setNextStep }: FileHistoryProps) {
   const {
     isLoading: signShaLoading,
     write: signSha
-  } = useCompKeeperSignSha({
+  } = useIrocKeeperSignSha({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

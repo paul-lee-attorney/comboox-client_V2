@@ -19,7 +19,7 @@ import { getEthPart, getGEthPart, getGWeiPart, getWeiPart,
 
 import { 
   useRegCenterCounterOfUsers, useRegCenterGetBookeeper, useRegCenterGetOwner, 
-  useRegCenterGetPlatformRule, useRegCenterGetPriceFeed, useRegCenterTotalSupply 
+  useRegCenterGetPlatformRule, useRegCenterTotalSupply 
 } from "../../../../../generated";
 
 import { ActionsOfOwner } from "./ActionsOfOwner";
@@ -83,7 +83,7 @@ export function CenterInfo() {
       setErrMsg(err.message);
     },
     onSuccess(data) {
-      setCounterOfUsers(data);
+      setCounterOfUsers(Number(data));
     }
   })
 
@@ -99,27 +99,12 @@ export function CenterInfo() {
     }
   })
 
-  const {
-    refetch: getFeedReg
-  } = useRegCenterGetPriceFeed({
-    address: AddrOfRegCenter,
-    args: [BigInt(0)],
-    onError(err) {
-      setErrMsg(err.message);
-    },
-    onSuccess(data) {
-      setFeedReg(data);
-    }
-  })
-
-
   const refresh = ()=>{
     getOwner();
     getBookeeper();
     getPlatformRule();
     getCounterOfUsers();
     getTotalSupply();
-    getFeedReg();
   }
 
   const [ open, setOpen ] = useState(false);

@@ -1,72 +1,52 @@
 import { useEffect } from "react";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
-import { getBoox, getKeepers } from "../../../comp/gk";
+import { getBoox } from "../../../comp/gk";
 import { Stack, Typography } from "@mui/material";
-import { longSnParser } from "../../../common/toolsKit";
+import { userNoParser } from "../../../common/toolsKit";
 import { CopyLongStrSpan } from "../../../common/CopyLongStr";
 import { basedOnPar } from "../../../comp/rom/rom";
 import { booxMap } from "../../../common";
-import { getV1Boox, getV1Keepers } from "../../../compV1/gk";
+import { MembersListBtn } from "../../../comp/rom/components/MembersListBtn";
+import { ToClipboard } from "../../../common/ToClipboard";
+import { AccountCircle, NoteAltOutlined } from "@mui/icons-material";
 
 export function CompSymbol() {
 
-  const { gk, compInfo, setBoox, setKeepers, setOnPar, setCompInfo } = useComBooxContext();
+  const { gk, compInfo, setBoox, setOnPar, setCompInfo } = useComBooxContext();
 
   useEffect(() => {
-    if (compInfo && gk) {
-      if (compInfo.regNum == 8) {
-        getV1Boox(gk).then(
-          (res) => {
-            setBoox(res.map(v=>(v.addr)));
-            basedOnPar(res[booxMap.ROM].addr).then(
-              flag => setOnPar(flag)
-            );
-          }
-        );
-        getV1Keepers(gk).then(
-          (res) => {
-            setKeepers(res.map(v=>(v.addr)));
-          }
-        );
-      } else {        
-        getBoox(gk).then(
-          (res) => {
-            setBoox(res.map(v=>(v.addr)));
-            basedOnPar(res[booxMap.ROM].addr).then(
-              flag => setOnPar(flag)
-            );
-          }
-        );
-        getKeepers(gk).then(
-          (res) => {
-            setKeepers(res.map(v=>(v.addr)));
-          }
-        );
-      }      
+    if (gk) {
+      getBoox(gk).then(
+        (res) => {
+          setBoox(res.map(v=>(v.addr)));
+          basedOnPar(res[booxMap.ROM].addr).then(
+            flag => setOnPar(flag)
+          );
+        }
+      );
     } else {
       setBoox(undefined);
       setOnPar(undefined);
       setCompInfo(undefined);
     }
-  }, [gk, compInfo, setBoox, setKeepers, setOnPar, setCompInfo]);
+  }, [gk, setBoox, setOnPar, setCompInfo]);
+
+  let addr = gk?.toLowerCase();
+  addr = addr?.substring(0, 7) + '...' + addr?.substring(addr.length-5);
 
   return (
-    <Stack direction='row' sx={{ alignItems:'center', justifyContent:'center', flexGrow:5 }} >
+    <Stack direction='row' sx={{ alignItems:'center', justifyContent:'center', flexGrow:1 }} >
 
       {gk && compInfo && (
-        <Typography variant="h6" component="div" sx={{ mx:1 }} >
-          {compInfo.symbol}
-        </Typography>
+        <MembersListBtn symbol={compInfo.symbol} />
       )}
 
       {gk && compInfo && (
-        <Typography variant="h6" component="div" sx={{ mx:1 }} >
-          ({longSnParser(compInfo.regNum.toString())})
-        </Typography>
+        <ToClipboard icon={<AccountCircle />} info={compInfo.regNum.toString(16)} />
       )}
 
       {gk && (
-        <CopyLongStrSpan title='Addr' src={gk.toLowerCase()} />
+        <ToClipboard icon={<NoteAltOutlined />} info={gk.toLowerCase()} />
       )}
     </Stack>
 

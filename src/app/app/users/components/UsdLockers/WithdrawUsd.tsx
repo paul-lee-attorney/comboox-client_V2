@@ -5,12 +5,13 @@ import {
   useCashLockersWithdrawUsd,
 } from '../../../../../../generated';
 
-import { AddrOfCL, HexType, keepersMap } from '../../../common';
+import { AddrZero, HexType, } from '../../../common';
 import { Undo } from '@mui/icons-material';
 import { refreshAfterTx } from '../../../common/toolsKit';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
+import { getCashLockersAddr } from '../../../cl';
 
 interface WithdrawUsdProps{
   hashLock: HexType;
@@ -30,11 +31,24 @@ export function WithdrawUsd({hashLock, refresh, setOpen}:WithdrawUsdProps) {
     setLoading(false);
   }
 
+  const [ addrCashLockers, setAddrCashLockers ] = useState<HexType>(AddrZero);
+  useEffect(()=>{
+    getCashLockersAddr().then(
+      addr => {
+        if (addr != AddrZero) {
+          setAddrCashLockers(addr);
+        } else {
+          setErrMsg('CashLockers contract is not deployed yet.');
+        }
+      }
+    ) 
+  }, [setErrMsg]);  
+
   const {
     isLoading: withdrawUsdLoading,
     write: withdrawUsd
   } = useCashLockersWithdrawUsd({
-    address: AddrOfCL,
+    address: addrCashLockers,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -57,7 +71,7 @@ export function WithdrawUsd({hashLock, refresh, setOpen}:WithdrawUsdProps) {
 
         <LoadingButton 
           size='small'
-          disabled={  withdrawUsdLoading } 
+          disabled={  withdrawUsdLoading || addrCashLockers === AddrZero } 
           loading={loading}
           loadingPosition='end'
           onClick={ withdrawUsdClick }

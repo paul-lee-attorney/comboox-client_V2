@@ -18,8 +18,7 @@ import { BillOfOrder } from "./components/BillOfOrder";
 import { BillOfDeal } from "./components/BillOfDeal";
 import { DealsChart } from "./components/DealsChart";
 import { SetBookAddr } from "../../components/SetBookAddr";
-import { Deal, defaultOrder, Order } from "../../compV1/loe/loe";
-import { dealParser, DealProps, getOrders } from "./loo";
+import { Deal, dealParser, DealProps, defaultOrder, getOrders, Order } from "./loo";
 import { ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, getAllLogs, getTopBlkOf, setLogs, setTopBlkOf, upsertMenuOfLogs } from "../../../api/firebase/arbiScanLogsTool";
 
 import { Hex, keccak256, toHex } from "viem";

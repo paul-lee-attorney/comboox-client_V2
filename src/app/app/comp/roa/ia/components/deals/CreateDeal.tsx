@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 
 import { HexType, MaxData, MaxPrice, MaxSeqNo, MaxUserNo, booxMap } from "../../../../../common";
 
-import { useInvestmentAgreementAddDeal } from "../../../../../../../../generated";
+import { useIInvestmentAgreementAddDeal } from "../../../../../../../../generated";
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography} from "@mui/material";
 
@@ -12,7 +12,7 @@ import { DateTimeField } from "@mui/x-date-pickers";
 import { StrBody, StrHead, TypeOfDeal, codifyHeadOfDeal, defaultStrBody, defaultStrHead } from "../../ia";
 import { getShare } from "../../../../ros/ros";
 
-import { FormResults, bigIntToStrNum, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../../common/toolsKit";
+import { FormResults, bigIntToStrNum, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 
 import { useComBooxContext } from "../../../../../../_providers/ComBooxContextProvider";
@@ -40,7 +40,7 @@ export function CreateDeal({addr, refresh}: CreateDealProps) {
   const {
     isLoading: addDealLoading,
     write: addDeal,
-  } = useInvestmentAgreementAddDeal({
+  } = useIInvestmentAgreementAddDeal({
     address: addr,
     onError(err) {
       setErrMsg(err.message);
@@ -56,8 +56,8 @@ export function CreateDeal({addr, refresh}: CreateDealProps) {
     addDeal({
       args: [ 
           codifyHeadOfDeal(head),
-          BigInt(body.buyer),
-          BigInt(body.groupOfBuyer),
+          hexToBigInt(body.buyer),
+          hexToBigInt(body.groupOfBuyer),
           strNumToBigInt(body.paid, 4),
           strNumToBigInt(body.par, 4),
           BigInt(body.distrWeight)
@@ -265,7 +265,7 @@ export function CreateDeal({addr, refresh}: CreateDealProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Buyer', input, MaxUserNo, setValid);
+                onlyHex('Buyer', input, 10, setValid);
                 setBody((v) => ({
                 ...v,
                 buyer: input,
@@ -286,7 +286,7 @@ export function CreateDeal({addr, refresh}: CreateDealProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('GroupOfBuyer', input, MaxUserNo, setValid);
+                onlyHex('GroupOfBuyer', input, 10, setValid);
                 setBody((v) => ({
                 ...v,
                 groupOfBuyer: input,

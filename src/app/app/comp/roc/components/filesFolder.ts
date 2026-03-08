@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../../common";
-import { filesFolderABI } from "../../../../../../generated";
+import { iFilesFolderABI } from "../../../../../../generated";
 
 export interface Head {
   circulateDate: number;
@@ -40,7 +40,7 @@ export interface InfoOfFile {
 export async function signingDeadline(folder: HexType, body: HexType):Promise<number>{
   let res: number = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'signingDeadline',
     args: [ body ],
   })
@@ -51,7 +51,7 @@ export async function signingDeadline(folder: HexType, body: HexType):Promise<nu
 export async function closingDeadline(folder: HexType, body: HexType):Promise<number>{
   let deadline: number = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'closingDeadline',
     args: [ body ],
   })
@@ -62,7 +62,7 @@ export async function closingDeadline(folder: HexType, body: HexType):Promise<nu
 export async function frExecDeadline(folder: HexType, body: HexType):Promise<number>{
   let deadline: number = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'frExecDeadline',
     args: [ body ],
   })
@@ -73,7 +73,7 @@ export async function frExecDeadline(folder: HexType, body: HexType):Promise<num
 export async function dtExecDeadline(folder: HexType, body: HexType):Promise<number>{
   let deadline: number = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'dtExecDeadline',
     args: [ body ],
   })
@@ -84,7 +84,7 @@ export async function dtExecDeadline(folder: HexType, body: HexType):Promise<num
 export async function terminateStartpoint(folder: HexType, body: HexType):Promise<number>{
   let res = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'terminateStartpoint',
     args: [ body ],
   })
@@ -95,7 +95,7 @@ export async function terminateStartpoint(folder: HexType, body: HexType):Promis
 export async function votingDeadline(folder: HexType, body: HexType):Promise<number>{
   let deadline: number = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'votingDeadline',
     args: [ body ],
   })
@@ -106,7 +106,7 @@ export async function votingDeadline(folder: HexType, body: HexType):Promise<num
 export async function qtyOfFiles(folder: HexType, body: HexType):Promise<BigInt>{
   let qty: BigInt = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'qtyOfFiles',
   })
 
@@ -116,7 +116,7 @@ export async function qtyOfFiles(folder: HexType, body: HexType):Promise<BigInt>
 export async function getSnOfFile(folder: HexType, body: HexType):Promise<HexType>{
   let file: File = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'getFile',
     args: [ body ],
   })
@@ -127,7 +127,7 @@ export async function getSnOfFile(folder: HexType, body: HexType):Promise<HexTyp
 export async function getFile(folder: HexType, body: HexType):Promise<File>{
   let file: File = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'getFile',
     args: [ body ],
   })
@@ -139,7 +139,7 @@ export async function getFilesList(folder: HexType):Promise<readonly HexType[]> 
 
   let list: readonly HexType[] = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'getFilesList',
   })
 
@@ -149,7 +149,7 @@ export async function getFilesList(folder: HexType):Promise<readonly HexType[]> 
 export async function isRegistered(folder: HexType, body: HexType):Promise<boolean>{
   let flag: boolean = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'isRegistered',
     args: [ body ],
   })
@@ -161,7 +161,7 @@ export async function getHeadOfFile(folder: HexType, addrOfFile: HexType): Promi
 
   let res = await readContract({
     address: folder,
-    abi: filesFolderABI,
+    abi: iFilesFolderABI,
     functionName: 'getHeadOfFile',
     args: [ addrOfFile ],
   })

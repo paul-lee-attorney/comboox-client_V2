@@ -14,7 +14,7 @@ import { BookOutlined, } from '@mui/icons-material';
 
 import Link from 'next/link';
 
-import { dateParser, longSnParser } from '../../../common/toolsKit';
+import { dateParser, longSnParser, userNoParser } from '../../../common/toolsKit';
 import { InfoOfFile } from './filesFolder';
 
 import { CopyLongStrSpan } from '../../../common/CopyLongStr';
@@ -82,7 +82,7 @@ export function GetFilesList({ list, title, pathName, setFile, setOpen }:GetFile
     {
       field: 'author',
       headerName: 'Author',
-      valueGetter: p => longSnParser(Number(p.row.sn.substring(34, 44)).toString()),
+      valueGetter: p => userNoParser(p.row.sn.substring(34, 44)),
       width: 218,
       headerAlign:'center',
       align: 'center',

@@ -1,6 +1,6 @@
-import { Chip, Paper, Toolbar, Typography } from "@mui/material";
+import { Chip, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { baseToDollar, dateParser, longSnParser } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Dispatch, SetStateAction } from "react";
 import { statesOfOpt } from "../../roc/sha/components/terms/Options/ContentOfOpt";
 import { SearchOption } from "./SearchOption";
@@ -22,7 +22,7 @@ export function OptionsList({list, setOpt, setOpen}:OptionsListProps) {
       valueGetter: p => longSnParser(p.row.opt.head.seqOfOpt.toString()),
       headerAlign: 'left',
       align:'left',      
-      width: 218,
+      width: 128,
     },
     {
       field: 'typeOfOpt',
@@ -30,7 +30,7 @@ export function OptionsList({list, setOpt, setOpen}:OptionsListProps) {
       valueGetter: p => typeOfOpts[p.row.opt.head.typeOfOpt],
       headerAlign: 'center',
       align:'center',
-      width: 128,
+      width: 218,
     },
     { 
       field: 'classOfShare', 
@@ -51,7 +51,7 @@ export function OptionsList({list, setOpt, setOpen}:OptionsListProps) {
     { 
       field: 'Rightholder', 
       headerName: 'Rightholder',
-      valueGetter: p => longSnParser(p.row.opt.body.rightholder.toString()),
+      valueGetter: p => userNoParser(p.row.opt.body.rightholder.toString(16)),
       headerAlign: 'center',
       align:'center',
       width: 218,

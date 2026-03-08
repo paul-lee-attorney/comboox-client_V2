@@ -12,7 +12,7 @@ import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfter
 
 import { AccessControlProps } from "./SetOwner";
 
-import { useAccessControlTakeBackKeys } from "../../../../../../../generated";
+import { useIAccessControlTakeBackKeys } from "../../../../../../../generated";
 
 export function TakeBackKeys({docAddr, setDocAddr, setOpen}:AccessControlProps) {
 
@@ -30,7 +30,7 @@ export function TakeBackKeys({docAddr, setDocAddr, setOpen}:AccessControlProps) 
   const {
     isLoading: takeBackKeysLoading,
     write: takeBackKeys,
-  } = useAccessControlTakeBackKeys({
+  } = useIAccessControlTakeBackKeys({
     address: docAddr,
     onError(err) {
       setErrMsg(err.message);

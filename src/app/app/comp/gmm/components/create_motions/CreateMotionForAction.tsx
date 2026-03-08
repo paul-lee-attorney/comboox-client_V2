@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 
 import { 
-  useCompKeeperCreateActionOfGm, 
+  useIgmmKeeperCreateActionOfGm,
 } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
@@ -38,7 +38,7 @@ export function CreateMotionForAction({refresh}:CreateMotionProps) {
   const {
     isLoading: proposeActionLoading,
     write: proposeAction,
-  } = useCompKeeperCreateActionOfGm({
+  } = useIgmmKeeperCreateActionOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -58,7 +58,7 @@ export function CreateMotionForAction({refresh}:CreateMotionProps) {
           actions.map(v => (v.target)), 
           actions.map(v => (strNumToBigInt(v.value, 9) * 10n ** 9n)),
           actions.map(v => (v.params)),
-          desHash, BigInt(executor)
+          desHash, BigInt(HexParser(executor))
         ],
       });
     }
@@ -116,7 +116,7 @@ export function CreateMotionForAction({refresh}:CreateMotionProps) {
             }}
             onChange={(e) => {
               let input = e.target.value;
-              onlyInt('Executor', input, MaxUserNo, setValid);
+              onlyHex('Executor', input, 10, setValid);
               setExecutor(input);
             }}
             value={ executor }

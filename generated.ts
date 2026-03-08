@@ -740,6 +740,382 @@ export const iAccountantABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IAlongs
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iAlongsABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'rule', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'dragger', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addDragger',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'dragger', internalType: 'uint256', type: 'uint256' },
+      { name: 'follower', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addFollower',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getDraggers',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'dragger', internalType: 'uint256', type: 'uint256' }],
+    name: 'getFollowers',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'dragger', internalType: 'uint256', type: 'uint256' }],
+    name: 'getLinkRule',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct RulesParser.LinkRule',
+        type: 'tuple',
+        components: [
+          { name: 'triggerDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'effectiveDays', internalType: 'uint16', type: 'uint16' },
+          { name: 'triggerType', internalType: 'uint8', type: 'uint8' },
+          {
+            name: 'shareRatioThreshold',
+            internalType: 'uint16',
+            type: 'uint16',
+          },
+          { name: 'rate', internalType: 'uint32', type: 'uint32' },
+          { name: 'proRata', internalType: 'bool', type: 'bool' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'argu', internalType: 'uint16', type: 'uint16' },
+          { name: 'ref', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'dragger', internalType: 'uint256', type: 'uint256' }],
+    name: 'isDragger',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'dragger', internalType: 'uint256', type: 'uint256' },
+      { name: 'follower', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isFollower',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'ia', internalType: 'address', type: 'address' },
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+    name: 'isTriggered',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+    name: 'priceCheck',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'dragger', internalType: 'uint256', type: 'uint256' }],
+    name: 'removeDragger',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'dragger', internalType: 'uint256', type: 'uint256' },
+      { name: 'follower', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeFollower',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IAntiDilution
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iAntiDilutionABI = [
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'AD_Overflow',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'AD_WrongInput',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'AD_WrongState',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'AD_ZeroValue',
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'class', internalType: 'uint256', type: 'uint256' },
+      { name: 'price', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addBenchmark',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'class', internalType: 'uint256', type: 'uint256' },
+      { name: 'obligor', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addObligor',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getClasses',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'class', internalType: 'uint256', type: 'uint256' }],
+    name: 'getFloorPriceOfClass',
+    outputs: [{ name: 'price', internalType: 'uint32', type: 'uint32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'ia', internalType: 'address', type: 'address' },
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getGiftPaid',
+    outputs: [{ name: 'gift', internalType: 'uint64', type: 'uint64' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'class', internalType: 'uint256', type: 'uint256' }],
+    name: 'getObligorsOfAD',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'class', internalType: 'uint256', type: 'uint256' }],
+    name: 'isMarked',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'class', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isObligor',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isTriggered',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'class', internalType: 'uint256', type: 'uint256' }],
+    name: 'removeBenchmark',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'class', internalType: 'uint256', type: 'uint256' },
+      { name: 'obligor', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeObligor',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IBMMKeeper
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2460,6 +2836,582 @@ export const iGeneralKeeperABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IInvestmentAgreement
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iInvestmentAgreementABI = [
+  { type: 'event', anonymous: false, inputs: [], name: 'CirculateDoc' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'seq', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'hashLock',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'closingDeadline',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+    ],
+    name: 'ClearDealCP',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'seq', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'hashKey',
+        internalType: 'string',
+        type: 'string',
+        indexed: true,
+      },
+    ],
+    name: 'CloseDeal',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'seqOfDeal',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'msgValue',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'PayOffApprovedDeal',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'seqOfDeal',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+    ],
+    name: 'RegDeal',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'seq', internalType: 'uint256', type: 'uint256', indexed: true },
+    ],
+    name: 'TerminateDeal',
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'beBuyer', internalType: 'bool', type: 'bool' },
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addBlank',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'sn', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'buyer', internalType: 'uint256', type: 'uint256' },
+      { name: 'groupOfBuyer', internalType: 'uint256', type: 'uint256' },
+      { name: 'paid', internalType: 'uint256', type: 'uint256' },
+      { name: 'par', internalType: 'uint256', type: 'uint256' },
+      { name: 'distrWeight', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addDeal',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'circulateDoc',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'circulated',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seq', internalType: 'uint256', type: 'uint256' },
+      { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'closingDeadline', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'clearDealCP',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seq', internalType: 'uint256', type: 'uint256' },
+      { name: 'hashKey', internalType: 'string', type: 'string' },
+    ],
+    name: 'closeDeal',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'delDeal',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'directCloseDeal',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'established',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'finalizeIA',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getBuyers',
+    outputs: [{ name: 'buyers', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getCirculateDate',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getClosingDays',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getClosingDeadline',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'getDeal',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getParasOfPage',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct SigsRepo.Signature',
+        type: 'tuple',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getParties',
+    outputs: [
+      { name: 'parties', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getSellers',
+    outputs: [
+      { name: 'sellers', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSeqList',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSigDeadline',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initParty', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getSigOfParty',
+    outputs: [
+      { name: 'seqOfDeals', internalType: 'uint256[]', type: 'uint256[]' },
+      {
+        name: 'sig',
+        internalType: 'struct SigsRepo.Signature',
+        type: 'tuple',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSigningDays',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getSigsOfPage',
+    outputs: [
+      {
+        name: 'sigsOfBuyer',
+        internalType: 'struct SigsRepo.Signature[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+      {
+        name: 'sigsOfSeller',
+        internalType: 'struct SigsRepo.Signature[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getTypeOfIA',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isBuyer',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isInitSigner',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isParty',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isSeller',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isSigner',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'lockDealSubject',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'msgValue', internalType: 'uint256', type: 'uint256' },
+      { name: 'caller', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'payOffApprovedDeal',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+    name: 'regDeal',
+    outputs: [{ name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'signer', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigDate', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'regSig',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'releaseDealSubject',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeBlank',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'requestPriceDiff',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'signingDays', internalType: 'uint256', type: 'uint256' },
+      { name: 'closingDays', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setTiming',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'caller', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'signDoc',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'takeGift',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' }],
+    name: 'terminateDeal',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ILOOKeeper
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3126,6 +4078,184 @@ export const iListOfOrdersABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ILockUp
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iLockUpABI = [
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'LU_ZeroValue',
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+      { name: 'keyholder', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addKeyholder',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seqOfShare', internalType: 'uint256', type: 'uint256' }],
+    name: 'delLocker',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seqOfShare', internalType: 'uint256', type: 'uint256' }],
+    name: 'getLocker',
+    outputs: [
+      { name: 'dueDate', internalType: 'uint48', type: 'uint48' },
+      { name: 'keyHolders', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'ia', internalType: 'address', type: 'address' },
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+    name: 'isExempted',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seqOfShare', internalType: 'uint256', type: 'uint256' }],
+    name: 'isLocked',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      {
+        name: 'deal',
+        internalType: 'struct DealsRepo.Deal',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct DealsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'typeOfDeal', internalType: 'uint8', type: 'uint8' },
+              { name: 'seqOfDeal', internalType: 'uint16', type: 'uint16' },
+              { name: 'preSeq', internalType: 'uint16', type: 'uint16' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'seqOfShare', internalType: 'uint32', type: 'uint32' },
+              { name: 'seller', internalType: 'uint40', type: 'uint40' },
+              { name: 'priceOfPaid', internalType: 'uint32', type: 'uint32' },
+              { name: 'priceOfPar', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'votingWeight', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct DealsRepo.Body',
+            type: 'tuple',
+            components: [
+              { name: 'buyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'groupOfBuyer', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'distrWeight', internalType: 'uint16', type: 'uint16' },
+              { name: 'flag', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          { name: 'hashLock', internalType: 'bytes32', type: 'bytes32' },
+        ],
+      },
+    ],
+    name: 'isTriggered',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'lockedShares',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+      { name: 'keyholder', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeKeyholder',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfShare', internalType: 'uint256', type: 'uint256' },
+      { name: 'dueDate', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setLocker',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IMeetingMinutes
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3767,6 +4897,243 @@ export const iMeetingMinutesABI = [
     inputs: [{ name: 'seqOfMotion', internalType: 'uint256', type: 'uint256' }],
     name: 'voteStarted',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IOptions
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iOptionsABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' },
+      { name: 'obligor', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addObligorIntoOpt',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'counterOfOptions',
+    outputs: [{ name: '', internalType: 'uint32', type: 'uint32' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'snOfOpt', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'snOfCond', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'rightholder', internalType: 'uint256', type: 'uint256' },
+      { name: 'paid', internalType: 'uint256', type: 'uint256' },
+      { name: 'par', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'createOption',
+    outputs: [
+      {
+        name: 'head',
+        internalType: 'struct OptionsRepo.Head',
+        type: 'tuple',
+        components: [
+          { name: 'seqOfOpt', internalType: 'uint32', type: 'uint32' },
+          { name: 'typeOfOpt', internalType: 'uint8', type: 'uint8' },
+          { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+          { name: 'rate', internalType: 'uint32', type: 'uint32' },
+          { name: 'issueDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'triggerDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'execDays', internalType: 'uint16', type: 'uint16' },
+          { name: 'closingDays', internalType: 'uint16', type: 'uint16' },
+          { name: 'obligor', internalType: 'uint40', type: 'uint40' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' }],
+    name: 'delOption',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getAllOptions',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct OptionsRepo.Option[]',
+        type: 'tuple[]',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct OptionsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'seqOfOpt', internalType: 'uint32', type: 'uint32' },
+              { name: 'typeOfOpt', internalType: 'uint8', type: 'uint8' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'rate', internalType: 'uint32', type: 'uint32' },
+              { name: 'issueDate', internalType: 'uint48', type: 'uint48' },
+              { name: 'triggerDate', internalType: 'uint48', type: 'uint48' },
+              { name: 'execDays', internalType: 'uint16', type: 'uint16' },
+              { name: 'closingDays', internalType: 'uint16', type: 'uint16' },
+              { name: 'obligor', internalType: 'uint40', type: 'uint40' },
+            ],
+          },
+          {
+            name: 'cond',
+            internalType: 'struct CondsRepo.Cond',
+            type: 'tuple',
+            components: [
+              { name: 'seqOfCond', internalType: 'uint32', type: 'uint32' },
+              { name: 'logicOpr', internalType: 'uint8', type: 'uint8' },
+              { name: 'compOpr1', internalType: 'uint8', type: 'uint8' },
+              { name: 'para1', internalType: 'uint64', type: 'uint64' },
+              { name: 'compOpr2', internalType: 'uint8', type: 'uint8' },
+              { name: 'para2', internalType: 'uint64', type: 'uint64' },
+              { name: 'compOpr3', internalType: 'uint8', type: 'uint8' },
+              { name: 'para3', internalType: 'uint64', type: 'uint64' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct OptionsRepo.Body',
+            type: 'tuple',
+            components: [
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'rightholder', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'argu', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' }],
+    name: 'getObligorsOfOption',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' }],
+    name: 'getOption',
+    outputs: [
+      {
+        name: 'option',
+        internalType: 'struct OptionsRepo.Option',
+        type: 'tuple',
+        components: [
+          {
+            name: 'head',
+            internalType: 'struct OptionsRepo.Head',
+            type: 'tuple',
+            components: [
+              { name: 'seqOfOpt', internalType: 'uint32', type: 'uint32' },
+              { name: 'typeOfOpt', internalType: 'uint8', type: 'uint8' },
+              { name: 'classOfShare', internalType: 'uint16', type: 'uint16' },
+              { name: 'rate', internalType: 'uint32', type: 'uint32' },
+              { name: 'issueDate', internalType: 'uint48', type: 'uint48' },
+              { name: 'triggerDate', internalType: 'uint48', type: 'uint48' },
+              { name: 'execDays', internalType: 'uint16', type: 'uint16' },
+              { name: 'closingDays', internalType: 'uint16', type: 'uint16' },
+              { name: 'obligor', internalType: 'uint40', type: 'uint40' },
+            ],
+          },
+          {
+            name: 'cond',
+            internalType: 'struct CondsRepo.Cond',
+            type: 'tuple',
+            components: [
+              { name: 'seqOfCond', internalType: 'uint32', type: 'uint32' },
+              { name: 'logicOpr', internalType: 'uint8', type: 'uint8' },
+              { name: 'compOpr1', internalType: 'uint8', type: 'uint8' },
+              { name: 'para1', internalType: 'uint64', type: 'uint64' },
+              { name: 'compOpr2', internalType: 'uint8', type: 'uint8' },
+              { name: 'para2', internalType: 'uint64', type: 'uint64' },
+              { name: 'compOpr3', internalType: 'uint8', type: 'uint8' },
+              { name: 'para3', internalType: 'uint64', type: 'uint64' },
+            ],
+          },
+          {
+            name: 'body',
+            internalType: 'struct OptionsRepo.Body',
+            type: 'tuple',
+            components: [
+              {
+                name: 'closingDeadline',
+                internalType: 'uint48',
+                type: 'uint48',
+              },
+              { name: 'rightholder', internalType: 'uint40', type: 'uint40' },
+              { name: 'paid', internalType: 'uint64', type: 'uint64' },
+              { name: 'par', internalType: 'uint64', type: 'uint64' },
+              { name: 'state', internalType: 'uint8', type: 'uint8' },
+              { name: 'para', internalType: 'uint16', type: 'uint16' },
+              { name: 'argu', internalType: 'uint16', type: 'uint16' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSeqList',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isObligor',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' }],
+    name: 'isOption',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'qtyOfOptions',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfOpt', internalType: 'uint256', type: 'uint256' },
+      { name: 'obligor', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeObligorFromOpt',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
   },
 ] as const
 
@@ -5075,7 +6442,7 @@ export const iRegisterOfAgreementsABI = [
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'ia', internalType: 'address', type: 'address' },
@@ -8671,7 +10038,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -8696,7 +10063,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -8729,7 +10096,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -8754,7 +10121,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -8796,7 +10163,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
       {
@@ -8810,7 +10177,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -8844,7 +10211,7 @@ export const iRegisterOfRedemptionsABI = [
           { name: 'shareholder', internalType: 'uint40', type: 'uint40' },
           { name: 'paid', internalType: 'uint64', type: 'uint64' },
           { name: 'value', internalType: 'uint64', type: 'uint64' },
-          { name: 'seqOfPacks', internalType: 'uint8', type: 'uint8' },
+          { name: 'seqOfPack', internalType: 'uint8', type: 'uint8' },
         ],
       },
     ],
@@ -9764,6 +11131,394 @@ export const ishaKeeperABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IShareholdersAgreement
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iShareholdersAgreementABI = [
+  {
+    type: 'error',
+    inputs: [{ name: 'reason', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'SHA_WrongInput',
+  },
+  { type: 'event', anonymous: false, inputs: [], name: 'CirculateDoc' },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'beBuyer', internalType: 'bool', type: 'bool' },
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addBlank',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'seqOfRule', internalType: 'uint256', type: 'uint256' },
+      { name: 'rule', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'addRule',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'circulateDoc',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'circulated',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'titleOfTerm', internalType: 'uint256', type: 'uint256' },
+      { name: 'version', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'createTerm',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'established',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'finalizeSHA',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getBuyers',
+    outputs: [{ name: 'buyers', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getCirculateDate',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getClosingDays',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getClosingDeadline',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getParasOfPage',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct SigsRepo.Signature',
+        type: 'tuple',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getParties',
+    outputs: [
+      { name: 'parties', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'getRule',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getRules',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getSellers',
+    outputs: [
+      { name: 'sellers', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSigDeadline',
+    outputs: [{ name: '', internalType: 'uint48', type: 'uint48' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initParty', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getSigOfParty',
+    outputs: [
+      { name: 'seqOfDeals', internalType: 'uint256[]', type: 'uint256[]' },
+      {
+        name: 'sig',
+        internalType: 'struct SigsRepo.Signature',
+        type: 'tuple',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getSigningDays',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'initPage', internalType: 'bool', type: 'bool' }],
+    name: 'getSigsOfPage',
+    outputs: [
+      {
+        name: 'sigsOfBuyer',
+        internalType: 'struct SigsRepo.Signature[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+      {
+        name: 'sigsOfSeller',
+        internalType: 'struct SigsRepo.Signature[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'signer', internalType: 'uint40', type: 'uint40' },
+          { name: 'sigDate', internalType: 'uint48', type: 'uint48' },
+          { name: 'blocknumber', internalType: 'uint64', type: 'uint64' },
+          { name: 'flag', internalType: 'bool', type: 'bool' },
+          { name: 'para', internalType: 'uint16', type: 'uint16' },
+          { name: 'arg', internalType: 'uint16', type: 'uint16' },
+          { name: 'seq', internalType: 'uint16', type: 'uint16' },
+          { name: 'attr', internalType: 'uint16', type: 'uint16' },
+          { name: 'data', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'titleOfTerm', internalType: 'uint256', type: 'uint256' }],
+    name: 'getTerm',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getTitles',
+    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'hasRule',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'titleOfTerm', internalType: 'uint256', type: 'uint256' }],
+    name: 'hasTitle',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'initDefaultRules',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isBuyer',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isInitSigner',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isParty',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isSeller',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'acct', internalType: 'uint256', type: 'uint256' }],
+    name: 'isSigner',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'qtyOfRules',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'qtyOfTerms',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'signer', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigDate', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'regSig',
+    outputs: [{ name: 'flag', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'seqOfDeal', internalType: 'uint256', type: 'uint256' },
+      { name: 'acct', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'removeBlank',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'seq', internalType: 'uint256', type: 'uint256' }],
+    name: 'removeRule',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'titleOfTerm', internalType: 'uint256', type: 'uint256' }],
+    name: 'removeTerm',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'signingDays', internalType: 'uint256', type: 'uint256' },
+      { name: 'closingDays', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setTiming',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'initPage', internalType: 'bool', type: 'bool' },
+      { name: 'caller', internalType: 'uint256', type: 'uint256' },
+      { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'signDoc',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ISigPage
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -10038,6 +11793,171 @@ export const iSigPageABI = [
       { name: 'sigHash', internalType: 'bytes32', type: 'bytes32' },
     ],
     name: 'signDoc',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IUSDC
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iusdcABI = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'authorizer',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'nonce',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'AuthorizationUsed',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'authorizer', internalType: 'address', type: 'address' },
+      { name: 'nonce', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'authorizationState',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'amt', internalType: 'uint256', type: 'uint256' }],
+    name: 'burn',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amt', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+      { name: 'validAfter', internalType: 'uint256', type: 'uint256' },
+      { name: 'validBefore', internalType: 'uint256', type: 'uint256' },
+      { name: 'nonce', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'v', internalType: 'uint8', type: 'uint8' },
+      { name: 'r', internalType: 'bytes32', type: 'bytes32' },
+      { name: 's', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'transferWithAuthorization',
     outputs: [],
   },
 ] as const
@@ -13657,6 +15577,774 @@ export function usePrepareIAccountantTransferFund(
     functionName: 'transferFund',
     ...config,
   } as UsePrepareContractWriteConfig<typeof iAccountantABI, 'transferFund'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__.
+ */
+export function useIAlongsRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"getDraggers"`.
+ */
+export function useIAlongsGetDraggers<
+  TFunctionName extends 'getDraggers',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'getDraggers',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"getFollowers"`.
+ */
+export function useIAlongsGetFollowers<
+  TFunctionName extends 'getFollowers',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'getFollowers',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"getLinkRule"`.
+ */
+export function useIAlongsGetLinkRule<
+  TFunctionName extends 'getLinkRule',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'getLinkRule',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"isDragger"`.
+ */
+export function useIAlongsIsDragger<
+  TFunctionName extends 'isDragger',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'isDragger',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"isFollower"`.
+ */
+export function useIAlongsIsFollower<
+  TFunctionName extends 'isFollower',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'isFollower',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"isTriggered"`.
+ */
+export function useIAlongsIsTriggered<
+  TFunctionName extends 'isTriggered',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'isTriggered',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"priceCheck"`.
+ */
+export function useIAlongsPriceCheck<
+  TFunctionName extends 'priceCheck',
+  TSelectData = ReadContractResult<typeof iAlongsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAlongsABI,
+    functionName: 'priceCheck',
+    ...config,
+  } as UseContractReadConfig<typeof iAlongsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAlongsABI}__.
+ */
+export function useIAlongsWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iAlongsABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iAlongsABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAlongsABI, TFunctionName, TMode>({
+    abi: iAlongsABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"addDragger"`.
+ */
+export function useIAlongsAddDragger<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAlongsABI,
+          'addDragger'
+        >['request']['abi'],
+        'addDragger',
+        TMode
+      > & { functionName?: 'addDragger' }
+    : UseContractWriteConfig<typeof iAlongsABI, 'addDragger', TMode> & {
+        abi?: never
+        functionName?: 'addDragger'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAlongsABI, 'addDragger', TMode>({
+    abi: iAlongsABI,
+    functionName: 'addDragger',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"addFollower"`.
+ */
+export function useIAlongsAddFollower<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAlongsABI,
+          'addFollower'
+        >['request']['abi'],
+        'addFollower',
+        TMode
+      > & { functionName?: 'addFollower' }
+    : UseContractWriteConfig<typeof iAlongsABI, 'addFollower', TMode> & {
+        abi?: never
+        functionName?: 'addFollower'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAlongsABI, 'addFollower', TMode>({
+    abi: iAlongsABI,
+    functionName: 'addFollower',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"removeDragger"`.
+ */
+export function useIAlongsRemoveDragger<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAlongsABI,
+          'removeDragger'
+        >['request']['abi'],
+        'removeDragger',
+        TMode
+      > & { functionName?: 'removeDragger' }
+    : UseContractWriteConfig<typeof iAlongsABI, 'removeDragger', TMode> & {
+        abi?: never
+        functionName?: 'removeDragger'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAlongsABI, 'removeDragger', TMode>({
+    abi: iAlongsABI,
+    functionName: 'removeDragger',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"removeFollower"`.
+ */
+export function useIAlongsRemoveFollower<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAlongsABI,
+          'removeFollower'
+        >['request']['abi'],
+        'removeFollower',
+        TMode
+      > & { functionName?: 'removeFollower' }
+    : UseContractWriteConfig<typeof iAlongsABI, 'removeFollower', TMode> & {
+        abi?: never
+        functionName?: 'removeFollower'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAlongsABI, 'removeFollower', TMode>({
+    abi: iAlongsABI,
+    functionName: 'removeFollower',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAlongsABI}__.
+ */
+export function usePrepareIAlongsWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAlongsABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAlongsABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAlongsABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"addDragger"`.
+ */
+export function usePrepareIAlongsAddDragger(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAlongsABI, 'addDragger'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAlongsABI,
+    functionName: 'addDragger',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAlongsABI, 'addDragger'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"addFollower"`.
+ */
+export function usePrepareIAlongsAddFollower(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAlongsABI, 'addFollower'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAlongsABI,
+    functionName: 'addFollower',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAlongsABI, 'addFollower'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"removeDragger"`.
+ */
+export function usePrepareIAlongsRemoveDragger(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAlongsABI, 'removeDragger'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAlongsABI,
+    functionName: 'removeDragger',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAlongsABI, 'removeDragger'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAlongsABI}__ and `functionName` set to `"removeFollower"`.
+ */
+export function usePrepareIAlongsRemoveFollower(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAlongsABI, 'removeFollower'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAlongsABI,
+    functionName: 'removeFollower',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAlongsABI, 'removeFollower'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__.
+ */
+export function useIAntiDilutionRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"getClasses"`.
+ */
+export function useIAntiDilutionGetClasses<
+  TFunctionName extends 'getClasses',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'getClasses',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"getFloorPriceOfClass"`.
+ */
+export function useIAntiDilutionGetFloorPriceOfClass<
+  TFunctionName extends 'getFloorPriceOfClass',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'getFloorPriceOfClass',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"getGiftPaid"`.
+ */
+export function useIAntiDilutionGetGiftPaid<
+  TFunctionName extends 'getGiftPaid',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'getGiftPaid',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"getObligorsOfAD"`.
+ */
+export function useIAntiDilutionGetObligorsOfAd<
+  TFunctionName extends 'getObligorsOfAD',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'getObligorsOfAD',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"isMarked"`.
+ */
+export function useIAntiDilutionIsMarked<
+  TFunctionName extends 'isMarked',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'isMarked',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"isObligor"`.
+ */
+export function useIAntiDilutionIsObligor<
+  TFunctionName extends 'isObligor',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'isObligor',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"isTriggered"`.
+ */
+export function useIAntiDilutionIsTriggered<
+  TFunctionName extends 'isTriggered',
+  TSelectData = ReadContractResult<typeof iAntiDilutionABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iAntiDilutionABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iAntiDilutionABI,
+    functionName: 'isTriggered',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iAntiDilutionABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__.
+ */
+export function useIAntiDilutionWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAntiDilutionABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iAntiDilutionABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAntiDilutionABI, TFunctionName, TMode>({
+    abi: iAntiDilutionABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"addBenchmark"`.
+ */
+export function useIAntiDilutionAddBenchmark<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAntiDilutionABI,
+          'addBenchmark'
+        >['request']['abi'],
+        'addBenchmark',
+        TMode
+      > & { functionName?: 'addBenchmark' }
+    : UseContractWriteConfig<typeof iAntiDilutionABI, 'addBenchmark', TMode> & {
+        abi?: never
+        functionName?: 'addBenchmark'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAntiDilutionABI, 'addBenchmark', TMode>({
+    abi: iAntiDilutionABI,
+    functionName: 'addBenchmark',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"addObligor"`.
+ */
+export function useIAntiDilutionAddObligor<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAntiDilutionABI,
+          'addObligor'
+        >['request']['abi'],
+        'addObligor',
+        TMode
+      > & { functionName?: 'addObligor' }
+    : UseContractWriteConfig<typeof iAntiDilutionABI, 'addObligor', TMode> & {
+        abi?: never
+        functionName?: 'addObligor'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAntiDilutionABI, 'addObligor', TMode>({
+    abi: iAntiDilutionABI,
+    functionName: 'addObligor',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"removeBenchmark"`.
+ */
+export function useIAntiDilutionRemoveBenchmark<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAntiDilutionABI,
+          'removeBenchmark'
+        >['request']['abi'],
+        'removeBenchmark',
+        TMode
+      > & { functionName?: 'removeBenchmark' }
+    : UseContractWriteConfig<
+        typeof iAntiDilutionABI,
+        'removeBenchmark',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeBenchmark'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAntiDilutionABI, 'removeBenchmark', TMode>({
+    abi: iAntiDilutionABI,
+    functionName: 'removeBenchmark',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"removeObligor"`.
+ */
+export function useIAntiDilutionRemoveObligor<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iAntiDilutionABI,
+          'removeObligor'
+        >['request']['abi'],
+        'removeObligor',
+        TMode
+      > & { functionName?: 'removeObligor' }
+    : UseContractWriteConfig<
+        typeof iAntiDilutionABI,
+        'removeObligor',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeObligor'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iAntiDilutionABI, 'removeObligor', TMode>({
+    abi: iAntiDilutionABI,
+    functionName: 'removeObligor',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__.
+ */
+export function usePrepareIAntiDilutionWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAntiDilutionABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAntiDilutionABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAntiDilutionABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"addBenchmark"`.
+ */
+export function usePrepareIAntiDilutionAddBenchmark(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'addBenchmark'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAntiDilutionABI,
+    functionName: 'addBenchmark',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'addBenchmark'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"addObligor"`.
+ */
+export function usePrepareIAntiDilutionAddObligor(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'addObligor'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAntiDilutionABI,
+    functionName: 'addObligor',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'addObligor'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"removeBenchmark"`.
+ */
+export function usePrepareIAntiDilutionRemoveBenchmark(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'removeBenchmark'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAntiDilutionABI,
+    functionName: 'removeBenchmark',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iAntiDilutionABI,
+    'removeBenchmark'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iAntiDilutionABI}__ and `functionName` set to `"removeObligor"`.
+ */
+export function usePrepareIAntiDilutionRemoveObligor(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'removeObligor'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iAntiDilutionABI,
+    functionName: 'removeObligor',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iAntiDilutionABI, 'removeObligor'>)
 }
 
 /**
@@ -17604,6 +20292,1828 @@ export function useIGeneralKeeperSetRouterEvent(
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__.
+ */
+export function useIInvestmentAgreementRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"circulated"`.
+ */
+export function useIInvestmentAgreementCirculated<
+  TFunctionName extends 'circulated',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'circulated',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"established"`.
+ */
+export function useIInvestmentAgreementEstablished<
+  TFunctionName extends 'established',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'established',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getBuyers"`.
+ */
+export function useIInvestmentAgreementGetBuyers<
+  TFunctionName extends 'getBuyers',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getBuyers',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getCirculateDate"`.
+ */
+export function useIInvestmentAgreementGetCirculateDate<
+  TFunctionName extends 'getCirculateDate',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getCirculateDate',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getClosingDays"`.
+ */
+export function useIInvestmentAgreementGetClosingDays<
+  TFunctionName extends 'getClosingDays',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getClosingDays',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getClosingDeadline"`.
+ */
+export function useIInvestmentAgreementGetClosingDeadline<
+  TFunctionName extends 'getClosingDeadline',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getClosingDeadline',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getDeal"`.
+ */
+export function useIInvestmentAgreementGetDeal<
+  TFunctionName extends 'getDeal',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getDeal',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getParasOfPage"`.
+ */
+export function useIInvestmentAgreementGetParasOfPage<
+  TFunctionName extends 'getParasOfPage',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getParasOfPage',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getParties"`.
+ */
+export function useIInvestmentAgreementGetParties<
+  TFunctionName extends 'getParties',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getParties',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSellers"`.
+ */
+export function useIInvestmentAgreementGetSellers<
+  TFunctionName extends 'getSellers',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSellers',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSeqList"`.
+ */
+export function useIInvestmentAgreementGetSeqList<
+  TFunctionName extends 'getSeqList',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSeqList',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSigDeadline"`.
+ */
+export function useIInvestmentAgreementGetSigDeadline<
+  TFunctionName extends 'getSigDeadline',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSigDeadline',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSigOfParty"`.
+ */
+export function useIInvestmentAgreementGetSigOfParty<
+  TFunctionName extends 'getSigOfParty',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSigOfParty',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSigningDays"`.
+ */
+export function useIInvestmentAgreementGetSigningDays<
+  TFunctionName extends 'getSigningDays',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSigningDays',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getSigsOfPage"`.
+ */
+export function useIInvestmentAgreementGetSigsOfPage<
+  TFunctionName extends 'getSigsOfPage',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getSigsOfPage',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"getTypeOfIA"`.
+ */
+export function useIInvestmentAgreementGetTypeOfIa<
+  TFunctionName extends 'getTypeOfIA',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'getTypeOfIA',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"isBuyer"`.
+ */
+export function useIInvestmentAgreementIsBuyer<
+  TFunctionName extends 'isBuyer',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'isBuyer',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"isInitSigner"`.
+ */
+export function useIInvestmentAgreementIsInitSigner<
+  TFunctionName extends 'isInitSigner',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'isInitSigner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"isParty"`.
+ */
+export function useIInvestmentAgreementIsParty<
+  TFunctionName extends 'isParty',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'isParty',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"isSeller"`.
+ */
+export function useIInvestmentAgreementIsSeller<
+  TFunctionName extends 'isSeller',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'isSeller',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"isSigner"`.
+ */
+export function useIInvestmentAgreementIsSigner<
+  TFunctionName extends 'isSigner',
+  TSelectData = ReadContractResult<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iInvestmentAgreementABI,
+    functionName: 'isSigner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__.
+ */
+export function useIInvestmentAgreementWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        TFunctionName,
+        TMode
+      > & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, TFunctionName, TMode>(
+    { abi: iInvestmentAgreementABI, ...config } as any,
+  )
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"addBlank"`.
+ */
+export function useIInvestmentAgreementAddBlank<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'addBlank'
+        >['request']['abi'],
+        'addBlank',
+        TMode
+      > & { functionName?: 'addBlank' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'addBlank',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'addBlank'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'addBlank', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'addBlank',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"addDeal"`.
+ */
+export function useIInvestmentAgreementAddDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'addDeal'
+        >['request']['abi'],
+        'addDeal',
+        TMode
+      > & { functionName?: 'addDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'addDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'addDeal'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'addDeal', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'addDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"circulateDoc"`.
+ */
+export function useIInvestmentAgreementCirculateDoc<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'circulateDoc'
+        >['request']['abi'],
+        'circulateDoc',
+        TMode
+      > & { functionName?: 'circulateDoc' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'circulateDoc',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'circulateDoc'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'circulateDoc',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'circulateDoc',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"clearDealCP"`.
+ */
+export function useIInvestmentAgreementClearDealCp<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'clearDealCP'
+        >['request']['abi'],
+        'clearDealCP',
+        TMode
+      > & { functionName?: 'clearDealCP' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'clearDealCP',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'clearDealCP'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'clearDealCP', TMode>(
+    {
+      abi: iInvestmentAgreementABI,
+      functionName: 'clearDealCP',
+      ...config,
+    } as any,
+  )
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"closeDeal"`.
+ */
+export function useIInvestmentAgreementCloseDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'closeDeal'
+        >['request']['abi'],
+        'closeDeal',
+        TMode
+      > & { functionName?: 'closeDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'closeDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'closeDeal'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'closeDeal', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'closeDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"delDeal"`.
+ */
+export function useIInvestmentAgreementDelDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'delDeal'
+        >['request']['abi'],
+        'delDeal',
+        TMode
+      > & { functionName?: 'delDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'delDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'delDeal'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'delDeal', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'delDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"directCloseDeal"`.
+ */
+export function useIInvestmentAgreementDirectCloseDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'directCloseDeal'
+        >['request']['abi'],
+        'directCloseDeal',
+        TMode
+      > & { functionName?: 'directCloseDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'directCloseDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'directCloseDeal'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'directCloseDeal',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'directCloseDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"finalizeIA"`.
+ */
+export function useIInvestmentAgreementFinalizeIa<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'finalizeIA'
+        >['request']['abi'],
+        'finalizeIA',
+        TMode
+      > & { functionName?: 'finalizeIA' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'finalizeIA',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'finalizeIA'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'finalizeIA', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'finalizeIA',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"lockDealSubject"`.
+ */
+export function useIInvestmentAgreementLockDealSubject<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'lockDealSubject'
+        >['request']['abi'],
+        'lockDealSubject',
+        TMode
+      > & { functionName?: 'lockDealSubject' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'lockDealSubject',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'lockDealSubject'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'lockDealSubject',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'lockDealSubject',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"payOffApprovedDeal"`.
+ */
+export function useIInvestmentAgreementPayOffApprovedDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'payOffApprovedDeal'
+        >['request']['abi'],
+        'payOffApprovedDeal',
+        TMode
+      > & { functionName?: 'payOffApprovedDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'payOffApprovedDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'payOffApprovedDeal'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'payOffApprovedDeal',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'payOffApprovedDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"regDeal"`.
+ */
+export function useIInvestmentAgreementRegDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'regDeal'
+        >['request']['abi'],
+        'regDeal',
+        TMode
+      > & { functionName?: 'regDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'regDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'regDeal'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'regDeal', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'regDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"regSig"`.
+ */
+export function useIInvestmentAgreementRegSig<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'regSig'
+        >['request']['abi'],
+        'regSig',
+        TMode
+      > & { functionName?: 'regSig' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'regSig',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'regSig'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'regSig', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'regSig',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"releaseDealSubject"`.
+ */
+export function useIInvestmentAgreementReleaseDealSubject<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'releaseDealSubject'
+        >['request']['abi'],
+        'releaseDealSubject',
+        TMode
+      > & { functionName?: 'releaseDealSubject' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'releaseDealSubject',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'releaseDealSubject'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'releaseDealSubject',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'releaseDealSubject',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"removeBlank"`.
+ */
+export function useIInvestmentAgreementRemoveBlank<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'removeBlank'
+        >['request']['abi'],
+        'removeBlank',
+        TMode
+      > & { functionName?: 'removeBlank' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'removeBlank',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeBlank'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'removeBlank', TMode>(
+    {
+      abi: iInvestmentAgreementABI,
+      functionName: 'removeBlank',
+      ...config,
+    } as any,
+  )
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"requestPriceDiff"`.
+ */
+export function useIInvestmentAgreementRequestPriceDiff<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'requestPriceDiff'
+        >['request']['abi'],
+        'requestPriceDiff',
+        TMode
+      > & { functionName?: 'requestPriceDiff' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'requestPriceDiff',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'requestPriceDiff'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'requestPriceDiff',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'requestPriceDiff',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"setTiming"`.
+ */
+export function useIInvestmentAgreementSetTiming<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'setTiming'
+        >['request']['abi'],
+        'setTiming',
+        TMode
+      > & { functionName?: 'setTiming' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'setTiming',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'setTiming'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'setTiming', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'setTiming',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"signDoc"`.
+ */
+export function useIInvestmentAgreementSignDoc<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'signDoc'
+        >['request']['abi'],
+        'signDoc',
+        TMode
+      > & { functionName?: 'signDoc' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'signDoc',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'signDoc'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'signDoc', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'signDoc',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"takeGift"`.
+ */
+export function useIInvestmentAgreementTakeGift<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'takeGift'
+        >['request']['abi'],
+        'takeGift',
+        TMode
+      > & { functionName?: 'takeGift' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'takeGift',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'takeGift'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iInvestmentAgreementABI, 'takeGift', TMode>({
+    abi: iInvestmentAgreementABI,
+    functionName: 'takeGift',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"terminateDeal"`.
+ */
+export function useIInvestmentAgreementTerminateDeal<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iInvestmentAgreementABI,
+          'terminateDeal'
+        >['request']['abi'],
+        'terminateDeal',
+        TMode
+      > & { functionName?: 'terminateDeal' }
+    : UseContractWriteConfig<
+        typeof iInvestmentAgreementABI,
+        'terminateDeal',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'terminateDeal'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iInvestmentAgreementABI,
+    'terminateDeal',
+    TMode
+  >({
+    abi: iInvestmentAgreementABI,
+    functionName: 'terminateDeal',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__.
+ */
+export function usePrepareIInvestmentAgreementWrite<
+  TFunctionName extends string,
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      TFunctionName
+    >,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"addBlank"`.
+ */
+export function usePrepareIInvestmentAgreementAddBlank(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'addBlank'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'addBlank',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'addBlank'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"addDeal"`.
+ */
+export function usePrepareIInvestmentAgreementAddDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'addDeal'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'addDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'addDeal'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"circulateDoc"`.
+ */
+export function usePrepareIInvestmentAgreementCirculateDoc(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'circulateDoc'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'circulateDoc',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'circulateDoc'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"clearDealCP"`.
+ */
+export function usePrepareIInvestmentAgreementClearDealCp(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'clearDealCP'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'clearDealCP',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'clearDealCP'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"closeDeal"`.
+ */
+export function usePrepareIInvestmentAgreementCloseDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'closeDeal'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'closeDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'closeDeal'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"delDeal"`.
+ */
+export function usePrepareIInvestmentAgreementDelDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'delDeal'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'delDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'delDeal'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"directCloseDeal"`.
+ */
+export function usePrepareIInvestmentAgreementDirectCloseDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'directCloseDeal'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'directCloseDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'directCloseDeal'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"finalizeIA"`.
+ */
+export function usePrepareIInvestmentAgreementFinalizeIa(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'finalizeIA'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'finalizeIA',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'finalizeIA'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"lockDealSubject"`.
+ */
+export function usePrepareIInvestmentAgreementLockDealSubject(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'lockDealSubject'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'lockDealSubject',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'lockDealSubject'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"payOffApprovedDeal"`.
+ */
+export function usePrepareIInvestmentAgreementPayOffApprovedDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'payOffApprovedDeal'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'payOffApprovedDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'payOffApprovedDeal'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"regDeal"`.
+ */
+export function usePrepareIInvestmentAgreementRegDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'regDeal'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'regDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'regDeal'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"regSig"`.
+ */
+export function usePrepareIInvestmentAgreementRegSig(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'regSig'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'regSig',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'regSig'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"releaseDealSubject"`.
+ */
+export function usePrepareIInvestmentAgreementReleaseDealSubject(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'releaseDealSubject'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'releaseDealSubject',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'releaseDealSubject'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"removeBlank"`.
+ */
+export function usePrepareIInvestmentAgreementRemoveBlank(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'removeBlank'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'removeBlank',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'removeBlank'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"requestPriceDiff"`.
+ */
+export function usePrepareIInvestmentAgreementRequestPriceDiff(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'requestPriceDiff'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'requestPriceDiff',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'requestPriceDiff'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"setTiming"`.
+ */
+export function usePrepareIInvestmentAgreementSetTiming(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'setTiming'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'setTiming',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'setTiming'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"signDoc"`.
+ */
+export function usePrepareIInvestmentAgreementSignDoc(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'signDoc'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'signDoc',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'signDoc'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"takeGift"`.
+ */
+export function usePrepareIInvestmentAgreementTakeGift(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iInvestmentAgreementABI, 'takeGift'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'takeGift',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'takeGift'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `functionName` set to `"terminateDeal"`.
+ */
+export function usePrepareIInvestmentAgreementTerminateDeal(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iInvestmentAgreementABI,
+      'terminateDeal'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iInvestmentAgreementABI,
+    functionName: 'terminateDeal',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iInvestmentAgreementABI,
+    'terminateDeal'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__.
+ */
+export function useIInvestmentAgreementEvent<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, TEventName>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"CirculateDoc"`.
+ */
+export function useIInvestmentAgreementCirculateDocEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, 'CirculateDoc'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'CirculateDoc',
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, 'CirculateDoc'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"ClearDealCP"`.
+ */
+export function useIInvestmentAgreementClearDealCpEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, 'ClearDealCP'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'ClearDealCP',
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, 'ClearDealCP'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"CloseDeal"`.
+ */
+export function useIInvestmentAgreementCloseDealEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, 'CloseDeal'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'CloseDeal',
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, 'CloseDeal'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"PayOffApprovedDeal"`.
+ */
+export function useIInvestmentAgreementPayOffApprovedDealEvent(
+  config: Omit<
+    UseContractEventConfig<
+      typeof iInvestmentAgreementABI,
+      'PayOffApprovedDeal'
+    >,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'PayOffApprovedDeal',
+    ...config,
+  } as UseContractEventConfig<
+    typeof iInvestmentAgreementABI,
+    'PayOffApprovedDeal'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"RegDeal"`.
+ */
+export function useIInvestmentAgreementRegDealEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, 'RegDeal'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'RegDeal',
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, 'RegDeal'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iInvestmentAgreementABI}__ and `eventName` set to `"TerminateDeal"`.
+ */
+export function useIInvestmentAgreementTerminateDealEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iInvestmentAgreementABI, 'TerminateDeal'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iInvestmentAgreementABI,
+    eventName: 'TerminateDeal',
+    ...config,
+  } as UseContractEventConfig<typeof iInvestmentAgreementABI, 'TerminateDeal'>)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ilooKeeperABI}__.
  */
 export function useIlooKeeperWrite<
@@ -18482,6 +22992,329 @@ export function useIListOfOrdersOrderWithdrawnEvent(
     eventName: 'OrderWithdrawn',
     ...config,
   } as UseContractEventConfig<typeof iListOfOrdersABI, 'OrderWithdrawn'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__.
+ */
+export function useILockUpRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"getLocker"`.
+ */
+export function useILockUpGetLocker<
+  TFunctionName extends 'getLocker',
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    functionName: 'getLocker',
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"isExempted"`.
+ */
+export function useILockUpIsExempted<
+  TFunctionName extends 'isExempted',
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    functionName: 'isExempted',
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"isLocked"`.
+ */
+export function useILockUpIsLocked<
+  TFunctionName extends 'isLocked',
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    functionName: 'isLocked',
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"isTriggered"`.
+ */
+export function useILockUpIsTriggered<
+  TFunctionName extends 'isTriggered',
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    functionName: 'isTriggered',
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"lockedShares"`.
+ */
+export function useILockUpLockedShares<
+  TFunctionName extends 'lockedShares',
+  TSelectData = ReadContractResult<typeof iLockUpABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iLockUpABI,
+    functionName: 'lockedShares',
+    ...config,
+  } as UseContractReadConfig<typeof iLockUpABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockUpABI}__.
+ */
+export function useILockUpWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iLockUpABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iLockUpABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iLockUpABI, TFunctionName, TMode>({
+    abi: iLockUpABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"addKeyholder"`.
+ */
+export function useILockUpAddKeyholder<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iLockUpABI,
+          'addKeyholder'
+        >['request']['abi'],
+        'addKeyholder',
+        TMode
+      > & { functionName?: 'addKeyholder' }
+    : UseContractWriteConfig<typeof iLockUpABI, 'addKeyholder', TMode> & {
+        abi?: never
+        functionName?: 'addKeyholder'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iLockUpABI, 'addKeyholder', TMode>({
+    abi: iLockUpABI,
+    functionName: 'addKeyholder',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"delLocker"`.
+ */
+export function useILockUpDelLocker<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iLockUpABI,
+          'delLocker'
+        >['request']['abi'],
+        'delLocker',
+        TMode
+      > & { functionName?: 'delLocker' }
+    : UseContractWriteConfig<typeof iLockUpABI, 'delLocker', TMode> & {
+        abi?: never
+        functionName?: 'delLocker'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iLockUpABI, 'delLocker', TMode>({
+    abi: iLockUpABI,
+    functionName: 'delLocker',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"removeKeyholder"`.
+ */
+export function useILockUpRemoveKeyholder<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iLockUpABI,
+          'removeKeyholder'
+        >['request']['abi'],
+        'removeKeyholder',
+        TMode
+      > & { functionName?: 'removeKeyholder' }
+    : UseContractWriteConfig<typeof iLockUpABI, 'removeKeyholder', TMode> & {
+        abi?: never
+        functionName?: 'removeKeyholder'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iLockUpABI, 'removeKeyholder', TMode>({
+    abi: iLockUpABI,
+    functionName: 'removeKeyholder',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"setLocker"`.
+ */
+export function useILockUpSetLocker<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iLockUpABI,
+          'setLocker'
+        >['request']['abi'],
+        'setLocker',
+        TMode
+      > & { functionName?: 'setLocker' }
+    : UseContractWriteConfig<typeof iLockUpABI, 'setLocker', TMode> & {
+        abi?: never
+        functionName?: 'setLocker'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iLockUpABI, 'setLocker', TMode>({
+    abi: iLockUpABI,
+    functionName: 'setLocker',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockUpABI}__.
+ */
+export function usePrepareILockUpWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iLockUpABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iLockUpABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iLockUpABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"addKeyholder"`.
+ */
+export function usePrepareILockUpAddKeyholder(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iLockUpABI, 'addKeyholder'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iLockUpABI,
+    functionName: 'addKeyholder',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iLockUpABI, 'addKeyholder'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"delLocker"`.
+ */
+export function usePrepareILockUpDelLocker(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iLockUpABI, 'delLocker'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iLockUpABI,
+    functionName: 'delLocker',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iLockUpABI, 'delLocker'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"removeKeyholder"`.
+ */
+export function usePrepareILockUpRemoveKeyholder(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iLockUpABI, 'removeKeyholder'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iLockUpABI,
+    functionName: 'removeKeyholder',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iLockUpABI, 'removeKeyholder'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockUpABI}__ and `functionName` set to `"setLocker"`.
+ */
+export function usePrepareILockUpSetLocker(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iLockUpABI, 'setLocker'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iLockUpABI,
+    functionName: 'setLocker',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iLockUpABI, 'setLocker'>)
 }
 
 /**
@@ -19985,6 +24818,396 @@ export function useIMeetingMinutesVoteCountingEvent(
     eventName: 'VoteCounting',
     ...config,
   } as UseContractEventConfig<typeof iMeetingMinutesABI, 'VoteCounting'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__.
+ */
+export function useIOptionsRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"counterOfOptions"`.
+ */
+export function useIOptionsCounterOfOptions<
+  TFunctionName extends 'counterOfOptions',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'counterOfOptions',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"getAllOptions"`.
+ */
+export function useIOptionsGetAllOptions<
+  TFunctionName extends 'getAllOptions',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'getAllOptions',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"getObligorsOfOption"`.
+ */
+export function useIOptionsGetObligorsOfOption<
+  TFunctionName extends 'getObligorsOfOption',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'getObligorsOfOption',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"getOption"`.
+ */
+export function useIOptionsGetOption<
+  TFunctionName extends 'getOption',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'getOption',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"getSeqList"`.
+ */
+export function useIOptionsGetSeqList<
+  TFunctionName extends 'getSeqList',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'getSeqList',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"isObligor"`.
+ */
+export function useIOptionsIsObligor<
+  TFunctionName extends 'isObligor',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'isObligor',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"isOption"`.
+ */
+export function useIOptionsIsOption<
+  TFunctionName extends 'isOption',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'isOption',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"qtyOfOptions"`.
+ */
+export function useIOptionsQtyOfOptions<
+  TFunctionName extends 'qtyOfOptions',
+  TSelectData = ReadContractResult<typeof iOptionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iOptionsABI,
+    functionName: 'qtyOfOptions',
+    ...config,
+  } as UseContractReadConfig<typeof iOptionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iOptionsABI}__.
+ */
+export function useIOptionsWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iOptionsABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iOptionsABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iOptionsABI, TFunctionName, TMode>({
+    abi: iOptionsABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"addObligorIntoOpt"`.
+ */
+export function useIOptionsAddObligorIntoOpt<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iOptionsABI,
+          'addObligorIntoOpt'
+        >['request']['abi'],
+        'addObligorIntoOpt',
+        TMode
+      > & { functionName?: 'addObligorIntoOpt' }
+    : UseContractWriteConfig<typeof iOptionsABI, 'addObligorIntoOpt', TMode> & {
+        abi?: never
+        functionName?: 'addObligorIntoOpt'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iOptionsABI, 'addObligorIntoOpt', TMode>({
+    abi: iOptionsABI,
+    functionName: 'addObligorIntoOpt',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"createOption"`.
+ */
+export function useIOptionsCreateOption<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iOptionsABI,
+          'createOption'
+        >['request']['abi'],
+        'createOption',
+        TMode
+      > & { functionName?: 'createOption' }
+    : UseContractWriteConfig<typeof iOptionsABI, 'createOption', TMode> & {
+        abi?: never
+        functionName?: 'createOption'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iOptionsABI, 'createOption', TMode>({
+    abi: iOptionsABI,
+    functionName: 'createOption',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"delOption"`.
+ */
+export function useIOptionsDelOption<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iOptionsABI,
+          'delOption'
+        >['request']['abi'],
+        'delOption',
+        TMode
+      > & { functionName?: 'delOption' }
+    : UseContractWriteConfig<typeof iOptionsABI, 'delOption', TMode> & {
+        abi?: never
+        functionName?: 'delOption'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iOptionsABI, 'delOption', TMode>({
+    abi: iOptionsABI,
+    functionName: 'delOption',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"removeObligorFromOpt"`.
+ */
+export function useIOptionsRemoveObligorFromOpt<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iOptionsABI,
+          'removeObligorFromOpt'
+        >['request']['abi'],
+        'removeObligorFromOpt',
+        TMode
+      > & { functionName?: 'removeObligorFromOpt' }
+    : UseContractWriteConfig<
+        typeof iOptionsABI,
+        'removeObligorFromOpt',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeObligorFromOpt'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iOptionsABI, 'removeObligorFromOpt', TMode>({
+    abi: iOptionsABI,
+    functionName: 'removeObligorFromOpt',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iOptionsABI}__.
+ */
+export function usePrepareIOptionsWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iOptionsABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iOptionsABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iOptionsABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"addObligorIntoOpt"`.
+ */
+export function usePrepareIOptionsAddObligorIntoOpt(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iOptionsABI, 'addObligorIntoOpt'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iOptionsABI,
+    functionName: 'addObligorIntoOpt',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iOptionsABI, 'addObligorIntoOpt'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"createOption"`.
+ */
+export function usePrepareIOptionsCreateOption(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iOptionsABI, 'createOption'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iOptionsABI,
+    functionName: 'createOption',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iOptionsABI, 'createOption'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"delOption"`.
+ */
+export function usePrepareIOptionsDelOption(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iOptionsABI, 'delOption'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iOptionsABI,
+    functionName: 'delOption',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iOptionsABI, 'delOption'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iOptionsABI}__ and `functionName` set to `"removeObligorFromOpt"`.
+ */
+export function usePrepareIOptionsRemoveObligorFromOpt(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iOptionsABI, 'removeObligorFromOpt'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iOptionsABI,
+    functionName: 'removeObligorFromOpt',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iOptionsABI,
+    'removeObligorFromOpt'
+  >)
 }
 
 /**
@@ -23435,6 +28658,36 @@ export function useIRegisterOfAgreementsHasFrClaims<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iRegisterOfAgreementsABI}__ and `functionName` set to `"isFRClaimer"`.
+ */
+export function useIRegisterOfAgreementsIsFrClaimer<
+  TFunctionName extends 'isFRClaimer',
+  TSelectData = ReadContractResult<
+    typeof iRegisterOfAgreementsABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iRegisterOfAgreementsABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iRegisterOfAgreementsABI,
+    functionName: 'isFRClaimer',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iRegisterOfAgreementsABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iRegisterOfAgreementsABI}__ and `functionName` set to `"isRegistered"`.
  */
 export function useIRegisterOfAgreementsIsRegistered<
@@ -23917,41 +29170,6 @@ export function useIRegisterOfAgreementsExecFile<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iRegisterOfAgreementsABI}__ and `functionName` set to `"isFRClaimer"`.
- */
-export function useIRegisterOfAgreementsIsFrClaimer<
-  TMode extends WriteContractMode = undefined,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iRegisterOfAgreementsABI,
-          'isFRClaimer'
-        >['request']['abi'],
-        'isFRClaimer',
-        TMode
-      > & { functionName?: 'isFRClaimer' }
-    : UseContractWriteConfig<
-        typeof iRegisterOfAgreementsABI,
-        'isFRClaimer',
-        TMode
-      > & {
-        abi?: never
-        functionName?: 'isFRClaimer'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof iRegisterOfAgreementsABI,
-    'isFRClaimer',
-    TMode
-  >({
-    abi: iRegisterOfAgreementsABI,
-    functionName: 'isFRClaimer',
-    ...config,
-  } as any)
-}
-
-/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iRegisterOfAgreementsABI}__ and `functionName` set to `"proposeFile"`.
  */
 export function useIRegisterOfAgreementsProposeFile<
@@ -24293,28 +29511,6 @@ export function usePrepareIRegisterOfAgreementsExecFile(
   } as UsePrepareContractWriteConfig<
     typeof iRegisterOfAgreementsABI,
     'execFile'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iRegisterOfAgreementsABI}__ and `functionName` set to `"isFRClaimer"`.
- */
-export function usePrepareIRegisterOfAgreementsIsFrClaimer(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof iRegisterOfAgreementsABI,
-      'isFRClaimer'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: iRegisterOfAgreementsABI,
-    functionName: 'isFRClaimer',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof iRegisterOfAgreementsABI,
-    'isFRClaimer'
   >)
 }
 
@@ -34312,6 +39508,1554 @@ export function usePrepareIshaKeeperTakeGiftShares(
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__.
+ */
+export function useIShareholdersAgreementRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"circulated"`.
+ */
+export function useIShareholdersAgreementCirculated<
+  TFunctionName extends 'circulated',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'circulated',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"established"`.
+ */
+export function useIShareholdersAgreementEstablished<
+  TFunctionName extends 'established',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'established',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getBuyers"`.
+ */
+export function useIShareholdersAgreementGetBuyers<
+  TFunctionName extends 'getBuyers',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getBuyers',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getCirculateDate"`.
+ */
+export function useIShareholdersAgreementGetCirculateDate<
+  TFunctionName extends 'getCirculateDate',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getCirculateDate',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getClosingDays"`.
+ */
+export function useIShareholdersAgreementGetClosingDays<
+  TFunctionName extends 'getClosingDays',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getClosingDays',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getClosingDeadline"`.
+ */
+export function useIShareholdersAgreementGetClosingDeadline<
+  TFunctionName extends 'getClosingDeadline',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getClosingDeadline',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getParasOfPage"`.
+ */
+export function useIShareholdersAgreementGetParasOfPage<
+  TFunctionName extends 'getParasOfPage',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getParasOfPage',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getParties"`.
+ */
+export function useIShareholdersAgreementGetParties<
+  TFunctionName extends 'getParties',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getParties',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getRule"`.
+ */
+export function useIShareholdersAgreementGetRule<
+  TFunctionName extends 'getRule',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getRule',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getRules"`.
+ */
+export function useIShareholdersAgreementGetRules<
+  TFunctionName extends 'getRules',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getRules',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getSellers"`.
+ */
+export function useIShareholdersAgreementGetSellers<
+  TFunctionName extends 'getSellers',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getSellers',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getSigDeadline"`.
+ */
+export function useIShareholdersAgreementGetSigDeadline<
+  TFunctionName extends 'getSigDeadline',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getSigDeadline',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getSigOfParty"`.
+ */
+export function useIShareholdersAgreementGetSigOfParty<
+  TFunctionName extends 'getSigOfParty',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getSigOfParty',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getSigningDays"`.
+ */
+export function useIShareholdersAgreementGetSigningDays<
+  TFunctionName extends 'getSigningDays',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getSigningDays',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getSigsOfPage"`.
+ */
+export function useIShareholdersAgreementGetSigsOfPage<
+  TFunctionName extends 'getSigsOfPage',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getSigsOfPage',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getTerm"`.
+ */
+export function useIShareholdersAgreementGetTerm<
+  TFunctionName extends 'getTerm',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getTerm',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"getTitles"`.
+ */
+export function useIShareholdersAgreementGetTitles<
+  TFunctionName extends 'getTitles',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'getTitles',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"hasRule"`.
+ */
+export function useIShareholdersAgreementHasRule<
+  TFunctionName extends 'hasRule',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'hasRule',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"hasTitle"`.
+ */
+export function useIShareholdersAgreementHasTitle<
+  TFunctionName extends 'hasTitle',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'hasTitle',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"isBuyer"`.
+ */
+export function useIShareholdersAgreementIsBuyer<
+  TFunctionName extends 'isBuyer',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'isBuyer',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"isInitSigner"`.
+ */
+export function useIShareholdersAgreementIsInitSigner<
+  TFunctionName extends 'isInitSigner',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'isInitSigner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"isParty"`.
+ */
+export function useIShareholdersAgreementIsParty<
+  TFunctionName extends 'isParty',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'isParty',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"isSeller"`.
+ */
+export function useIShareholdersAgreementIsSeller<
+  TFunctionName extends 'isSeller',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'isSeller',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"isSigner"`.
+ */
+export function useIShareholdersAgreementIsSigner<
+  TFunctionName extends 'isSigner',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'isSigner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"qtyOfRules"`.
+ */
+export function useIShareholdersAgreementQtyOfRules<
+  TFunctionName extends 'qtyOfRules',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'qtyOfRules',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"qtyOfTerms"`.
+ */
+export function useIShareholdersAgreementQtyOfTerms<
+  TFunctionName extends 'qtyOfTerms',
+  TSelectData = ReadContractResult<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iShareholdersAgreementABI,
+    functionName: 'qtyOfTerms',
+    ...config,
+  } as UseContractReadConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__.
+ */
+export function useIShareholdersAgreementWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        TFunctionName,
+        TMode
+      > & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    TFunctionName,
+    TMode
+  >({ abi: iShareholdersAgreementABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"addBlank"`.
+ */
+export function useIShareholdersAgreementAddBlank<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'addBlank'
+        >['request']['abi'],
+        'addBlank',
+        TMode
+      > & { functionName?: 'addBlank' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'addBlank',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'addBlank'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iShareholdersAgreementABI, 'addBlank', TMode>({
+    abi: iShareholdersAgreementABI,
+    functionName: 'addBlank',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"addRule"`.
+ */
+export function useIShareholdersAgreementAddRule<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'addRule'
+        >['request']['abi'],
+        'addRule',
+        TMode
+      > & { functionName?: 'addRule' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'addRule',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'addRule'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iShareholdersAgreementABI, 'addRule', TMode>({
+    abi: iShareholdersAgreementABI,
+    functionName: 'addRule',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"circulateDoc"`.
+ */
+export function useIShareholdersAgreementCirculateDoc<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'circulateDoc'
+        >['request']['abi'],
+        'circulateDoc',
+        TMode
+      > & { functionName?: 'circulateDoc' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'circulateDoc',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'circulateDoc'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'circulateDoc',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'circulateDoc',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"createTerm"`.
+ */
+export function useIShareholdersAgreementCreateTerm<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'createTerm'
+        >['request']['abi'],
+        'createTerm',
+        TMode
+      > & { functionName?: 'createTerm' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'createTerm',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'createTerm'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'createTerm',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'createTerm',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"finalizeSHA"`.
+ */
+export function useIShareholdersAgreementFinalizeSha<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'finalizeSHA'
+        >['request']['abi'],
+        'finalizeSHA',
+        TMode
+      > & { functionName?: 'finalizeSHA' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'finalizeSHA',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'finalizeSHA'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'finalizeSHA',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'finalizeSHA',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"initDefaultRules"`.
+ */
+export function useIShareholdersAgreementInitDefaultRules<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'initDefaultRules'
+        >['request']['abi'],
+        'initDefaultRules',
+        TMode
+      > & { functionName?: 'initDefaultRules' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'initDefaultRules',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'initDefaultRules'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'initDefaultRules',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'initDefaultRules',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"regSig"`.
+ */
+export function useIShareholdersAgreementRegSig<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'regSig'
+        >['request']['abi'],
+        'regSig',
+        TMode
+      > & { functionName?: 'regSig' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'regSig',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'regSig'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iShareholdersAgreementABI, 'regSig', TMode>({
+    abi: iShareholdersAgreementABI,
+    functionName: 'regSig',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeBlank"`.
+ */
+export function useIShareholdersAgreementRemoveBlank<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'removeBlank'
+        >['request']['abi'],
+        'removeBlank',
+        TMode
+      > & { functionName?: 'removeBlank' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'removeBlank',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeBlank'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'removeBlank',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeBlank',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeRule"`.
+ */
+export function useIShareholdersAgreementRemoveRule<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'removeRule'
+        >['request']['abi'],
+        'removeRule',
+        TMode
+      > & { functionName?: 'removeRule' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'removeRule',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeRule'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'removeRule',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeRule',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeTerm"`.
+ */
+export function useIShareholdersAgreementRemoveTerm<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'removeTerm'
+        >['request']['abi'],
+        'removeTerm',
+        TMode
+      > & { functionName?: 'removeTerm' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'removeTerm',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'removeTerm'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof iShareholdersAgreementABI,
+    'removeTerm',
+    TMode
+  >({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeTerm',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"setTiming"`.
+ */
+export function useIShareholdersAgreementSetTiming<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'setTiming'
+        >['request']['abi'],
+        'setTiming',
+        TMode
+      > & { functionName?: 'setTiming' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'setTiming',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'setTiming'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iShareholdersAgreementABI, 'setTiming', TMode>(
+    {
+      abi: iShareholdersAgreementABI,
+      functionName: 'setTiming',
+      ...config,
+    } as any,
+  )
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"signDoc"`.
+ */
+export function useIShareholdersAgreementSignDoc<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iShareholdersAgreementABI,
+          'signDoc'
+        >['request']['abi'],
+        'signDoc',
+        TMode
+      > & { functionName?: 'signDoc' }
+    : UseContractWriteConfig<
+        typeof iShareholdersAgreementABI,
+        'signDoc',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'signDoc'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iShareholdersAgreementABI, 'signDoc', TMode>({
+    abi: iShareholdersAgreementABI,
+    functionName: 'signDoc',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__.
+ */
+export function usePrepareIShareholdersAgreementWrite<
+  TFunctionName extends string,
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      TFunctionName
+    >,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"addBlank"`.
+ */
+export function usePrepareIShareholdersAgreementAddBlank(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iShareholdersAgreementABI, 'addBlank'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'addBlank',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'addBlank'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"addRule"`.
+ */
+export function usePrepareIShareholdersAgreementAddRule(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iShareholdersAgreementABI, 'addRule'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'addRule',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'addRule'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"circulateDoc"`.
+ */
+export function usePrepareIShareholdersAgreementCirculateDoc(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'circulateDoc'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'circulateDoc',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'circulateDoc'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"createTerm"`.
+ */
+export function usePrepareIShareholdersAgreementCreateTerm(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'createTerm'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'createTerm',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'createTerm'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"finalizeSHA"`.
+ */
+export function usePrepareIShareholdersAgreementFinalizeSha(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'finalizeSHA'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'finalizeSHA',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'finalizeSHA'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"initDefaultRules"`.
+ */
+export function usePrepareIShareholdersAgreementInitDefaultRules(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'initDefaultRules'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'initDefaultRules',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'initDefaultRules'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"regSig"`.
+ */
+export function usePrepareIShareholdersAgreementRegSig(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iShareholdersAgreementABI, 'regSig'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'regSig',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'regSig'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeBlank"`.
+ */
+export function usePrepareIShareholdersAgreementRemoveBlank(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'removeBlank'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeBlank',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'removeBlank'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeRule"`.
+ */
+export function usePrepareIShareholdersAgreementRemoveRule(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'removeRule'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeRule',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'removeRule'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"removeTerm"`.
+ */
+export function usePrepareIShareholdersAgreementRemoveTerm(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'removeTerm'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'removeTerm',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'removeTerm'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"setTiming"`.
+ */
+export function usePrepareIShareholdersAgreementSetTiming(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof iShareholdersAgreementABI,
+      'setTiming'
+    >,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'setTiming',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'setTiming'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `functionName` set to `"signDoc"`.
+ */
+export function usePrepareIShareholdersAgreementSignDoc(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iShareholdersAgreementABI, 'signDoc'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iShareholdersAgreementABI,
+    functionName: 'signDoc',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iShareholdersAgreementABI,
+    'signDoc'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iShareholdersAgreementABI}__.
+ */
+export function useIShareholdersAgreementEvent<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof iShareholdersAgreementABI, TEventName>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iShareholdersAgreementABI,
+    ...config,
+  } as UseContractEventConfig<typeof iShareholdersAgreementABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iShareholdersAgreementABI}__ and `eventName` set to `"CirculateDoc"`.
+ */
+export function useIShareholdersAgreementCirculateDocEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iShareholdersAgreementABI, 'CirculateDoc'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iShareholdersAgreementABI,
+    eventName: 'CirculateDoc',
+    ...config,
+  } as UseContractEventConfig<typeof iShareholdersAgreementABI, 'CirculateDoc'>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iSigPageABI}__.
  */
 export function useISigPageRead<
@@ -34995,6 +41739,453 @@ export function useISigPageCirculateDocEvent(
     eventName: 'CirculateDoc',
     ...config,
   } as UseContractEventConfig<typeof iSigPageABI, 'CirculateDoc'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iusdcABI}__.
+ */
+export function useIusdcRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof iusdcABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({ abi: iusdcABI, ...config } as UseContractReadConfig<
+    typeof iusdcABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"allowance"`.
+ */
+export function useIusdcAllowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof iusdcABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iusdcABI,
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"authorizationState"`.
+ */
+export function useIusdcAuthorizationState<
+  TFunctionName extends 'authorizationState',
+  TSelectData = ReadContractResult<typeof iusdcABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iusdcABI,
+    functionName: 'authorizationState',
+    ...config,
+  } as UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useIusdcBalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof iusdcABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iusdcABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"totalSupply"`.
+ */
+export function useIusdcTotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof iusdcABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iusdcABI,
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof iusdcABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__.
+ */
+export function useIusdcWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iusdcABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iusdcABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, TFunctionName, TMode>({
+    abi: iusdcABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"approve"`.
+ */
+export function useIusdcApprove<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iusdcABI,
+          'approve'
+        >['request']['abi'],
+        'approve',
+        TMode
+      > & { functionName?: 'approve' }
+    : UseContractWriteConfig<typeof iusdcABI, 'approve', TMode> & {
+        abi?: never
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'approve', TMode>({
+    abi: iusdcABI,
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"burn"`.
+ */
+export function useIusdcBurn<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iusdcABI, 'burn'>['request']['abi'],
+        'burn',
+        TMode
+      > & { functionName?: 'burn' }
+    : UseContractWriteConfig<typeof iusdcABI, 'burn', TMode> & {
+        abi?: never
+        functionName?: 'burn'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'burn', TMode>({
+    abi: iusdcABI,
+    functionName: 'burn',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"mint"`.
+ */
+export function useIusdcMint<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iusdcABI, 'mint'>['request']['abi'],
+        'mint',
+        TMode
+      > & { functionName?: 'mint' }
+    : UseContractWriteConfig<typeof iusdcABI, 'mint', TMode> & {
+        abi?: never
+        functionName?: 'mint'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'mint', TMode>({
+    abi: iusdcABI,
+    functionName: 'mint',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useIusdcTransfer<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iusdcABI,
+          'transfer'
+        >['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof iusdcABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'transfer', TMode>({
+    abi: iusdcABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function useIusdcTransferFrom<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iusdcABI,
+          'transferFrom'
+        >['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof iusdcABI, 'transferFrom', TMode> & {
+        abi?: never
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'transferFrom', TMode>({
+    abi: iusdcABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transferWithAuthorization"`.
+ */
+export function useIusdcTransferWithAuthorization<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof iusdcABI,
+          'transferWithAuthorization'
+        >['request']['abi'],
+        'transferWithAuthorization',
+        TMode
+      > & { functionName?: 'transferWithAuthorization' }
+    : UseContractWriteConfig<
+        typeof iusdcABI,
+        'transferWithAuthorization',
+        TMode
+      > & {
+        abi?: never
+        functionName?: 'transferWithAuthorization'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iusdcABI, 'transferWithAuthorization', TMode>({
+    abi: iusdcABI,
+    functionName: 'transferWithAuthorization',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__.
+ */
+export function usePrepareIusdcWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"approve"`.
+ */
+export function usePrepareIusdcApprove(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'approve'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"burn"`.
+ */
+export function usePrepareIusdcBurn(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'burn'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'burn',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, 'burn'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"mint"`.
+ */
+export function usePrepareIusdcMint(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'mint'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'mint',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, 'mint'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareIusdcTransfer(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'transfer'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function usePrepareIusdcTransferFrom(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'transferFrom'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iusdcABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iusdcABI}__ and `functionName` set to `"transferWithAuthorization"`.
+ */
+export function usePrepareIusdcTransferWithAuthorization(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof iusdcABI, 'transferWithAuthorization'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iusdcABI,
+    functionName: 'transferWithAuthorization',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof iusdcABI,
+    'transferWithAuthorization'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iusdcABI}__.
+ */
+export function useIusdcEvent<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof iusdcABI, TEventName>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iusdcABI,
+    ...config,
+  } as UseContractEventConfig<typeof iusdcABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iusdcABI}__ and `eventName` set to `"Approval"`.
+ */
+export function useIusdcApprovalEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iusdcABI, 'Approval'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iusdcABI,
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof iusdcABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iusdcABI}__ and `eventName` set to `"AuthorizationUsed"`.
+ */
+export function useIusdcAuthorizationUsedEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iusdcABI, 'AuthorizationUsed'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iusdcABI,
+    eventName: 'AuthorizationUsed',
+    ...config,
+  } as UseContractEventConfig<typeof iusdcABI, 'AuthorizationUsed'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iusdcABI}__ and `eventName` set to `"Transfer"`.
+ */
+export function useIusdcTransferEvent(
+  config: Omit<
+    UseContractEventConfig<typeof iusdcABI, 'Transfer'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: iusdcABI,
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof iusdcABI, 'Transfer'>)
 }
 
 /**

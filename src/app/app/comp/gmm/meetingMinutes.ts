@@ -1,7 +1,7 @@
 import { readContract } from "@wagmi/core";
 
 
-import { meetingMinutesABI } from "../../../../../generated";
+import { iMeetingMinutesABI } from "../../../../../generated";
 import { OrgVotingRule } from "../roc/sha/components/rules/VotingRules/SetVotingRule";
 import { AddrZero, HexType } from "../../common";
 
@@ -20,7 +20,7 @@ export const defaultAction: Action = {
 export async function isProposed(minutes: HexType, seqOfMotion: bigint): Promise<boolean> {
   let flag: boolean = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'isProposed',
     args: [ seqOfMotion ],
   })
@@ -31,7 +31,7 @@ export async function isProposed(minutes: HexType, seqOfMotion: bigint): Promise
 export async function voteStarted(minutes: HexType, seqOfMotion: bigint): Promise<boolean> {
   let flag: boolean = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'voteStarted',
     args: [ seqOfMotion ],
   })
@@ -42,7 +42,7 @@ export async function voteStarted(minutes: HexType, seqOfMotion: bigint): Promis
 export async function voteEnded(minutes: HexType, seqOfMotion: bigint): Promise<boolean> {
   let flag: boolean = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'voteEnded',
     args: [ seqOfMotion ],
   })
@@ -69,7 +69,7 @@ export async function getVoterOfDelegateMap(minutes: HexType, seqOfMotion: bigin
 
   let res = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getVoterOfDelegateMap',
     args: [ seqOfMotion, acct ],
   })
@@ -89,7 +89,7 @@ export async function getDelegateOf(minutes: HexType, seqOfMotion: bigint, acct:
   
   let delegate:bigint = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getDelegateOf',
     args: [ seqOfMotion, acct ],
   })
@@ -142,7 +142,7 @@ export function motionSnParser(sn: HexType): HeadOfMotion {
 export async function getMotion(bog: HexType, seq: bigint): Promise<Motion> {
   let motion = await readContract({
     address: bog,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getMotion',
     args: [seq],
   })
@@ -153,7 +153,7 @@ export async function getMotion(bog: HexType, seq: bigint): Promise<Motion> {
 export async function getSeqList(minutes: HexType): Promise<readonly bigint[]> {
   let list: readonly bigint[] = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getSeqList',
   })
 
@@ -194,7 +194,7 @@ export const defaultVoteCase: VoteCase = {
 export async function isVoted(minutes: HexType, seqOfMotion: bigint, acct: bigint): Promise<boolean> {
   let flag:boolean = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'isVoted',
     args: [ seqOfMotion, acct ],
   })
@@ -206,7 +206,7 @@ export async function isVotedFor(minutes: HexType, seqOfMotion: bigint, acct: bi
 
   let flag:boolean = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'isVotedFor',
     args: [ seqOfMotion, acct, atti ],
   })
@@ -217,7 +217,7 @@ export async function isVotedFor(minutes: HexType, seqOfMotion: bigint, acct: bi
 export async function getCaseOfAttitude(minutes: HexType, seqOfMotion: bigint, atti: bigint): Promise<VoteCase> {
   let voteCase: VoteCase = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getCaseOfAttitude',
     args: [ seqOfMotion, atti ],
   });
@@ -254,7 +254,7 @@ export interface Ballot {
 export async function getBallot(minutes:HexType, seqOfMotion: bigint, acct: bigint): Promise<Ballot> {
   let ballot:Ballot = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'getBallot',
     args: [ seqOfMotion, acct ],
   });
@@ -280,7 +280,7 @@ export async function getBallotsList(minutes: HexType, seqOfMotion: bigint, vote
 export async function isPassed(minutes: HexType, seqOfMotion: bigint): Promise<boolean> {
   let flag = await readContract({
     address: minutes,
-    abi: meetingMinutesABI,
+    abi: iMeetingMinutesABI,
     functionName: 'isPassed',
     args: [ seqOfMotion ],
   })

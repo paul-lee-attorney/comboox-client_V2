@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCompKeeperTransferPledge } from "../../../../../../../generated";
+import { useIropKeeperTransferPledge } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -27,7 +27,7 @@ export function TransferPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: transferPledgeLoading,
     write: transferPledge,
-  } = useCompKeeperTransferPledge({
+  } = useIropKeeperTransferPledge({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

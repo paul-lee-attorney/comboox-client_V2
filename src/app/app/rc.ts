@@ -13,6 +13,83 @@ export const typesOfEntity = [
   'GeneralFund'
 ]
 
+// ==== StrLocker === 
+
+export interface StrHeadOfLocker {
+  from: string;
+  to: string;
+  expireDate: number;
+  value: string;
+}
+
+export interface HeadOfLocker {
+  from: number;
+  to: number;
+  expireDate: number;
+  value: bigint;
+}
+
+export const defaultStrHeadOfLocker:StrHeadOfLocker = {
+  from: '0',
+  to: '0',
+  expireDate: 0,
+  value: '0',
+}
+
+export interface BodyOfLocker {
+  counterLocker: HexType;
+  selector: HexType;
+  paras: string[];
+}
+
+export const defaultHeadOfLocker:HeadOfLocker = {
+  from: 0,
+  to: 0,
+  expireDate: 0,
+  value: BigInt('0'),
+}
+
+export const defaultBodyOfLocker:BodyOfLocker = {
+  counterLocker: AddrZero,
+  selector: SelectorZero,
+  paras: [Bytes32Zero],
+}
+
+export const defaultLocker: Locker = {
+  hashLock: Bytes32Zero,
+  head: defaultHeadOfLocker,
+  body: defaultBodyOfLocker,
+}
+
+export const defaultStrLocker: StrLocker = {
+  hashLock: Bytes32Zero,
+  head: defaultStrHeadOfLocker,
+  body: defaultBodyOfLocker,
+}
+
+export interface StrLocker {
+  hashLock: HexType;
+  head: StrHeadOfLocker;
+  body: BodyOfLocker;  
+}
+
+export interface Locker {
+  hashLock: HexType;
+  head: HeadOfLocker;
+  body: BodyOfLocker;
+}
+
+
+export interface BodyOfOrgLocker {
+  counterLocker: HexType;
+  payload: HexType;
+}
+export interface OrgLocker {
+  head: HeadOfLocker;
+  body: BodyOfOrgLocker;
+}
+
+
 // ==== User ====
 
 export interface StrKey {
@@ -153,6 +230,7 @@ export interface Doc {
 
 export interface DocItem {
   seqOfList: number;
+  title: string;
   doc: Doc;
 }
 
@@ -422,7 +500,7 @@ export async function getDocByUserNo(acct: bigint): Promise<Doc>{
   return res;
 }
 
-export async function getDocsList(typeOfDoc: bigint, version: bigint): Promise<DocItem[]>{
+export async function getDocsList(typeOfDoc: bigint, title:string, version: bigint): Promise<DocItem[]>{
   let res = await readContract({
     address: AddrOfRegCenter,
     abi: regCenterABI,
@@ -433,6 +511,7 @@ export async function getDocsList(typeOfDoc: bigint, version: bigint): Promise<D
   let out:DocItem[] = res.map((v,i) => {
     return {
       seqOfList: i,
+      title: title,
       doc: v,
     }
   });
@@ -462,11 +541,29 @@ export async function getDocAddr(hash: HexType): Promise<HexType> {
   let out: HexType;
 
   if (receipt)
-      out = `0x${receipt?.logs[0]?.topics[2]?.substring(26)}`;
+      out = `0x${receipt?.logs[2]?.topics[2]?.substring(26)}`;
   else out = AddrZero;
 
   return out; 
 }
+
+export async function getCloneAddr(hash: HexType): Promise<HexType> {
+  const receipt = await waitForTransaction({
+    hash: hash
+  });
+
+  let out: HexType;
+
+  if (receipt) {
+      console.log("Receipt: ", receipt);
+      out = `0x${receipt?.logs[1]?.topics[2]?.substring(26)}`;
+  }
+  else out = AddrZero;
+
+  return out; 
+}
+
+
 
 export const temps: string[] = [
   'RegisterOfConstitution', 'RegisterOfDirectors', 'MeetingMinutes', 'RegisterOfMembers',
@@ -485,7 +582,7 @@ export async function getTempsList(): Promise<DocItem[]>{
   // const ls = await getTypesList(); 
 
   const ls = temps.map((v) => ({
-    name: v,
+    title: v,
     typeOfDoc: getTypeByName(v),
   }));
 
@@ -494,7 +591,7 @@ export async function getTempsList(): Promise<DocItem[]>{
       let vers = await getVersionsList(v.typeOfDoc);      
       return vers.map(vr => ({
         ...vr,
-        name: v.name,
+        title: v.title,
       }));
     })
   );
@@ -503,7 +600,7 @@ export async function getTempsList(): Promise<DocItem[]>{
 
   const out: DocItem[] = lists.flat().map((ver) => ({
     seqOfList: counter++,
-    name: ver.name,
+    title: ver.title,
     doc: ver,
   }))
 
@@ -521,6 +618,27 @@ export function parasParser(input: string):string[] {
     i++;
   }
   return out;
+}
+
+export function parseOrgLocker(hashLock: HexType, input: OrgLocker): StrLocker {
+
+  let lk: StrLocker = {
+    hashLock: hashLock,
+    head: {
+      from: input.head.from.toString(),
+      to: input.head.to.toString(),
+      expireDate: input.head.expireDate,
+      value: input.head.value.toString(),
+    },
+    body: 
+      { 
+        counterLocker: input.body.counterLocker,
+        selector: `0x${input.body.payload.substring(2,10)}`,
+        paras: parasParser(input.body.payload.substring(10)),
+      }
+  };
+
+  return lk;
 }
 
 // ==== CBP ====

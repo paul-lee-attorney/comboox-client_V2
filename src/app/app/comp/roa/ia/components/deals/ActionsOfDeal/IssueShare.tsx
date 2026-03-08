@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Paper, Stack } from "@mui/material";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperIssueNewShare } from "../../../../../../../../../generated";
+import { useIroaKeeperIssueNewShare } from "../../../../../../../../../generated";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import { RocketLaunch } from "@mui/icons-material";
 import { HexType } from "../../../../../../common";
@@ -25,7 +25,7 @@ export function IssueShare({ addr, deal, setOpen, setDeal, refresh}: ActionsOfDe
   const {
     isLoading: issueNewShareLoading,
     write: issueNewShare
-  } = useCompKeeperIssueNewShare({
+  } = useIroaKeeperIssueNewShare({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -39,7 +39,7 @@ export function IssueShare({ addr, deal, setOpen, setDeal, refresh}: ActionsOfDe
 
   const handleClick = ()=>{
     issueNewShare({
-      args: [addr, BigInt(deal.head.seqOfDeal)],      
+      args: [addr, BigInt(deal.head.seqOfDeal)],
     });
   };
 

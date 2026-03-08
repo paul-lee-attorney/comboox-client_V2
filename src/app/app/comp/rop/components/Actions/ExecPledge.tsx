@@ -1,4 +1,4 @@
-import { useCompKeeperExecPledge } from "../../../../../../../generated";
+import { useIropKeeperExecPledge } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { DoneOutline } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -52,7 +52,7 @@ export function ExecPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: execPledgeLoading,
     write: execPledge,
-  } = useCompKeeperExecPledge({
+  } = useIropKeeperExecPledge({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

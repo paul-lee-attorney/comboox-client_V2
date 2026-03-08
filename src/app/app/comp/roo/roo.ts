@@ -1,7 +1,7 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../common";
-import { strNumToBigInt } from "../../common/toolsKit";
-import { registerOfOptionsABI } from "../../../../../generated";
+import { strNumToBigInt, userNoCodifier } from "../../common/toolsKit";
+import { iRegisterOfOptionsABI } from "../../../../../generated";
 
 export interface StrHeadOfOpt{
   seqOfOpt: string;
@@ -76,7 +76,7 @@ export function optHeadCodifier(head: StrHeadOfOpt): HexType {
     head.triggerDate.toString(16).padStart(12, '0') +
     Number(head.execDays).toString(16).padStart(4, '0') +
     Number(head.closingDays).toString(16).padStart(4, '0') +
-    Number(head.obligor).toString(16).padStart(10, '0')
+    userNoCodifier(head.obligor)
   }`;
   return out;
 }
@@ -339,7 +339,7 @@ export async function counterOfOptions(addr: HexType): Promise<number>{
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'counterOfOptions',
   })
 
@@ -350,7 +350,7 @@ export async function qtyOfOptions(addr: HexType): Promise<bigint>{
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'qtyOfOptions',
   })
 
@@ -361,7 +361,7 @@ export async function isOption(addr: HexType, seqOfOpt: number): Promise<boolean
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'isOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -373,7 +373,7 @@ export async function getOption(addr: HexType, seqOfOpt: string): Promise<Option
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -385,7 +385,7 @@ export async function getAllOptions(addr: HexType): Promise<readonly Option[]>{
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getAllOptions',
   })
 
@@ -396,7 +396,7 @@ export async function isRightholder(addr: HexType, seqOfOpt: number, acct: numbe
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'isRightholder',
     args: [ BigInt(seqOfOpt), BigInt(acct) ]
   })
@@ -408,7 +408,7 @@ export async function isObligor(addr: HexType, seqOfOpt: number, acct: number): 
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'isObligor',
     args: [ BigInt(seqOfOpt), BigInt(acct) ]
   })
@@ -420,7 +420,7 @@ export async function getObligorsOfOption(addr: HexType, seqOfOpt: string): Prom
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getObligorsOfOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -432,7 +432,7 @@ export async function getSeqListOfOptions(addr: HexType): Promise<readonly bigin
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getSeqListOfOptions',
   })
 
@@ -445,7 +445,7 @@ export async function counterOfSwaps(addr: HexType, seqOfOpt: number): Promise<n
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'counterOfSwaps',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -457,7 +457,7 @@ export async function sumPaidOfTarget(addr: HexType, seqOfOpt: number): Promise<
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'sumPaidOfTarget',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -469,7 +469,7 @@ export async function isSwap(addr: HexType, seqOfOpt: number, seqOfSwap: number)
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'isSwap',
     args: [ BigInt(seqOfOpt), BigInt(seqOfSwap) ],
   })
@@ -481,7 +481,7 @@ export async function getSwap(addr: HexType, seqOfOpt: number, seqOfSwap: number
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getSwap',
     args: [ BigInt(seqOfOpt), BigInt(seqOfSwap) ],
   })
@@ -493,7 +493,7 @@ export async function getAllSwapsOfOption(addr: HexType, seqOfOpt: number): Prom
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getAllSwapsOfOption',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -505,7 +505,7 @@ export async function allSwapsClosed(addr: HexType, seqOfOpt: number): Promise<b
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'allSwapsClosed',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -519,7 +519,7 @@ export async function getOracleAtDate(addr: HexType, seqOfOpt: number, date: num
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getOracleAtDate',
     args: [ BigInt(seqOfOpt), BigInt(date) ],
   })
@@ -531,7 +531,7 @@ export async function getLatestOracle(addr: HexType, seqOfOpt: number): Promise<
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getLatestOracle',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -543,7 +543,7 @@ export async function getAllOraclesOfOption(addr: HexType, seqOfOpt: number): Pr
 
   let res = await readContract({
     address: addr,
-    abi: registerOfOptionsABI,
+    abi: iRegisterOfOptionsABI,
     functionName: 'getAllOraclesOfOption',
     args: [ BigInt(seqOfOpt) ],
   })
@@ -557,7 +557,7 @@ export async function getAllOraclesOfOption(addr: HexType, seqOfOpt: number): Pr
 
 //   let res = await readContract({
 //     address: addr,
-//     abi: registerOfOptionsABI,
+//     abi: iRegisterOfOptionsABI,
 //     functionName: 'checkValueOfSwap',
 //     args: [ BigInt(seqOfOpt), BigInt(seqOfSwap) ],
 //   })

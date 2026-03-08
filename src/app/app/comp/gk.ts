@@ -1,9 +1,10 @@
 import { readContract } from "@wagmi/core";
 import { AddrZero, HexType } from "../common";
-import { baseKeeperABI } from "../../../../generated";
+import { iGeneralKeeperABI, iRegisterOfConstitutionABI } from "../../../../generated";
 import { getDK } from "./common/draftControl";
 import { toStr } from "../common/toolsKit";
 import { getOwner } from "../common/ownable";
+import { Add } from "@mui/icons-material";
 
 export const nameOfBooks = [
   'GK', 'ROC', 'ROD', 'BMM', 'ROM', 'GMM', 
@@ -21,7 +22,7 @@ export const titleOfKeepers = [
 export async function getKeeper(addr: HexType, title: number):Promise<HexType> {
   let keeper: HexType = await readContract({
     address: addr,
-    abi: baseKeeperABI,
+    abi: iGeneralKeeperABI,
     functionName: 'getKeeper',
     args: [BigInt(title)]
   })
@@ -32,7 +33,7 @@ export async function getKeeper(addr: HexType, title: number):Promise<HexType> {
 export async function getBook(addr: HexType, title: number):Promise<HexType> {
   let keeper: HexType = await readContract({
     address: addr,
-    abi: baseKeeperABI,
+    abi: iGeneralKeeperABI,
     functionName: 'getBook',
     args: [BigInt(title)]
   })
@@ -57,20 +58,24 @@ export async function getBoox(gk: HexType): Promise<BookInfo[]>{
     dk: await getDK(gk),
   })
 
+  let typeOfEntity = (await getCompInfo(gk)).typeOfEntity;
+
   let i = 1;
 
   while (i <= 16) {
 
-    let addr = await getBook(gk, i);
+    let addr = nameOfBooks[i] == 'Blank' || (typeOfEntity < 5 && i == 16)
+        ? AddrZero
+        : await getBook(gk, i);
     
-    let owner = i == 12 || nameOfBooks[i] == 'Blank' || addr == AddrZero
+    let owner = i == 12 || nameOfBooks[i] == 'Blank' || (typeOfEntity < 5 && i == 16)
         ? AddrZero
         : await getOwner(addr);
         
-    let dk = i == 12 || nameOfBooks[i] == 'Blank' || addr == AddrZero
+    let dk = i == 12 || nameOfBooks[i] == 'Blank' || (typeOfEntity < 5 && i == 16)
         ? AddrZero
         : await getDK(addr);
-     
+
     let item: BookInfo = {
       title: i,
       addr: addr,
@@ -97,39 +102,52 @@ export async function getKeepers(gk: HexType):Promise<BookInfo[]>{
     dk: await getDK(gk),
   })
 
+  let typeOfEntity = (await getCompInfo(gk)).typeOfEntity;  
+
   let i = 1;
+
   while (i <= 16) {
 
-    let addr = await getKeeper(gk, i);
-    let owner = titleOfKeepers[i] == 'Blank' || addr == AddrZero
-      ? AddrZero
-      : await getOwner(addr);
-
-    let dk = titleOfKeepers[i] == 'Blank' || addr == AddrZero
-      ? AddrZero
-      : await getDK(addr);
+    let addr = titleOfKeepers[i] == 'Blank' || (typeOfEntity < 5 && i == 16)
+        ? AddrZero
+        : await getKeeper(gk, i);
  
     let item: BookInfo = {
       title: i,
       addr: addr,
-      owner: owner,
-      dk: dk,    
+      owner: AddrZero,
+      dk: AddrZero,    
     }
 
     books.push(item);
 
     i++;
+
   }
 
-  return books;  
+  return books;
 }
 
+export async function pointer(addr: HexType): Promise<HexType>{
+  let ptr: HexType = await readContract({
+    address: addr,
+    abi: iRegisterOfConstitutionABI,
+    functionName: 'pointer',
+  })
+
+  return ptr;
+}
+
+
 export async function getSHA(gk: HexType):Promise<HexType>{
-  return await readContract({
+  const roc = await readContract({
     address: gk,
-    abi: baseKeeperABI,
-    functionName: 'getSHA'
+    abi: iGeneralKeeperABI,
+    functionName: 'getBook',
+    args: [ BigInt(1) ]
   });
+
+  return await pointer(roc);
 }
 
 export interface CompInfo {
@@ -146,7 +164,7 @@ export async function getCompInfo(gk: HexType):Promise<CompInfo>{
 
   let res = await readContract({
     address: gk,
-    abi: baseKeeperABI,
+    abi: iGeneralKeeperABI,
     functionName: 'getCompInfo',
   })
 

@@ -1,5 +1,5 @@
 import { readContract } from "@wagmi/core";
-import { registerOfRedemptionsABI } from "../../../../../generated";
+import { iRegisterOfRedemptionsABI } from "../../../../../generated";
 import { HexType } from "../../common";
 
 // ==== Request ====
@@ -52,7 +52,7 @@ export interface RequestProps extends Request {
 export async function isRedeemable(addr: HexType, classOfShare:number): Promise <boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'isRedeemable',
     args: [ BigInt(classOfShare) ]
   });
@@ -63,7 +63,7 @@ export async function isRedeemable(addr: HexType, classOfShare:number): Promise 
 export async function getClassesList(addr: HexType): Promise <number[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getClassesList',
   });
 
@@ -73,7 +73,7 @@ export async function getClassesList(addr: HexType): Promise <number[]> {
 export async function getInfoOfClass(addr: HexType, classOfShare:number): Promise <Request> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getInfoOfClass',
     args: [ BigInt(classOfShare) ]
   });
@@ -84,7 +84,7 @@ export async function getInfoOfClass(addr: HexType, classOfShare:number): Promis
 export async function getPacksList(addr: HexType, classOfShare:number): Promise <number[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getPacksList',
     args: [ BigInt(classOfShare) ]
   });
@@ -95,7 +95,7 @@ export async function getPacksList(addr: HexType, classOfShare:number): Promise 
 export async function getInfoOfPack(addr: HexType, classOfShare:number, seqOfPack:number): Promise <Request> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getInfoOfPack',
     args: [ BigInt(classOfShare), BigInt(seqOfPack) ]
   });
@@ -106,7 +106,7 @@ export async function getInfoOfPack(addr: HexType, classOfShare:number, seqOfPac
 export async function getSharesList(addr: HexType, classOfShare:number, seqOfPack:number): Promise <number[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getSharesList',
     args: [ BigInt(classOfShare), BigInt(seqOfPack) ]
   });
@@ -117,7 +117,7 @@ export async function getSharesList(addr: HexType, classOfShare:number, seqOfPac
 export async function getRequest(addr: HexType, classOfShare:number, seqOfPack:number, seqOfShare:number): Promise <Request> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getRequest',
     args: [ BigInt(classOfShare), BigInt(seqOfPack), BigInt(seqOfShare) ]
   });
@@ -128,7 +128,7 @@ export async function getRequest(addr: HexType, classOfShare:number, seqOfPack:n
 export async function getRequests(addr: HexType, classOfShare:number, seqOfPack:number): Promise <readonly Request[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfRedemptionsABI,
+    abi: iRegisterOfRedemptionsABI,
     functionName: 'getRequests',
     args: [ BigInt(classOfShare), BigInt(seqOfPack) ]
   });

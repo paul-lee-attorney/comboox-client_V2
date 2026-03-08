@@ -4,7 +4,7 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { longSnParser, splitStrArr } from '../../../../../../common/toolsKit';
+import { longSnParser, splitStrArr, userNoParser } from '../../../../../../common/toolsKit';
 import { ContentOfOpt } from './ContentOfOpt';
 import { TriggerCondition } from './TriggerCondition';
 import { OptWrap } from '../../../../../roo/roo';
@@ -44,7 +44,7 @@ export function Opt({ optWrap }: OptProps) {
           }}
           multiline
           rows={1}
-          value={ splitStrArr(optWrap.obligors.map(v => longSnParser(v.toString()))) }
+          value={ splitStrArr(optWrap.obligors.map(v => userNoParser(v.toString(16)))) }
         />
 
       </Stack>

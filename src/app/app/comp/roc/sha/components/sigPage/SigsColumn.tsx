@@ -11,7 +11,7 @@ import {
 } from "@mui/icons-material"
 
 import { StrSig } from "./sigPage";
-import { dateParser, longSnParser, } from "../../../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser, } from "../../../../../common/toolsKit";
 
 interface SigColumnProps {
   isSha: boolean;
@@ -51,7 +51,7 @@ export function SigColumn({ isSha, isBuyer, sigs }: SigColumnProps) {
                 : 'outlined'
               }
               color={ isBuyer ? 'primary' : 'success' }
-              label={ longSnParser(v.signer.toString()) }
+              label={ userNoParser(v.signer.toString(16)) }
             />
 
             <TextField 

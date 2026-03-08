@@ -1,9 +1,10 @@
 import { IconButton, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { baseToDollar, dateParser, longSnParser } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Dispatch, SetStateAction } from "react";
 import { Refresh } from "@mui/icons-material";
-import { Order } from "../../../compV1/loe/loe";
+import { Order } from "../loo";
+
 
 interface OrdersListProps {
   name: string;
@@ -35,9 +36,9 @@ export function OrdersList({name, list, setOrder, setOpen, refresh}:OrdersListPr
     {
       field: 'issuer',
       headerName: name == "Sell" ? 'Seller' : 'Buyer',
-      valueGetter: p => longSnParser(p.row.node.issuer.toString()),
+      valueGetter: p => userNoParser(p.row.node.issuer.toString(16)),
       headerAlign: 'center',
-      align:'center',      
+      align:'center',
       width: 218,
     },
     { 

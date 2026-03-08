@@ -2,13 +2,13 @@ import { Paper, Stack, TextField } from "@mui/material";
 
 import { Loyalty } from "@mui/icons-material";
 import { useState } from "react";
-import { useCompKeeperPlaceSellOrder } from "../../../../../../../generated";
+import { useIlooKeeperPlaceSellOrder } from "../../../../../../../generated";
 import { ActionsOfOrderProps } from "../ActionsOfOrder";
 import { HexType, MaxData, MaxPrice, MaxSeqNo } from "../../../../common";
 import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { defaultOffer, InitOffer } from "../../../../compV1/loe/loe";
+import { defaultOffer, InitOffer } from "../../loo";
 
 export function PlaceSellOrder({ classOfShare, refresh }: ActionsOfOrderProps) {
   const { gk, setErrMsg} = useComBooxContext();
@@ -26,7 +26,7 @@ export function PlaceSellOrder({ classOfShare, refresh }: ActionsOfOrderProps) {
   const {
     isLoading: placeSellOrderLoading,
     write:placeSellOrder,
-  } = useCompKeeperPlaceSellOrder({
+  } = useIlooKeeperPlaceSellOrder({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bytes32Zero, HexType } from "../../../../common";
 
-import { useCompKeeperExecActionOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperExecActionOfGm } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { AddCircle, RemoveCircle, Surfing } from "@mui/icons-material";
@@ -34,7 +34,7 @@ export function ExecActionOfGm({motion, setOpen, refresh}:ActionsOnMotionProps) 
   const {
     isLoading: execActionLoading,
     write: execAction,
-  } = useCompKeeperExecActionOfGm({
+  } = useIgmmKeeperExecActionOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

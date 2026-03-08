@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { Close, StopCircleOutlined }  from '@mui/icons-material';
 
-import { useShareholdersAgreementFinalizeSha } from '../../../../../../../../generated';
+import { useIShareholdersAgreementFinalizeSha } from '../../../../../../../../generated';
 
 import { HexType } from '../../../../../common';
 import { refreshAfterTx } from '../../../../../common/toolsKit';
@@ -38,7 +38,7 @@ export function FinalizeSha({ addr, setIsFinalized, setNextStep }: FinalizeShaPr
   const {
     isLoading: finalizeShaLoading,
     write: finalizeSha,
-  } = useShareholdersAgreementFinalizeSha({
+  } = useIShareholdersAgreementFinalizeSha({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

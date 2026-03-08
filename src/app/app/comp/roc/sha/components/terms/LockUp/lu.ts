@@ -1,5 +1,5 @@
 import { readContract } from "@wagmi/core";
-import { lockUpABI } from "../../../../../../../../../generated";
+import { iLockUpABI } from "../../../../../../../../../generated";
 import { HexType } from "../../../../../../common";
 import { Deal } from "../../../../../roa/ia/ia";
 
@@ -16,7 +16,7 @@ export interface Locker {
 export async function isLocked(lu: HexType, seqOfShare: number): Promise<boolean> {
   let res = await readContract({
     address: lu,
-    abi: lockUpABI,
+    abi: iLockUpABI,
     functionName: 'isLocked',
     args: [ BigInt(seqOfShare) ],
   });
@@ -27,7 +27,7 @@ export async function isLocked(lu: HexType, seqOfShare: number): Promise<boolean
 export async function getLocker(lu: HexType, seq: number): Promise<Locker> {
   let res = await readContract({
     address: lu,
-    abi: lockUpABI,
+    abi: iLockUpABI,
     functionName: 'getLocker',
     args: [ BigInt(seq) ],
   });
@@ -44,7 +44,7 @@ export async function getLocker(lu: HexType, seq: number): Promise<Locker> {
 export async function lockedShares(lu: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: lu,
-    abi: lockUpABI,
+    abi: iLockUpABI,
     functionName: 'lockedShares',
   });
 
@@ -54,7 +54,7 @@ export async function lockedShares(lu: HexType): Promise<readonly bigint[]> {
 export async function isTriggered(lu: HexType, deal: Deal): Promise<boolean> {
   let res = await readContract({
     address: lu,
-    abi: lockUpABI,
+    abi: iLockUpABI,
     functionName: 'isTriggered',
     args: [ deal ],
   });
@@ -65,7 +65,7 @@ export async function isTriggered(lu: HexType, deal: Deal): Promise<boolean> {
 export async function isExempted(lu: HexType, ia: HexType, deal: Deal): Promise<boolean> {
   let res = await readContract({
     address: lu,
-    abi: lockUpABI,
+    abi: iLockUpABI,
     functionName: 'isExempted',
     args: [ ia, deal ],
   });

@@ -1,7 +1,7 @@
 
 import { Paper, Stack, TextField } from '@mui/material';
 
-import { useFuelTankSetRate, useUsdFuelTankSetRate } from '../../../../../generated';
+import { useUsdFuelTankSetRate } from '../../../../../generated';
 
 import { AddrOfTank, HexType } from '../../common';
 import { Settings } from '@mui/icons-material';
@@ -11,7 +11,7 @@ import { LoadingButton } from '@mui/lab';
 import { ActionOfFuelProps } from '../ActionsOfFuel';
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 
-export function SetRate({ refresh }: ActionOfFuelProps) {
+export function SetRate({ addrFT, refresh }: ActionOfFuelProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -30,7 +30,7 @@ export function SetRate({ refresh }: ActionOfFuelProps) {
     isLoading: setNewRateLoading,
     write: setNewRate
   } = useUsdFuelTankSetRate({
-    address: AddrOfTank,
+    address: addrFT,
     onError(err) {
       setErrMsg(err.message);
     },

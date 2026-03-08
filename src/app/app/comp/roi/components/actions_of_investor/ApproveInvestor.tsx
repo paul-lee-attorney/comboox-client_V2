@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Paper, Stack, TextField, } from "@mui/material";
 import { PersonAddAlt } from "@mui/icons-material";
 
-import { useCompKeeperApproveInvestor } from "../../../../../../../generated";
+import { useIroiKeeperApproveInvestor } from "../../../../../../../generated";
 
 import { ActionsOfInvestorProps } from "../ActionsOfInvestor";
 
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { CheckPI } from "./CheckPI";
@@ -31,7 +31,7 @@ export function ApproveInvestor({acct, refresh }: ActionsOfInvestorProps) {
   const {
     isLoading: approveInvestorLoading,
     write:approveInvestor,
-  } = useCompKeeperApproveInvestor({
+  } = useIroiKeeperApproveInvestor({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -75,7 +75,7 @@ export function ApproveInvestor({acct, refresh }: ActionsOfInvestorProps) {
           }}
           onChange={ e => {
             let input = e.target.value;
-            onlyInt('UserNo', input, MaxUserNo, setValid);
+            onlyHex('UserNo', input, 10, setValid);
             setUserNo(input);
           }}
           value={ userNo } 

@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { Alert, Button, IconButton, Stack, TextField } from '@mui/material';
 import { Close, DriveFileMove, Search } from '@mui/icons-material';
 
-import { AddrZero, MaxUserNo } from '../common';
-import { FormResults, HexParser, defFormResults, getTypeByName, hasError, onlyHex, onlyInt } from '../common/toolsKit';
+import { MaxUserNo } from '../common';
+import { FormResults, HexParser, defFormResults, getTypeByName, hasError, hexToBigInt, onlyHex, onlyInt, userNoParser } from '../common/toolsKit';
 import Link from 'next/link';
 import { Doc, getDocByUserNo, getHeadByBody, HeadOfDoc } from '../rc';
 
@@ -14,14 +14,11 @@ import { useComBooxContext } from '../../_providers/ComBooxContextProvider';
 
 import { CenterInfo } from './center_info/CenterInfo';
 import { getCompInfo } from '../comp/gk';
-import { getOldCompInfo } from '../compV1/gk';
 import { useAccount } from 'wagmi';
 
 export function GetComp() {
 
   const { setGK, setBoox, setOnPar, setCompInfo } = useComBooxContext();
-
-  const { isConnected } = useAccount();
 
   const [ regNum, setRegNum ] = useState<string>();
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
@@ -39,7 +36,7 @@ export function GetComp() {
 
     if (!regNum) return;
 
-    if (regNum.substring(0,2) == '0x' ) {
+    if (regNum.length >= 40) {
       let body = HexParser(regNum);
       getHeadByBody(body).then(
         (head: HeadOfDoc) => {
@@ -47,7 +44,7 @@ export function GetComp() {
               getCompInfo(body).then(
                 info => {
                   if (info.regNum > 0) {
-                    setRegNum(info.regNum.toString());
+                    setRegNum(userNoParser(info.regNum.toString(16)));
                     setOpen(false);
                     setGK(body);
                     setDoc({head: head, body: body});
@@ -62,34 +59,20 @@ export function GetComp() {
         }
       )
     } else {
-
-      if (Number(regNum) == 8) {
-        getDocByUserNo(8n).then(
-          (doc:Doc) => {
-            getOldCompInfo(doc.body).then(
+      getDocByUserNo(hexToBigInt(regNum)).then(
+        (doc:Doc) => {
+          if (BigInt(doc.head.typeOfDoc) == getTypeByName('GeneralKeeper')) {                
+            getCompInfo(doc.body).then(
               info => setCompInfo(info)
             );
             setGK(doc.body);
             setDoc({head:doc.head, body:doc.body});
             setOpen(false);
-        });
-      } else {
-        getDocByUserNo(BigInt(regNum)).then(
-          (doc:Doc) => {
-            if (BigInt(doc.head.typeOfDoc) == getTypeByName('GeneralKeeper')) {                
-              getCompInfo(doc.body).then(
-                info => setCompInfo(info)
-              );
-              setGK(doc.body);
-              setDoc({head:doc.head, body:doc.body});
-              setOpen(false);
-            } else {
-              setDoc(undefined);
-              setOpen(true);              
-            }
-        });
-      }
-      
+          } else {
+            setDoc(undefined);
+            setOpen(true);
+          }
+      });
     }
   }
 
@@ -118,7 +101,7 @@ export function GetComp() {
         />
 
         <Button 
-          disabled={ hasError(valid) || !isConnected }
+          disabled={ hasError(valid) }
           sx={{ 
             m:1, ml:3, width: 218, height: 40,                      
             '&.Mui-disabled': {

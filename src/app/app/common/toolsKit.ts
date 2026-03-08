@@ -295,7 +295,7 @@ export function onlyNum(id: string, input: string, max:bigint, maxDec: number, s
 }
 
 export function isHex(input: string): boolean {
-  let reg = /^((0x|\$)[a-f0-9A-F]+)$/;
+  let reg = /^(?:0x)?[a-f0-9A-F]+$/;
   return reg.test(input);
 }
 
@@ -465,3 +465,36 @@ export const getTypeByName = (name: string): bigint => {
   return hash & BigInt(0xFFFFFFFF);
 }
 
+export function userNoParser(hex:string) {
+  let s = String(hex).trim().toUpperCase();
+
+  const has0x = /^0x/i.test(s);
+  if (has0x) s = s.slice(2);
+
+  s = s.replace(/[^0-9A-F]/g, "");
+
+  if (s.length === 0 || /^0+$/.test(s)) return "-";
+
+  const parts = [];
+  for (let i = s.length; i > 0; i -= 5) {
+    parts.unshift(s.slice(Math.max(0, i - 5), i));
+  }
+
+  return parts.join("_");
+}
+
+export function userNoCodifier(userNo: string) {
+  if (userNo === '-') return '0'.padStart(10, '0');
+
+  userNo = userNo.replace('0x', '');
+
+  let parts = userNo.split('_');
+  let hex = parts.length > 1
+      ? parts.map(part => part.padStart(5, '0')).join('')
+      : userNo.padStart(10, '0');
+  return hex;
+}
+
+export function hexToBigInt(hex:string) {
+  return BigInt(`0x${hex.padStart(64,'0')}`);
+}

@@ -3,14 +3,14 @@ import { Paper, Stack, TextField } from "@mui/material";
 
 import { RedoOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { useCompKeeperWithdrawInitialOffer } from "../../../../../../../generated";
+import { useIlooKeeperWithdrawInitialOffer } from "../../../../../../../generated";
 import { ActionsOfOrderProps } from "../ActionsOfOrder";
 
 import { HexType, MaxPrice, MaxSeqNo } from "../../../../common";
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { defaultOffer, InitOffer } from "../../../../compV1/loe/loe";
+import { defaultOffer, InitOffer } from "../../loo";
 
 export function WithdrawInitialOffer({ classOfShare, refresh }: ActionsOfOrderProps) {
   const { gk, setErrMsg} = useComBooxContext();
@@ -27,7 +27,7 @@ export function WithdrawInitialOffer({ classOfShare, refresh }: ActionsOfOrderPr
   const {
     isLoading: withdrawInitOfferLoading,
     write:withdrawInitOffer,
-  } = useCompKeeperWithdrawInitialOffer({
+  } = useIlooKeeperWithdrawInitialOffer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

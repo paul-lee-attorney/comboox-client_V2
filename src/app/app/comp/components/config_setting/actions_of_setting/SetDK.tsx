@@ -10,7 +10,7 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { AddrZero, HexType } from "../../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../common/toolsKit";
 
-import { useAccessControlSetDirectKeeper } from "../../../../../../../generated";
+import { useIAccessControlSetDirectKeeper } from "../../../../../../../generated";
 
 import { AccessControlProps } from "./SetOwner";
 
@@ -31,7 +31,7 @@ export function SetDK({docAddr, setDocAddr, setOpen}:AccessControlProps) {
   const {
     isLoading: updateDKLoading,
     write: updateDK,
-  } = useAccessControlSetDirectKeeper({
+  } = useIAccessControlSetDirectKeeper({
     address: docAddr,
     onError(err) {
       setErrMsg(err.message);

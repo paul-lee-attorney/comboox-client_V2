@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../common";
-import { cashierABI } from "../../../../generated";
+import { iCashierABI } from "../../../../generated";
 
 // ==== Balances ====
 
@@ -8,7 +8,7 @@ export async function custodyOf(addr:HexType, acct:HexType): Promise<bigint> {
 
   let res = await readContract({
      address: addr,
-     abi: cashierABI,
+     abi: iCashierABI,
      functionName: 'custodyOf',
      args: [acct]
    })
@@ -21,7 +21,7 @@ export async function totalEscrow(addr:HexType, blk?: bigint): Promise<bigint> {
 
   let res = await readContract({
      address: addr,
-     abi: cashierABI,
+     abi: iCashierABI,
      functionName: 'totalEscrow',
      blockNumber: blk,
    })
@@ -33,7 +33,7 @@ export async function totalUsdDeposits(addr:HexType, blk?: bigint): Promise<bigi
 
   let res = await readContract({
      address: addr,
-     abi: cashierABI,
+     abi: iCashierABI,
      functionName: 'totalDeposits',
      blockNumber: blk,
    })
@@ -45,7 +45,7 @@ export async function depositOfMine(addr:HexType, acct:bigint): Promise<bigint> 
 
   let res = await readContract({
      address: addr,
-     abi: cashierABI,
+     abi: iCashierABI,
      functionName: 'depositOfMine',
      args: [acct],
    })
@@ -57,7 +57,7 @@ export async function balanceOfComp(addr:HexType, blk?: bigint): Promise<bigint>
 
   let res = await readContract({
      address: addr,
-     abi: cashierABI,
+     abi: iCashierABI,
      functionName: 'balanceOfComp',
      blockNumber: blk,
    })

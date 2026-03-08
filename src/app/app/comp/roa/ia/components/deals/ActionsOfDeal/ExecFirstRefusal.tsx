@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Bytes32Zero, HexType, booxMap } from "../../../../../../common";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperExecFirstRefusal } from "../../../../../../../../../generated";
+import { useIshaKeeperExecFirstRefusal } from "../../../../../../../../../generated";
 import { 
   Divider, 
   FormControl, 
@@ -57,7 +57,7 @@ export function ExecFirstRefusal({addr, deal, setOpen, setDeal, refresh}:Actions
   const {
     isLoading: execFirstRefusalLoading,
     write: execFirstRefusal,
-  } = useCompKeeperExecFirstRefusal({
+  } = useIshaKeeperExecFirstRefusal({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

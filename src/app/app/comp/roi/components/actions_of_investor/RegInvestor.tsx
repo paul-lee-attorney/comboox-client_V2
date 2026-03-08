@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 import { Box, Button, Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField, } from "@mui/material";
 import { BorderColor, Camera, UploadOutlined } from "@mui/icons-material";
 
-import { FormResults, HexParser, defFormResults, hasError, longSnParser, onlyChars, onlyEmail, onlyHex, onlyInt, onlyNumOrChar, refreshAfterTx, stampToUtc, utcToStamp } from "../../../../common/toolsKit";
-import { useCompKeeperRegInvestor } from "../../../../../../../generated";
+import { 
+  FormResults, HexParser, defFormResults, hasError, 
+  longSnParser, onlyChars, onlyEmail, onlyHex, onlyInt, 
+  onlyNumOrChar, refreshAfterTx, stampToUtc, utcToStamp 
+} from "../../../../common/toolsKit";
+
+import { useIroiKeeperRegInvestor } from "../../../../../../../generated";
 import { ActionsOfInvestorProps } from "../ActionsOfInvestor";
-import { AddrZero, Bytes32Zero, HexType, keepersMap, MaxUserNo } from "../../../../common";
+import { AddrZero, Bytes32Zero, HexType, MaxUserNo } from "../../../../common";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { UserInfo, countries, defaultUserInfo, idDocTypes, statesOfUS } from "../../../../../api/firebase";
@@ -23,7 +28,7 @@ import { getMyUserNo } from "../../../../rc";
 export function RegInvestor({ refresh }: ActionsOfInvestorProps) {
   const { gk, setErrMsg } = useComBooxContext();
 
-  const [ groupRep, setGroupRep ] = useState<string>('0');
+  const [ groupRep, setGroupRep ] = useState<string>('00');
   const [ idHash, setIdHash ] = useState<HexType>(Bytes32Zero);
 
   const { data: signer } = useWalletClient();
@@ -100,7 +105,7 @@ export function RegInvestor({ refresh }: ActionsOfInvestorProps) {
   const {
     isLoading: regInvestorLoading,
     write:regInvestor,
-  } = useCompKeeperRegInvestor({
+  } = useIroiKeeperRegInvestor({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -385,7 +390,7 @@ export function RegInvestor({ refresh }: ActionsOfInvestorProps) {
               }}
               onChange={ e => {
                 let input = e.target.value;
-                onlyInt('GroupRep', input, MaxUserNo, setValid);
+                onlyHex('GroupRep', input, 10, setValid);
                 setGroupRep(input); 
               }}
               value={ groupRep } 

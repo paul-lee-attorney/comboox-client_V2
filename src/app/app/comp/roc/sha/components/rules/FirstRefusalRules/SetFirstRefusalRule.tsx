@@ -19,7 +19,7 @@ import {
 import { AddRule } from '../AddRule'
 import { HexType, MaxUserNo } from '../../../../../../common';
 import { ListAlt } from '@mui/icons-material';
-import { FormResults, defFormResults, longSnParser, onlyInt } from '../../../../../../common/toolsKit';
+import { FormResults, defFormResults, longSnParser, onlyHex, onlyInt, userNoCodifier, userNoParser } from '../../../../../../common/toolsKit';
 import { RulesEditProps } from '../GovernanceRules/SetGovernanceRule';
 import { getRule } from '../../../sha';
 
@@ -45,10 +45,10 @@ export function frCodifier(rule: FirstRefusalRule, seq: number): HexType {
     (rule.membersEqual ? '01' : '00') +
     (rule.proRata ? '01' : '00') +
     (rule.basedOnPar ? '01' : '00') +
-    (Number(rule.rightholders[0]).toString(16).padStart(10, '0')) +
-    (Number(rule.rightholders[1]).toString(16).padStart(10, '0')) +
-    (Number(rule.rightholders[2]).toString(16).padStart(10, '0')) +
-    (Number(rule.rightholders[3]).toString(16).padStart(10, '0')) +
+    userNoCodifier(rule.rightholders[0]) +
+    userNoCodifier(rule.rightholders[1]) +
+    userNoCodifier(rule.rightholders[2]) +
+    userNoCodifier(rule.rightholders[3]) +
     (Number(rule.para).toString(16).padStart(4, '0')) +
     (Number(rule.argu).toString(16).padStart(4, '0'))
   }`;
@@ -66,10 +66,10 @@ export function frParser(hexRule: HexType ): FirstRefusalRule {
     proRata: hexRule.substring(14, 16) === '01',
     basedOnPar: hexRule.substring(16, 18) === '01',
     rightholders: [
-      parseInt(hexRule.substring(18, 28), 16).toString(),
-      parseInt(hexRule.substring(28, 38), 16).toString(),
-      parseInt(hexRule.substring(38, 48), 16).toString(),
-      parseInt(hexRule.substring(48, 58), 16).toString(),
+      userNoParser(hexRule.substring(18, 28)),
+      userNoParser(hexRule.substring(28, 38)),
+      userNoParser(hexRule.substring(38, 48)),
+      userNoParser(hexRule.substring(48, 58)),
     ],
     para: parseInt(hexRule.substring(58, 62), 16).toString(),
     argu: parseInt(hexRule.substring(62, 66), 16).toString(),
@@ -146,6 +146,7 @@ export function SetFirstRefusalRule({ sha, seq, isFinalized, time, refresh }: Ru
               {!isFinalized && (
                 <AddRule 
                   sha={ sha }
+                  seqOfRule = { seq }
                   rule={ frCodifier(objFR, seq) }
                   isFinalized={isFinalized}
                   valid={valid}
@@ -259,14 +260,14 @@ export function SetFirstRefusalRule({ sha, seq, isFinalized, time, refresh }: Ru
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Rightholder_1', input, MaxUserNo, setValid);
+                    onlyHex('Rightholder_1', input, 10, setValid);
                     setObjFR((v) => {
                       let holders = [...v.rightholders];
                       holders[0] = input;
                       return {...v, rightholders: holders};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objFR.rightholders[0]) : objFR.rightholders[0] }
+                  value={ objFR.rightholders[0] }
                 />
 
                 <TextField 
@@ -282,14 +283,14 @@ export function SetFirstRefusalRule({ sha, seq, isFinalized, time, refresh }: Ru
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Rightholder_2', input, MaxUserNo, setValid);
+                    onlyHex('Rightholder_2', input, 10, setValid);
                     setObjFR((v) => {
                       let holders = [...v.rightholders];
                       holders[1] = input;
                       return {...v, rightholders: holders};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objFR.rightholders[1]) : objFR.rightholders[1] }
+                  value={ objFR.rightholders[1] }
                 />
 
                 <TextField 
@@ -305,14 +306,14 @@ export function SetFirstRefusalRule({ sha, seq, isFinalized, time, refresh }: Ru
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Rightholder_3', input, MaxUserNo, setValid);
+                    onlyHex('Rightholder_3', input, 10, setValid);
                     setObjFR((v) => {
                       let holders = [...v.rightholders];
                       holders[2] = input;
                       return {...v, rightholders: holders};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objFR.rightholders[2]) : objFR.rightholders[2] }
+                  value={ objFR.rightholders[2] }
                 />
 
                 <TextField 
@@ -328,14 +329,14 @@ export function SetFirstRefusalRule({ sha, seq, isFinalized, time, refresh }: Ru
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Rightholder_4', input, MaxUserNo, setValid);
+                    onlyHex('Rightholder_4', input, 10, setValid);
                     setObjFR((v) => {
                       let holders = [...v.rightholders];
                       holders[3] = input;
                       return {...v, rightholders: holders};
                     });
                   }}
-                  value={ isFinalized ? longSnParser(objFR.rightholders[3]) : objFR.rightholders[3] }
+                  value={ objFR.rightholders[3] }
                 />
 
               </Stack>

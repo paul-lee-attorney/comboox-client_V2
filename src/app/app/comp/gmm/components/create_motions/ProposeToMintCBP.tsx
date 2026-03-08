@@ -1,16 +1,16 @@
 import { useState } from "react";
 
 
-import { AddrOfRegCenter, Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
+import { AddrOfRegCenter, Bytes32Zero, HexType, MaxSeqNo } from "../../../../common";
 
 
 import { Divider,  Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { useCompKeeperCreateAction } from "../../../../../../../generated";
+import { useIgmmKeeperCreateActionOfGm } from "../../../../../../../generated";
 
 
 export function ProposeToMintCBP({ refresh }:CreateMotionProps) {
@@ -21,6 +21,7 @@ export function ProposeToMintCBP({ refresh }:CreateMotionProps) {
   const [ seqOfVR, setSeqOfVR ] = useState<string>('9');
   const [ executor, setExecutor ] = useState<string>('0');
 
+  // '0x40c10f19' === bytes4(keccak256(mint(address,uint256)));
   let params = '0x40c10f19' + gk?.substring(2,).padStart(64, '0');
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
@@ -34,7 +35,7 @@ export function ProposeToMintCBP({ refresh }:CreateMotionProps) {
   const {
     isLoading: proposeMintLoading,
     write: proposeMint,
-  } = useCompKeeperCreateAction({
+  } = useIgmmKeeperCreateActionOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -54,7 +55,7 @@ export function ProposeToMintCBP({ refresh }:CreateMotionProps) {
           [AddrOfRegCenter],
           [0n],
           [HexParser(params + strNumToBigInt(amt, 18).toString(16).padStart(64, '0'))],
-          Bytes32Zero, BigInt(executor)
+          Bytes32Zero, hexToBigInt(executor)
         ],
       });
     }
@@ -114,7 +115,7 @@ export function ProposeToMintCBP({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Executor', input, MaxUserNo, setValid);
+                onlyHex('Executor', input, 10, setValid);
                 setExecutor(input);
               }}
               value={ executor }

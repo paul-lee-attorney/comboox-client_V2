@@ -165,6 +165,7 @@ export function SetGovernanceRule({ sha, seq, isFinalized, time, refresh }: Rule
                 {!isFinalized && (
                   <AddRule 
                     sha={ sha }
+                    seqOfRule = { 0 }
                     rule={ strGRCodifier(objGR) }
                     isFinalized={ isFinalized }
                     valid = {valid}

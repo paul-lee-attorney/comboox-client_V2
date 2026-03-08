@@ -10,7 +10,7 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { AddrZero, HexType } from "../../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../common/toolsKit";
 
-import { useAccessControlInitKeepers } from "../../../../../../../generated";
+import { useIAccessControlInitKeepers } from "../../../../../../../generated";
 
 import { AccessControlProps } from "./SetOwner";
 
@@ -31,7 +31,7 @@ export function InitKeepers({docAddr, setDocAddr, setOpen}:AccessControlProps) {
   const {
     isLoading: initKeepersLoading,
     write: initKeepers,
-  } = useAccessControlInitKeepers({
+  } = useIAccessControlInitKeepers({
     address: docAddr,
     onError(err) {
       setErrMsg(err.message);

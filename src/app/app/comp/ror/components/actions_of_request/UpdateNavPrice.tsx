@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Paper, Stack, TextField } from "@mui/material";
 
 import { EditNoteOutlined } from "@mui/icons-material";
-import { useFundKeeperUpdateNavPrice } from "../../../../../../../generated";
+import { useIrorKeeperUpdateNavPrice } from "../../../../../../../generated";
 
 import { FormResults, defFormResults, hasError, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 
@@ -29,7 +29,7 @@ export function UpdateNavPrice({ classOfShare, refresh }: ActionsOfRequestProps)
   const {
     isLoading: updatePriceLoading,
     write:updatePrice,
-  } = useFundKeeperUpdateNavPrice({
+  } = useIrorKeeperUpdateNavPrice({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

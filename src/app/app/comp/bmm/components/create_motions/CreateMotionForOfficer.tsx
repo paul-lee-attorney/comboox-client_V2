@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { 
-  useCompKeeperCreateMotionToRemoveOfficer, 
-  useCompKeeperNominateOfficer, 
+  useIbmmKeeperCreateMotionToRemoveOfficer, 
+  useIbmmKeeperNominateOfficer, 
 } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
@@ -30,7 +30,7 @@ export function CreateMotionForOfficer({ refresh }:CreateMotionProps ) {
   const {
     isLoading: addOfficerLoading,
     write: addOfficer,
-  } = useCompKeeperNominateOfficer({
+  } = useIbmmKeeperNominateOfficer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -63,13 +63,13 @@ export function CreateMotionForOfficer({ refresh }:CreateMotionProps ) {
   const{
     isLoading: removeOfficerLoading,
     write: removeOfficer
-  } = useCompKeeperCreateMotionToRemoveOfficer({
+  } = useIbmmKeeperCreateMotionToRemoveOfficer({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
     },
     onSuccess(data) {
-      setLoading(true);
+      setLoadingRemove(true);
       let hash: HexType = data.hash;
       refreshAfterTx(hash, updateResultsRemove);
     }

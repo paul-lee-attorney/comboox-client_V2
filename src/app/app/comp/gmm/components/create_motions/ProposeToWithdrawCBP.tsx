@@ -9,7 +9,7 @@ import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, ref
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { useCompKeeperCreateAction } from "../../../../../../../generated";
+import { useIgmmKeeperCreateActionOfGm } from "../../../../../../../generated";
 
 export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
 
@@ -30,7 +30,7 @@ export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
   const {
     isLoading: proposeToWithdrawCBPLoading,
     write: proposeToWithdrawCBP,
-  } = useCompKeeperCreateAction({
+  } = useIgmmKeeperCreateActionOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

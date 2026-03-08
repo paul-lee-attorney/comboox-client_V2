@@ -15,7 +15,7 @@ import {
 
 import { Approval, Close }  from '@mui/icons-material';
 
-import { useOwnableSetNewOwner } from '../../../../../../../../generated';
+import { useIOwnableSetNewOwner } from '../../../../../../../../generated';
 
 import { AddrZero, HexType } from '../../../../../common';
 import { getOwner } from '../../../../../common/ownable';
@@ -58,7 +58,7 @@ export function SetOwner({ addr }: AccessControlProps) {
   const {
     isLoading: setOwnrLoading,
     write: setOwnr,
-  } = useOwnableSetNewOwner({
+  } = useIOwnableSetNewOwner({
     address: addr,
     onError(err) {
       setErrMsg(err.message);
@@ -127,7 +127,7 @@ export function SetOwner({ addr }: AccessControlProps) {
 
           variant='outlined' 
           severity='info' 
-          sx={{ m:1, height:55 }} 
+          sx={{ m:1, height:55 }}
         >
           Owner: { newOwner?.substring(0, 6) + '...' + newOwner?.substring(38, 42) } 
         </Alert>

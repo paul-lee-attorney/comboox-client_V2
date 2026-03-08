@@ -17,7 +17,7 @@ import {
   RemoveCircle,
 } from "@mui/icons-material"
 import {
-  useShareholdersAgreementRemoveRule 
+  useIShareholdersAgreementRemoveRule 
 } from "../../../../../../../../../generated";
 import { SetListingRule } from "./SetListingRule";
 import { GroupRulesSettingProps } from "../VotingRules/VotingRules";
@@ -73,7 +73,7 @@ export function ListingRules({sha, initSeqList, isFinalized, time, refresh}: Gro
   const {
     isLoading: removeRuleLoading,
     write: removeRule,
-  } = useShareholdersAgreementRemoveRule({
+  } = useIShareholdersAgreementRemoveRule({
     address: sha,
     args: cp && cp.length > 0 ? [BigInt(cp[cp.length - 1])] : undefined,
     onError(err) {

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 
-import { 
-  useCompKeeperCreateMotionToApproveDoc, 
+import {
+  useIbmmKeeperCreateMotionToApproveDoc, 
 } from "../../../../../../../generated";
 
 import { Paper, Stack, TextField } from "@mui/material";
@@ -32,7 +32,7 @@ export function CreateMotionToApproveDoc({refresh}:CreateMotionProps) {
   const {
     isLoading: proposeDocLoading,
     write: proposeDoc,
-  } = useCompKeeperCreateMotionToApproveDoc({
+  } = useIbmmKeeperCreateMotionToApproveDoc({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

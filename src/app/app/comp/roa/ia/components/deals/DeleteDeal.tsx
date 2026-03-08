@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Deal, defaultDeal } from "../../ia";
-import { useInvestmentAgreementDelDeal } from "../../../../../../../../generated";
+import { useIInvestmentAgreementDelDeal } from "../../../../../../../../generated";
 import { HexType } from "../../../../../common";
 import { Delete } from "@mui/icons-material";
 import { refreshAfterTx } from "../../../../../common/toolsKit";
@@ -31,7 +31,7 @@ export function DeleteDeal({addr, seqOfDeal, setOpen, setDeal, refresh}:DeleteDe
 
   const {
     write: deleteDeal
-  } = useInvestmentAgreementDelDeal({
+  } = useIInvestmentAgreementDelDeal({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

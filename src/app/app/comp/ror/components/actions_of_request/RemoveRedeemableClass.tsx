@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Paper, Stack, TextField } from "@mui/material";
 
 import { RemoveCircleOutlineOutlined } from "@mui/icons-material";
-import { useFundKeeperRemoveRedeemableClass } from "../../../../../../../generated";
+import { useIrorKeeperRemoveRedeemableClass } from "../../../../../../../generated";
 
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 
@@ -29,7 +29,7 @@ export function RemoveRedeemableClass({ refresh }: ActionsOfRequestProps) {
   const {
     isLoading: removeClassLoading,
     write:removeClass,
-  } = useFundKeeperRemoveRedeemableClass({
+  } = useIrorKeeperRemoveRedeemableClass({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

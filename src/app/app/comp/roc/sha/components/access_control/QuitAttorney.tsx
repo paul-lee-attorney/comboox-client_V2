@@ -11,7 +11,7 @@ import {
 import { Skateboarding, Close, }  from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 
-import { useDraftControlRenounceRole } from '../../../../../../../../generated';
+import { useIDraftControlRenounceRole } from '../../../../../../../../generated';
 
 import { AccessControlProps } from './SetOwner';
 
@@ -38,7 +38,7 @@ export function QuitAttorney({ addr }: AccessControlProps) {
   const {
     isLoading: quitAttorneyLoading,
     write: quitAttorney,
-  } = useDraftControlRenounceRole({
+  } = useIDraftControlRenounceRole({
     address: addr,
     args: [ ATTORNEYS ],
     onError(err) {

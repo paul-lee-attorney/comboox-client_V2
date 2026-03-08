@@ -16,7 +16,7 @@ import {
 import { Close, PersonAdd }  from '@mui/icons-material';
 
 import {
-  useDraftControlGrantRole,
+  useIDraftControlGrantRole,
 } from '../../../../../../../../generated';
 
 import { AddrZero, HexType } from '../../../../../common';
@@ -50,7 +50,7 @@ export function AppointAttorney({ addr }: AccessControlProps) {
   const {
     isLoading: grantRoleLoading,
     write: grantRole,
-  } = useDraftControlGrantRole({
+  } = useIDraftControlGrantRole({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

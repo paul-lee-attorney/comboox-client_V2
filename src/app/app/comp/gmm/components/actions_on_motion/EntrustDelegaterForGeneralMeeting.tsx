@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { 
-  useCompKeeperEntrustDelegaterForGeneralMeeting, 
+  useIgmmKeeperEntrustDelegaterForGeneralMeeting, 
 } from "../../../../../../../generated";
 
 import { Alert, Collapse, IconButton, Stack, TextField, } from "@mui/material";
@@ -33,7 +33,7 @@ export function EntrustDelegaterForGeneralMeeting({ motion, setOpen, refresh }: 
   const {
     isLoading: entrustDelegaterOfMemberLoading,
     write: entrustDelegaterOfMember,
-  } = useCompKeeperEntrustDelegaterForGeneralMeeting({
+  } = useIgmmKeeperEntrustDelegaterForGeneralMeeting({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

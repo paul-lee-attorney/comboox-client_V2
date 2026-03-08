@@ -9,8 +9,6 @@ type ContextType = {
   setGK: Dispatch<SetStateAction<HexType | undefined>>;
   boox: HexType[] | undefined;
   setBoox: Dispatch<SetStateAction<HexType[] | undefined>>;
-  keepers: HexType[] | undefined;
-  setKeepers: Dispatch<SetStateAction<HexType[] | undefined>>;
   errMsg: string | undefined;
   setErrMsg: Dispatch<SetStateAction<string | undefined>>;
   onPar: boolean | undefined;
@@ -26,8 +24,6 @@ const ComBooxContext = createContext<ContextType>({
   setGK: ()=>{},
   boox: undefined,
   setBoox: ()=>{},
-  keepers: undefined,
-  setKeepers: ()=>{},
   errMsg: undefined,
   setErrMsg: ()=>{},
   onPar: undefined,
@@ -44,7 +40,6 @@ const ComBooxContextProvider = ({ children }: ProviderType) => {
   const [ userNo, setUserNo ] = useState<number>();
   const [ gk, setGK ] = useState<HexType>();
   const [ boox, setBoox ] = useState<HexType[]>();
-  const [ keepers, setKeepers ] = useState<HexType[]>();
   const [ errMsg, setErrMsg ] = useState<string>();
   const [ onPar, setOnPar ] = useState<boolean>();
   const [ compInfo, setCompInfo ] = useState<CompInfo>();
@@ -55,7 +50,6 @@ const ComBooxContextProvider = ({ children }: ProviderType) => {
         userNo, setUserNo, 
         gk, setGK, 
         boox, setBoox,
-        keepers, setKeepers, 
         errMsg, setErrMsg, 
         onPar, setOnPar, 
         compInfo, setCompInfo

@@ -14,7 +14,7 @@ import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
 
-export function SetRoyaltyRule({ refreshList, getUser }:ActionsOfUserProps) {
+export function SetRoyaltyRule({ refresh }:ActionsOfUserProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -22,9 +22,8 @@ export function SetRoyaltyRule({ refreshList, getUser }:ActionsOfUserProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [loading, setLoading] = useState(false);
 
-  const refresh = () => {
-    getUser();
-    refreshList();
+  const updateResults = () => {
+    refresh();
     setLoading(false);
   }
 
@@ -39,7 +38,7 @@ export function SetRoyaltyRule({ refreshList, getUser }:ActionsOfUserProps) {
     onSuccess(data) {
       setLoading(true);
       let hash: HexType = data.hash;
-      refreshAfterTx(hash, refresh);
+      refreshAfterTx(hash, updateResults);
     }
   })
 

@@ -8,14 +8,14 @@ import { Create } from "@mui/icons-material";
 
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
 
-import { CopyLongStrSpan, CopyLongStrTF } from "../../common/CopyLongStr";
+import { CopyLongStrTF } from "../../common/CopyLongStr";
 import { InfoOfFile, getFilesListWithInfo, } from "./components/filesFolder";
 import { GetFilesList } from "./components/GetFilesList";
 import { IndexCard } from "./components/IndexCard";
-import { AddrZero, HexType, MaxPrice, booxMap } from "../../common";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../common/toolsKit";
+import { AddrZero, HexType, booxMap } from "../../common";
+import { FormResults, defFormResults, getTypeByName, hasError, refreshAfterTx } from "../../common/toolsKit";
 
-import { useCompKeeperCreateSha } from "../../../../../generated";
+import { useIrocKeeperCreateSha } from "../../../../../generated";
 import { SetBookAddr } from "../../components/SetBookAddr";
 import { counterOfVersions } from "../../rc";
 
@@ -36,7 +36,7 @@ function RegisterOfConstitution() {
   const [ version, setVersion ] = useState<string>('1');
 
   useEffect(()=>{
-    counterOfVersions(22n).then(
+    counterOfVersions(getTypeByName("ShareholdersAgreement")).then(
       vr => setVersion(vr.toString())
     );
   }, [time]);
@@ -44,7 +44,7 @@ function RegisterOfConstitution() {
   const {
     isLoading: createShaLoading, 
     write: createSha,
-  } = useCompKeeperCreateSha({
+  } = useIrocKeeperCreateSha({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

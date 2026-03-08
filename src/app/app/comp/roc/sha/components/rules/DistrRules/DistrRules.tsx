@@ -12,7 +12,7 @@ import { SetDistrRule, } from "./SetDistrRule";
 import { HexType } from "../../../../../../common";
 import { refreshAfterTx } from "../../../../../../common/toolsKit";
 
-import { useShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
+import { useIShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
 import { GroupRulesSettingProps } from "../VotingRules/VotingRules";
 
 
@@ -65,9 +65,11 @@ export function DistrRules({sha, initSeqList, isFinalized, time, refresh}: Group
   const {
     isLoading: removeRuleLoading,
     write: removeRule,
-  } = useShareholdersAgreementRemoveRule({
+  } = useIShareholdersAgreementRemoveRule({
     address: sha,
-    args: [BigInt(cp[cp.length - 1])],
+    args: cp && cp.length > 0 
+      ? [BigInt(cp[cp.length - 1])]
+      : undefined,
     onError(err) {
       setErrMsg(err.message);
     },

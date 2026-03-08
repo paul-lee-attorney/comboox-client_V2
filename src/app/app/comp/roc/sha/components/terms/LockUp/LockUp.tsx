@@ -24,10 +24,10 @@ import {
 } from "@mui/icons-material"
 
 import {
-  useLockUpSetLocker,
-  useLockUpRemoveKeyholder,
-  useLockUpDelLocker,
-  useLockUpAddKeyholder,
+  useILockUpSetLocker,
+  useILockUpRemoveKeyholder,
+  useILockUpDelLocker,
+  useILockUpAddKeyholder,
 } from "../../../../../../../../../generated";
 
 import { DateTimeField } from "@mui/x-date-pickers";
@@ -39,7 +39,11 @@ import { AddTerm } from "../AddTerm";
 import { LockerOfShare } from "./LockerOfShare";
 import { Locker, getLockers } from "./lu";
 
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx, stampToUtc, utcToStamp } from "../../../../../../common/toolsKit";
+import { 
+  FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, 
+  refreshAfterTx, stampToUtc, utcToStamp 
+} from "../../../../../../common/toolsKit";
+
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 
 
@@ -64,7 +68,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: addLockerLoading,
     write: addLocker 
-  } = useLockUpSetLocker({
+  } = useILockUpSetLocker({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -94,7 +98,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: removeLockerLoading, 
     write: removeLocker 
-  } = useLockUpDelLocker({
+  } = useILockUpDelLocker({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -123,7 +127,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: addKeyholderLoading, 
     write: addKeyholder,
-  } = useLockUpAddKeyholder({
+  } = useILockUpAddKeyholder({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -139,7 +143,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
     addKeyholder({
       args: [ 
         BigInt(seqOfShare), 
-        BigInt(keyholder) 
+        hexToBigInt(keyholder) 
       ],
     });
   };
@@ -153,7 +157,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: removeKeyholderLoading, 
     write: removeKeyholder,
-  } = useLockUpRemoveKeyholder({
+  } = useILockUpRemoveKeyholder({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -169,7 +173,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
     removeKeyholder({
       args: [ 
         BigInt(seqOfShare), 
-        BigInt(keyholder) 
+        hexToBigInt(keyholder) 
       ],
     });
   };
@@ -316,7 +320,7 @@ export function LockUp({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
                         }}
                         onChange={(e) => {
                           let input = e.target.value;
-                          onlyInt('Keyholder', input, MaxUserNo, setValid);
+                          onlyHex('Keyholder', input, 10, setValid);
                           setKeyholder(input);
                         }}
                         value={ keyholder }              

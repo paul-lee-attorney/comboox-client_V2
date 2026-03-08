@@ -16,16 +16,14 @@ import { CreateMotionForAction } from "./create_motions/CreateMotionForAction";
 import { ProposeToTransferFund } from "./create_motions/ProposeToTransferFund";
 import { ProposeToDistributeUsd } from "./create_motions/ProposeToDistributeUsd";
 import { CreateMotionProps } from "../../bmm/components/CreateMotionOfBoardMeeting";
-import { ProposeToDeprecateGK } from "./create_motions/ProposeToDeprecateGK";
-import { ProposeToMintCBP } from "../../../compV1/gmm/components/create_motions/ProposeToMintCBP";
 import { ProposeToWithdrawCBP } from "./create_motions/ProposeToWithdrawCBP";
+import { ProposeToMintCBP } from "./create_motions/ProposeToMintCBP";
 
 export function CreateMotionOfGm({ refresh }: CreateMotionProps) {
 
   const nameOfTypes = [
     'Nominate/Remove Officer', 'Approve Document', 'Transfer Fund', 
-    'Distribute USD', 'Approve Action', 'Deprecate GK', 'Mint CBP',
-    'Withdraw CBP'
+    'Distribute USD', 'Approve Action', 'Mint CBP', 'Withdraw CBP'
   ];
 
   const compOfTypes = [
@@ -34,9 +32,8 @@ export function CreateMotionOfGm({ refresh }: CreateMotionProps) {
     <ProposeToTransferFund key={2} refresh={refresh} />,
     <ProposeToDistributeUsd key={3} refresh={refresh} />,
     <CreateMotionForAction key={4} refresh={refresh} />,
-    <ProposeToDeprecateGK key={5} refresh={refresh} />,
-    <ProposeToMintCBP key={6} refresh={refresh} />,
-    <ProposeToWithdrawCBP key={7} refresh={refresh} />,
+    <ProposeToMintCBP key={5} refresh={refresh} />,
+    <ProposeToWithdrawCBP key={6} refresh={refresh} />,
   ]
   
   const [ typeOfMotion, setTypeOfMotion ] = useState('0');

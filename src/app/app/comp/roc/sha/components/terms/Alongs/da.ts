@@ -1,7 +1,7 @@
 import { readContract } from "@wagmi/core";
 import { bigIntToStrNum, strNumToBigInt } from "../../../../../../common/toolsKit";
 import { HexType } from "../../../../../../common";
-import { alongsABI } from "../../../../../../../../../generated";
+import { iAlongsABI } from "../../../../../../../../../generated";
 import { Deal } from "../../../../../roa/ia/ia";
 
 export interface LinkRule{
@@ -101,7 +101,7 @@ export const triggerTypes = [
 export async function isDragger(addr: HexType, dragger: number): Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'isDragger',
     args: [ BigInt(dragger)],
   })
@@ -112,7 +112,7 @@ export async function isDragger(addr: HexType, dragger: number): Promise<boolean
 export async function getLinkRule(addr: HexType, dragger: string): Promise<LinkRule>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'getLinkRule',
     args: [ BigInt(dragger)],
   })
@@ -123,7 +123,7 @@ export async function getLinkRule(addr: HexType, dragger: string): Promise<LinkR
 export async function isFollower(addr: HexType, dragger: number, follower: number): Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'isFollower',
     args: [ BigInt(dragger), BigInt(follower)],
   })
@@ -134,7 +134,7 @@ export async function isFollower(addr: HexType, dragger: number, follower: numbe
 export async function getDraggers(addr: HexType): Promise<readonly bigint[]>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'getDraggers',
   })
 
@@ -144,7 +144,7 @@ export async function getDraggers(addr: HexType): Promise<readonly bigint[]>{
 export async function getFollowers(addr: HexType, dragger: string): Promise<readonly bigint[]>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'getFollowers',
     args: [ BigInt(dragger)],
   })
@@ -155,7 +155,7 @@ export async function getFollowers(addr: HexType, dragger: string): Promise<read
 export async function priceCheck(addr: HexType, deal: Deal): Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'priceCheck',
     args: [ deal ],
   })
@@ -166,7 +166,7 @@ export async function priceCheck(addr: HexType, deal: Deal): Promise<boolean>{
 export async function isTriggered(addr: HexType, ia: HexType, deal: Deal): Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: alongsABI,
+    abi: iAlongsABI,
     functionName: 'isTriggered',
     args: [ ia, deal ],
   })

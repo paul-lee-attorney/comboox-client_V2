@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { AddrZero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 
-import { useCompKeeperProposeToTransferFund } from "../../../../../../../generated";
+import { useIgmmKeeperProposeToTransferFundWithGm } from "../../../../../../../generated";
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
@@ -52,7 +52,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
   const {
     isLoading: proposeToTransferFundLoading,
     write: proposeToTransferFund
-  } = useCompKeeperProposeToTransferFund({
+  } = useIgmmKeeperProposeToTransferFundWithGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -68,13 +68,12 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
 
       proposeToTransferFund({
         args: [
-          false, 
           paras.to, 
           typeOfCurrency == typeOfCurrency,
           strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
           BigInt(paras.expireDate), 
-          BigInt(seqOfVR), 
-          BigInt(executor)
+          BigInt(seqOfVR),
+          BigInt(HexParser(executor))
         ],
       });
 
@@ -184,7 +183,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Executor', input, MaxUserNo, setValid);
+                onlyHex('Executor', input, 10, setValid);
                 setExecutor(input);
               }}
               value={ executor }

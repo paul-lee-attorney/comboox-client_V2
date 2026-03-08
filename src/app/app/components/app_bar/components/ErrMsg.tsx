@@ -6,6 +6,8 @@ export function ErrMsg() {
 
   const { errMsg, setErrMsg } = useComBooxContext();
 
+  console.log('errMsg: ', errMsg, '\n');
+
   let start = errMsg?.indexOf('reason:');
   let end = errMsg?.indexOf('Contract Call');
   let msg = (start && start > 0) && (end && end > 0)

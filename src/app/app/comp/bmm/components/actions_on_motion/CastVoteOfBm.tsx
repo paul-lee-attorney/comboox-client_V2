@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useCompKeeperCastVote } from "../../../../../../../generated";
+import { useIbmmKeeperCastVote } from "../../../../../../../generated";
 
 
 import { 
@@ -47,7 +47,7 @@ export function CastVoteOfBm({ seqOfMotion, setOpen, refresh }: ProposeMotionPro
   const {
     isLoading: castVoteLoading,
     write: castVote,
-  } = useCompKeeperCastVote({
+  } = useIbmmKeeperCastVote({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

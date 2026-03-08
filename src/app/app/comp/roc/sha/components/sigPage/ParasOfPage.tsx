@@ -16,7 +16,7 @@ import {
   Update,
 } from "@mui/icons-material"
 
-import { useSigPageSetTiming } from "../../../../../../../../generated";
+import { useISigPageSetTiming } from "../../../../../../../../generated";
 
 
 import { ParasOfSigPage, defParasOfSigPage, getParasOfPage, 
@@ -69,7 +69,7 @@ export function ParasOfPage({ addr, initPage, finalized, time, setTime }: ParasO
   const {
     isLoading: setTimingLoading,
     write: writeSetTiming,
-  } = useSigPageSetTiming({
+  } = useISigPageSetTiming({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

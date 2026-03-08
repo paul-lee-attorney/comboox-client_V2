@@ -8,7 +8,7 @@ import { ArrowDownward, ArrowUpward, Update }  from '@mui/icons-material';
 
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 
-import { useRegisterOfMembersSetMaxQtyOfMembers } from '../../../../../generated';
+import { useIRegisterOfMembersSetMaxQtyOfMembers } from '../../../../../generated';
 
 import { HexType, MaxSeqNo, booxMap } from '../../common';
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from '../../common/toolsKit';
@@ -41,7 +41,7 @@ export function SetMaxQtyOfMembers({nextStep}: InitCompProps) {
   const {
     isLoading: setMaxQtyLoading,
     write: setMaxQty, 
-  } = useRegisterOfMembersSetMaxQtyOfMembers({
+  } = useIRegisterOfMembersSetMaxQtyOfMembers({
     address: boox ? boox[booxMap.ROM] : undefined,
     onError(err) {
       setErrMsg(err.message);

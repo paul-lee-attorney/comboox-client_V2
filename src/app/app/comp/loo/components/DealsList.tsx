@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState, } from "react";
 import { IconButton, Paper, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { baseToDollar, dateParser, defFormResults, FormResults, longSnParser, onlyInt } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, defFormResults, FormResults, longSnParser, onlyInt, userNoParser } from "../../../common/toolsKit";
 import { DealProps } from "../loo";
 import { CloudDownloadOutlined, Refresh } from "@mui/icons-material";
 import { exportToExcel } from "../../../../api/dataTools";
@@ -37,7 +37,7 @@ export function DealsList({list, qty, amt, refresh, setDeal, setShow}: DealsList
     {
       field: 'buyer',
       headerName: 'Buyer',
-      valueGetter: p => p.row.buyer,
+      valueGetter: p => userNoParser(p.row.buyer.toString(16)),
       headerAlign: 'center',
       align:'center',      
       width: 218,

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { HexType, MaxPrice, MaxSeqNo, MaxUserNo } from "../../../../common";
 
-import {  useCompKeeperProposeToDistributeUsd } from "../../../../../../../generated";
+import {  useIgmmKeeperProposeToDistributeUsd } from "../../../../../../../generated";
 
 import { Divider, Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
@@ -34,7 +34,7 @@ export function ProposeToDistributeUsd({ refresh }:CreateMotionProps) {
   const {
     isLoading: proposeToDistributeUsdLoading,
     write: proposeToDistributeUsd
-  } = useCompKeeperProposeToDistributeUsd({
+  } = useIgmmKeeperProposeToDistributeUsd({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

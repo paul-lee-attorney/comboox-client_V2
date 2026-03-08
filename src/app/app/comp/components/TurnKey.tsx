@@ -9,28 +9,15 @@ import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 
 import { HexType, booxMap } from '../../common';
-import { getKeeper } from '../gk';
 import { getDK } from '../common/draftControl';
 import { refreshAfterTx } from '../../common/toolsKit';
 
 import { InitCompProps } from './SetCompInfo';
-import { useAccessControlSetDirectKeeper } from '../../../../../generated';
+import { useIAccessControlSetDirectKeeper } from '../../../../../generated';
 
 export function TurnKey({ nextStep }:InitCompProps) {
   const { gk, boox, setErrMsg } = useComBooxContext();
   const [ time, setTime ] = useState(0);
-
-  const [romKeeper, setRomKeeper] = useState<HexType>();
-
-  useEffect(()=>{
-    if (gk) {
-      getKeeper(gk, booxMap.ROM).then(
-        res => {
-          setRomKeeper(res);
-        }
-      )
-    }
-  }, [gk, time]);
 
   const [ loadingRom, setLoadingRom ] = useState(false);
   const refreshRom = ()=>{
@@ -41,9 +28,9 @@ export function TurnKey({ nextStep }:InitCompProps) {
   const {
     isLoading: setRomDKLoading,
     write: setRomDK,
-  } = useAccessControlSetDirectKeeper({
+  } = useIAccessControlSetDirectKeeper({
     address: boox ? boox[booxMap.ROM] : undefined,
-    args: romKeeper ? [ romKeeper ] : undefined,
+    args: gk ? [ gk ] : undefined,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -75,9 +62,9 @@ export function TurnKey({ nextStep }:InitCompProps) {
   const {
     isLoading: setRosDKLoading,
     write: setRosDK
-  } = useAccessControlSetDirectKeeper({
+  } = useIAccessControlSetDirectKeeper({
     address: boox ? boox[booxMap.ROS] : undefined,
-    args: romKeeper ? [ romKeeper ] : undefined,
+    args: gk ? [ gk ] : undefined,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -154,14 +141,14 @@ export function TurnKey({ nextStep }:InitCompProps) {
                   />
 
                   <Typography variant="body1" sx={{ m:1, textDecoration:'underline' }} >
-                    {romKeeper}
+                    { gk }
                   </Typography>
                 </Stack>
 
                 <Stack direction='row' >
                   <Chip
-                    variant={ dkOfRom == romKeeper ? 'filled' : 'outlined' }
-                    color={ dkOfRom == romKeeper ? 'primary' : 'default' }
+                    variant={ dkOfRom == gk ? 'filled' : 'outlined' }
+                    color={ dkOfRom == gk ? 'primary' : 'default' }
                     label='KeeperOfROM'
                     sx={{width:120}}
                   />
@@ -182,14 +169,14 @@ export function TurnKey({ nextStep }:InitCompProps) {
                   />
 
                   <Typography variant="body1" sx={{ m:1, textDecoration:'underline' }} >
-                    {romKeeper}
+                    {gk}
                   </Typography>
                 </Stack>
 
                 <Stack direction='row' >
                   <Chip
-                    variant={ dkOfRos == romKeeper ? 'filled' : 'outlined' }
-                    color={ dkOfRos == romKeeper ? 'success' : 'default' }
+                    variant={ dkOfRos == gk ? 'filled' : 'outlined' }
+                    color={ dkOfRos == gk ? 'success' : 'default' }
                     label='KeeperOfROS'
                     sx={{width:120}}
                   />

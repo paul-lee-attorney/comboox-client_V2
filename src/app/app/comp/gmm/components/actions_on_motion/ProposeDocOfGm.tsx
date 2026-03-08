@@ -1,6 +1,6 @@
 
 import { Stack, TextField } from "@mui/material";
-import { useCompKeeperProposeDocOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperProposeDocOfGm } from "../../../../../../../generated";
 import { HexType, MaxUserNo, } from "../../../../common";
 import { EmojiPeople } from "@mui/icons-material";
 import { useState } from "react";
@@ -29,7 +29,7 @@ export function ProposeDocOfGm({ addr, seqOfVR, setNextStep }: ProposeDocOfGmPro
   const {
     isLoading,
     write
-  } = useCompKeeperProposeDocOfGm({
+  } = useIgmmKeeperProposeDocOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

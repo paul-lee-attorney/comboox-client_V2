@@ -10,8 +10,8 @@ import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider
 import { AddrZero, HexType } from "../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../common/toolsKit";
 
-import { useAccessControlInitKeepers } from "../../../../../../generated";
-import { CreateDocProps } from "./CreateDoc";
+import { useIAccessControlInitKeepers } from "../../../../../../generated";
+import { CreateDocProps } from "./CreateProxy";
 
 export function InitKeepers({addr, setOpen, setTime}:CreateDocProps) {
 
@@ -32,7 +32,7 @@ export function InitKeepers({addr, setOpen, setTime}:CreateDocProps) {
   const {
     isLoading: initKeepersLoading,
     write: initKeepers,
-  } = useAccessControlInitKeepers({
+  } = useIAccessControlInitKeepers({
     address: addr,
     onError(err) {
       setErrMsg(err.message);
@@ -66,7 +66,7 @@ export function InitKeepers({addr, setOpen, setTime}:CreateDocProps) {
           variant='outlined'
           label='TargetDoc'
           size="small"
-          inputProps={{readonly:'true'}}
+          inputProps={{readOnly: true }}
           sx={{
             m:1,
             minWidth: 420,

@@ -8,9 +8,9 @@ import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 
 import { AddrOfRegCenter, AddrZero, HexType } from "../../../common";
-import { FormResults, HexParser, defFormResults, getReceipt, hasError, onlyHex } from "../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, getReceipt, hasError, onlyHex, userNoParser } from "../../../common/toolsKit";
 
-import { useRegCenterCreateDoc } from "../../../../../../generated";
+import { useRegCenterProxyDoc } from "../../../../../../generated";
 
 function codifySn(typeOfDoc: number, version: number): HexType {
   let snOfDoc: HexType = `0x${
@@ -33,15 +33,14 @@ export interface CreateDocProps{
   setTime: Dispatch<SetStateAction<number>>;
 }
 
-export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDocProps) {
+export function CreateProxy({typeOfDoc, version, addr, setOpen, setTime}:CreateDocProps) {
 
   const { setErrMsg } = useComBooxContext();
 
-
-  const [ owner, setOwner ] = useState<HexType>(AddrZero);
+  // const [ owner, setOwner ] = useState<HexType>(AddrZero);
   const [ docAddr, setDocAddr ] = useState<HexType>(AddrZero);
 
-  const [ valid, setValid ] = useState<FormResults>(defFormResults);
+  // const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
 
   const [ show, setShow ] = useState(false);
@@ -54,7 +53,7 @@ export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDoc
   const {
     isLoading: createDocLoading,
     write: createDoc,
-  } = useRegCenterCreateDoc({
+  } = useRegCenterProxyDoc({
     address: AddrOfRegCenter,
     onError(err) {
       setErrMsg(err.message);
@@ -65,7 +64,7 @@ export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDoc
       getReceipt(hash).then(
         r => {
           console.log("Receipt: ", r);
-          setDocAddr(`0x${r.logs[0].topics[2].substring(26)}`);
+          setDocAddr(`0x${r.logs[2].topics[2].substring(26)}`);
           setShow(true);
           updateResults();
         }
@@ -76,8 +75,8 @@ export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDoc
   const handleClick = ()=>{
     createDoc({
       args: [ 
-        codifySn(typeOfDoc, version), 
-        owner 
+        BigInt(typeOfDoc), 
+        BigInt(version)
       ],
     });
   };
@@ -94,21 +93,21 @@ export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDoc
 
         <TextField 
           variant='outlined'
-          label='Type'
+          label='TypeOfDoc'
           size="small"
-          inputProps={{readOnly:'true'}}
+          inputProps={{readOnly: true }}
           sx={{
             m:1,
             width: 128,
           }}
-          value={ typeOfDoc.toString().padStart(4, '0') }
+          value={ HexParser(typeOfDoc.toString(16)) }
         />
 
         <TextField 
           variant='outlined'
           label='Version'
           size="small"
-          inputProps={{readOnly:'true'}}
+          inputProps={{readOnly: true }}
           sx={{
             m:1,
             width: 128,
@@ -116,26 +115,8 @@ export function CreateDoc({typeOfDoc, version, addr, setOpen, setTime}:CreateDoc
           value={ version.toString().padStart(4, '0') }
         />
 
-        <TextField 
-          variant='outlined'
-          label='Owner'
-          size="small"
-          error={ valid['Owner']?.error }
-          helperText={ valid['Owner']?.helpTx ?? ' ' }                        
-          sx={{
-            m:1,
-            minWidth: 420,
-          }}
-          value={ owner }
-          onChange={(e)=>{
-            let input = HexParser( e.target.value );
-            onlyHex('Owner', input, 40, setValid);
-            setOwner(input);
-          }}
-        />
-
         <LoadingButton 
-          disabled = {createDocLoading || hasError(valid)}
+          disabled = { createDocLoading }
           loading={loading}
           loadingPosition="end"
           sx={{ m: 1, minWidth: 128, height: 40 }} 

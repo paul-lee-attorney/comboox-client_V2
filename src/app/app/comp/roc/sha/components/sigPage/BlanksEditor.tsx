@@ -8,11 +8,13 @@ import { HexType, MaxUserNo } from "../../../../../common";
 
 import { PersonAdd, PersonRemove } from "@mui/icons-material"
 
-import { useSigPageAddBlank, useSigPageRemoveBlank,
+import { useISigPageAddBlank, useISigPageRemoveBlank,
 } from "../../../../../../../../generated";
 
 
 import { FormResults, defFormResults, hasError, 
+  hexToBigInt, 
+  onlyHex, 
   onlyInt, refreshAfterTx } from "../../../../../common/toolsKit";
 
 import { ParasOfPageProps } from "./ParasOfPage";
@@ -36,7 +38,7 @@ export function BlanksEditor({ addr, initPage, isSha, setTime }: ParasOfPageProp
   const {
     isLoading: addBlankIsLoading,
     write: addBlank,
-  } = useSigPageAddBlank({
+  } = useISigPageAddBlank({
     address: addr,
     onError(err) {
       setErrMsg(err.message);
@@ -55,7 +57,7 @@ export function BlanksEditor({ addr, initPage, isSha, setTime }: ParasOfPageProp
           initPage,
           isBuyer, 
           BigInt('1'), 
-          BigInt(acct),
+          hexToBigInt(acct),
         ]
       });
   }
@@ -69,7 +71,7 @@ export function BlanksEditor({ addr, initPage, isSha, setTime }: ParasOfPageProp
   const {
     isLoading: removeBlankIsLoading,
     write: removeBlank,
-  } = useSigPageRemoveBlank({
+  } = useISigPageRemoveBlank({
     address: addr,
     onError(err) {
       setErrMsg(err.message);
@@ -87,7 +89,7 @@ export function BlanksEditor({ addr, initPage, isSha, setTime }: ParasOfPageProp
         args: [
           initPage,
           BigInt('1'), 
-          BigInt(acct),
+          hexToBigInt(acct),
         ]
       });
   }
@@ -141,10 +143,10 @@ export function BlanksEditor({ addr, initPage, isSha, setTime }: ParasOfPageProp
         }}
         onChange={(e) => {
           let input = e.target.value;
-          onlyInt('UserNo', input, MaxUserNo, setValid);
+          onlyHex('UserNo', input, 10, setValid);
           setAcct(input);
         }}
-        value={ acct }                                      
+        value={ acct }
       />
 
       <Tooltip

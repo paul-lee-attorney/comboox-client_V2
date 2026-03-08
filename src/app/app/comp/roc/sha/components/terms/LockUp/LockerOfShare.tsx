@@ -4,7 +4,7 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { dateParser, longSnParser, splitStrArr } from '../../../../../../common/toolsKit';
+import { dateParser, longSnParser, splitStrArr, userNoParser } from '../../../../../../common/toolsKit';
 
 interface LockerOfShareProps {
   seqOfShare: number,
@@ -51,7 +51,7 @@ export function LockerOfShare({ seqOfShare, dueDate, keyholders }: LockerOfShare
           }}
           multiline
           rows={1}
-          value={ splitStrArr(keyholders.map(v=> longSnParser(v.toString()))) }
+          value={ splitStrArr(keyholders.map(v=> userNoParser(v.toString(16)))) }
         />
 
       </Stack>

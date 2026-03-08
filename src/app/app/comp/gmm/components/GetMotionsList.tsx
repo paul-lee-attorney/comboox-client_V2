@@ -1,6 +1,6 @@
 import { Box, Chip, Paper, Toolbar, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { Motion, motionType, statesOfMotion } from "../meetingMinutes";
 
 interface GetMotionsListProps {
@@ -17,13 +17,13 @@ export function GetMotionsList({ list, title, setMotion, setOpen }:GetMotionsLis
       field: 'sn',
       headerName: 'Sn',
       valueGetter: p => longSnParser(p.row.head.seqOfMotion.toString()),
-      width: 120,    
+      width: 80,    
     },
     {
       field: 'typeOfMotion',
       headerName: 'TypeOfMotion',
       valueGetter: p => motionType[p.row.head.typeOfMotion - 1],
-      width: 120,
+      width: 168,
       headerAlign: 'center',
       align: 'center',
     },
@@ -31,14 +31,14 @@ export function GetMotionsList({ list, title, setMotion, setOpen }:GetMotionsLis
       field: 'seqOfVR',
       headerName: 'SeqOfVR',
       valueGetter: p => p.row.head.seqOfVR,
-      width: 120,
+      width: 80,
       headerAlign: 'center',
       align: 'center',
     },
     {
       field: 'creator',
       headerName: 'Creator',
-      valueGetter: p => longSnParser(p.row.head.creator.toString()),
+      valueGetter: p => userNoParser(p.row.head.creator.toString(16)),
       width: 160,
       headerAlign: 'center',
       align: 'center',
@@ -55,7 +55,7 @@ export function GetMotionsList({ list, title, setMotion, setOpen }:GetMotionsLis
       field: 'proposer',
       headerName: 'Proposer',
       valueGetter: p => p.row.body.proposer > 0
-          ? longSnParser(p.row.body.proposer.toString())
+          ? userNoParser(p.row.body.proposer.toString(16))
           : '-',
       width: 160,
       headerAlign: 'center',

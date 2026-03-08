@@ -1,7 +1,7 @@
 import { readContract } from "@wagmi/core";
 import { Bytes32Zero, HexType } from "../../../common";
 import { strNumToBigInt } from "../../../common/toolsKit";
-import { investmentAgreementABI } from "../../../../../../generated";
+import { iInvestmentAgreementABI } from "../../../../../../generated";
 import { Swap } from "../../roo/roo";
 
 export const TypeOfDeal = [
@@ -108,34 +108,6 @@ export interface Body {
   flag: boolean,  
 }
 
-// export function convertBody(body: Body): OrgBody {
-//   let out: OrgBody = {
-//     buyer: Number(body.buyer),
-//     groupOfBuyer: Number(body.groupOfBuyer),
-//     paid: BigInt(body.paid),
-//     par: BigInt(body.par),
-//     state: body.state,
-//     para: Number(body.para),
-//     argu: Number(body.argu),
-//     flag: body.flag,      
-//   }
-//   return out;
-// }
-
-// export function parseOrgBody(body: OrgBody): Body {
-//   let out: Body = {
-//     buyer: body.buyer.toString(),
-//     groupOfBuyer: body.groupOfBuyer.toString(),
-//     paid: body.paid.toString(),
-//     par: body.par.toString(),
-//     state: body.state,
-//     para: body.para.toString(),
-//     argu: body.argu.toString(),
-//     flag: body.flag,      
-//   }
-//   return out;
-// }
-
 export const defaultStrBody: StrBody = {
   buyer: '0',
   groupOfBuyer: '0',
@@ -219,7 +191,7 @@ export const statesOfSwap = [
 export async function getTypeOfIA(ia: HexType):Promise<number>{
   let typeOfIa = await readContract({
     address: ia,
-    abi: investmentAgreementABI,
+    abi: iInvestmentAgreementABI,
     functionName: 'getTypeOfIA',
   });
 
@@ -229,7 +201,7 @@ export async function getTypeOfIA(ia: HexType):Promise<number>{
 export async function getDeal(ia: HexType, seq:bigint):Promise<Deal>{
   let deal = await readContract({
     address: ia,
-    abi: investmentAgreementABI,
+    abi: iInvestmentAgreementABI,
     functionName: 'getDeal',
     args: [seq],
   });
@@ -240,7 +212,7 @@ export async function getDeal(ia: HexType, seq:bigint):Promise<Deal>{
 export async function getSeqList(ia: HexType):Promise<readonly bigint[]>{
   let list = await readContract({
     address: ia,
-    abi: investmentAgreementABI,
+    abi: iInvestmentAgreementABI,
     functionName: 'getSeqList',
   });
 
@@ -258,61 +230,3 @@ export async function obtainDealsList(addr: HexType, seqList: readonly bigint[])
 
   return list;
 }
-
-// ==== Swap ====
-
-export async function getSwap(ia: HexType, seqOfDeal: number, seqOfSwap: number): Promise<Swap> {
-  let res = await readContract({
-    address: ia,
-    abi: investmentAgreementABI,
-    functionName: 'getSwap',
-    args: [BigInt(seqOfDeal), BigInt(seqOfSwap)],
-  });
-
-  return res;
-}
-
-export async function getAllSwaps(ia: HexType, seqOfDeal: number): Promise<readonly Swap[]> {
-  let res = await readContract({
-    address: ia,
-    abi: investmentAgreementABI,
-    functionName: 'getAllSwaps',
-    args: [BigInt(seqOfDeal)],
-  });
-
-  return res;
-}
-
-export async function allSwapsClosed(ia: HexType, seqOfDeal: number): Promise<boolean> {
-  let res = await readContract({
-    address: ia,
-    abi: investmentAgreementABI,
-    functionName: 'allSwapsClosed',
-    args: [BigInt(seqOfDeal)],
-  });
-
-  return res;
-}
-
-// export async function checkValueOfSwap(ia: HexType, seqOfDeal: number, seqOfSwap: number): Promise<bigint> {
-//   let res = await readContract({
-//     address: ia,
-//     abi: investmentAgreementABI,
-//     functionName: 'checkValueOfSwap',
-//     args: [BigInt(seqOfDeal), BigInt(seqOfSwap)],
-//   });
-
-//   return res;
-// }
-
-// export async function checkValueOfDeal(ia: HexType, seqOfDeal: number): Promise<bigint> {
-//   let res = await readContract({
-//     address: ia,
-//     abi: investmentAgreementABI,
-//     functionName: 'checkValueOfDeal',
-//     args: [BigInt(seqOfDeal)],
-//   });
-
-//   return res;
-// }
-

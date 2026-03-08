@@ -12,16 +12,16 @@ import { AddrZero, HexType, MaxPrice, MaxSeqNo, MaxUserNo } from "../../../../..
 
 import { CopyLongStrSpan } from "../../../../../../common/CopyLongStr";
 import { BenchmarkType, getBenchmarks } from "./ad";
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt, userNoParser } from "../../../../../../common/toolsKit";
 
 import { Benchmark } from "./Benchmark";
 import { AddTerm } from "../AddTerm";
 
 import {
-  useAntiDilutionAddBenchmark,
-  useAntiDilutionRemoveBenchmark,
-  useAntiDilutionAddObligor,
-  useAntiDilutionRemoveObligor,
+  useIAntiDilutionAddBenchmark,
+  useIAntiDilutionRemoveBenchmark,
+  useIAntiDilutionAddObligor,
+  useIAntiDilutionRemoveObligor,
 } from "../../../../../../../../../generated";
 
 export interface SetShaTermProps {
@@ -52,7 +52,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
   const { 
     isLoading: addMarkLoading,
     write: addMark 
-  } = useAntiDilutionAddBenchmark({
+  } = useIAntiDilutionAddBenchmark({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -82,7 +82,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
   const { 
     isLoading: removeMarkIsLoading, 
     write: removeMark 
-  } = useAntiDilutionRemoveBenchmark({
+  } = useIAntiDilutionRemoveBenchmark({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -102,7 +102,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
     });
   }
 
-  const [ obligor, setObligor ] = useState<string>();
+  const [ obligor, setObligor ] = useState('0');
 
   const [ loadingAddObl, setLoadingAddObl ] = useState(false);
   const refreshAddObl = ()=> {
@@ -113,7 +113,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
   const { 
     isLoading: addObligorIsLoading, 
     write: addObligor 
-  } = useAntiDilutionAddObligor({
+  } = useIAntiDilutionAddObligor({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -130,7 +130,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
       addObligor({
         args: [ 
           BigInt(classOfShare), 
-          BigInt(obligor)
+          hexToBigInt(obligor)
         ], 
       });
   };
@@ -144,7 +144,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
   const { 
     isLoading: removeObligorIsLoading, 
     write: removeObligor 
-  } = useAntiDilutionRemoveObligor({
+  } = useIAntiDilutionRemoveObligor({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -161,7 +161,7 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
       removeObligor({
         args: [ 
           BigInt(classOfShare), 
-          BigInt(obligor)
+          hexToBigInt(obligor)
         ]  
       });
   };
@@ -314,10 +314,10 @@ export function AntiDilution({ sha, term, setTerms, isFinalized }: SetShaTermPro
                       }}
                       onChange={(e) => {
                         let input = e.target.value;
-                        onlyInt('Obligor', input, MaxUserNo, setValid);
+                        onlyHex('Obligor', input, 10, setValid);
                         setObligor(input);
                       }}
-                      value={ obligor }              
+                      value={ obligor }
                     />
 
                     <Tooltip

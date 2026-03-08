@@ -12,7 +12,6 @@ import { RemoveDirector } from "./actions_on_motion/RemoveDirector";
 import { ExecActionOfGm } from "./actions_on_motion/ExecActionOfGm";
 import { TransferFund } from "./actions_on_motion/TransferFund";
 import { DistributeUsd } from "./actions_on_motion/DistributeUsd";
-import { DeprecateGK } from "./actions_on_motion/DeprecateGK";
 import { UploadMotionFile } from "./actions_on_motion/UploadMotionFile";
 import { MintCBP } from "./actions_on_motion/MintCBP";
 import { WithdrawCBP } from "./actions_on_motion/WithdrawCBP";
@@ -33,8 +32,8 @@ export function ActionsOnMotion({motion, voteIsEnd, setOpen, refresh}:ActionsOnM
   
   const actionsOnMotion = [
     'Propose Motion', 'Upload File', 'Cast Vote', 'Count Results', 'Take Seat', 
-    'Remove Director', 'Exec Actions', 'Transfer Fund', 'Distribute', 'Deprecate GK',
-    'Mint CBP', 'Withdraw CBP'
+    'Remove Director', 'Exec Actions', 'Transfer Fund', 'Distribute', 'Mint CBP', 
+    'Withdraw CBP'
   ]
 
   const compsOfAction = [
@@ -46,10 +45,9 @@ export function ActionsOnMotion({motion, voteIsEnd, setOpen, refresh}:ActionsOnM
     <RemoveDirector key={5} motion={motion} setOpen = {setOpen} refresh={refresh} />,
     <ExecActionOfGm key={6} motion={motion} setOpen = {setOpen} refresh={refresh} />,
     <TransferFund key={7} motion={motion} setOpen = {setOpen} refresh={refresh} />,  
-    <DistributeUsd key={8} motion={motion} setOpen = {setOpen} refresh={refresh} />,  
-    <DeprecateGK key={9} motion={motion} setOpen = {setOpen} refresh={refresh} />, 
-    <MintCBP key={10} motion={motion} setOpen = {setOpen} refresh={refresh} />, 
-    <WithdrawCBP key={11} motion={motion} setOpen = {setOpen} refresh={refresh} />, 
+    <DistributeUsd key={8} motion={motion} setOpen = {setOpen} refresh={refresh} />,
+    <MintCBP key={9} motion={motion} setOpen = {setOpen} refresh={refresh} />, 
+    <WithdrawCBP key={10} motion={motion} setOpen = {setOpen} refresh={refresh} />, 
   ]
 
   return (
@@ -75,10 +73,10 @@ export function ActionsOnMotion({motion, voteIsEnd, setOpen, refresh}:ActionsOnM
               else if (motion.body.state == 2 && voteIsEnd && i != 3) return null;
               else if (motion.body.state == 3 && motion.head.typeOfMotion == 1 && i != 4) return null;
               else if (motion.body.state == 3 && motion.head.typeOfMotion == 2 && i != 5) return null;
-              else if (motion.body.state == 3 && motion.head.typeOfMotion == 4 && (i != 6 && i != 10 && i != 11)) return null;
+              else if (motion.body.state == 3 && motion.head.typeOfMotion == 4 && (i != 6 && i != 9 && i != 10)) return null;
               else if (motion.body.state == 3 && motion.head.typeOfMotion == 5 && i != 7) return null;
               else if (motion.body.state == 3 && motion.head.typeOfMotion == 6 && i != 8) return null;
-              else if (motion.body.state == 3 && motion.head.typeOfMotion == 7 && i != 9) return null;
+              // else if (motion.body.state == 3 && motion.head.typeOfMotion == 7 && i != 9) return null;
               else if (motion.body.state > 3) return null;
               return (<MenuItem key={v} value={ i } > <b>{v}</b> </MenuItem>);
             })}
@@ -93,10 +91,10 @@ export function ActionsOnMotion({motion, voteIsEnd, setOpen, refresh}:ActionsOnM
         else if (motion.body.state == 2 && voteIsEnd && i != 3) return null;
         else if (motion.body.state == 3 && motion.head.typeOfMotion == 1 && i != 4) return null;
         else if (motion.body.state == 3 && motion.head.typeOfMotion == 2 && i != 5) return null;
-        else if (motion.body.state == 3 && motion.head.typeOfMotion == 4 && (i != 6 && i != 10 && i != 11)) return null;
+        else if (motion.body.state == 3 && motion.head.typeOfMotion == 4 && (i != 6 && i != 9 && i != 10)) return null;
         else if (motion.body.state == 3 && motion.head.typeOfMotion == 5 && i != 7) return null;
         else if (motion.body.state == 3 && motion.head.typeOfMotion == 6 && i != 8) return null;
-        else if (motion.body.state == 3 && motion.head.typeOfMotion == 7 && i != 9) return null;
+        // else if (motion.body.state == 3 && motion.head.typeOfMotion == 7 && i != 9) return null;
         else if (motion.body.state > 3) return null;
         return (
           <Collapse key={i} in={ typeOfAction == i.toString() } >

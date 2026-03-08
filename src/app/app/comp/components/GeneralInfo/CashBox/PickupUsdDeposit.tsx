@@ -9,7 +9,7 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { booxMap, HexType } from "../../../../common";
 import { refreshAfterTx } from "../../../../common/toolsKit";
 
-import { useCashierPickupUsd } from "../../../../../../../generated";
+import { useICashierPickupUsd } from "../../../../../../../generated";
 
 interface PickupDepositProps{
   refresh: ()=>void;
@@ -28,7 +28,7 @@ export function PickupUsdDeposit({ refresh }:PickupDepositProps) {
   const {
     isLoading: pickupDepositLoading,
     write: pickupDeposit,
-  } = useCashierPickupUsd({
+  } = useICashierPickupUsd({
     address: boox && boox[booxMap.Cashier],
     onError(err) {
       setErrMsg(err.message);

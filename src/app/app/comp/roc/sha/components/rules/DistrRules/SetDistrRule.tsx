@@ -148,6 +148,7 @@ export function SetDistrRule({ sha, seq, isFinalized, time, refresh }: RulesEdit
               {!isFinalized && (
                 <AddRule 
                   sha={ sha } 
+                  seqOfRule={ seq }
                   rule={ drCodifier(objDR, seq) } 
                   isFinalized={ isFinalized }
                   valid={valid}

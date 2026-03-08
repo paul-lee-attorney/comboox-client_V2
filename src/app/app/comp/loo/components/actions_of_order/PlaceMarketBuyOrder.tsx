@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Paper, Stack, TextField } from "@mui/material";
 
 import { ShoppingCartOutlined } from "@mui/icons-material";
-import { useCompKeeperPlaceMarketBuyOrder } from "../../../../../../../generated";
+import { useIlooKeeperPlaceMarketBuyOrder } from "../../../../../../../generated";
 import { ActionsOfOrderProps } from "../ActionsOfOrder";
 
 import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
@@ -12,11 +12,12 @@ import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx
 import { AddrZero, booxMap, HexType, MaxData, MaxSeqNo } from "../../../../common";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
-import { defaultOffer, InitOffer } from "../../../../compV1/loe/loe";
+
 import { AuthSig } from "../../../../components/usdc_auth/typedData";
 import { usePublicClient, useWalletClient } from "wagmi";
 import { verifyAuthorization } from "../../../../components/usdc_auth/authVerifier";
 import { GenerateAuth } from "../../../../components/usdc_auth/GenerateAuth";
+import { defaultOffer, InitOffer } from "../../loo";
 
 export function PlaceMarketBuyOrder({ classOfShare, refresh }: ActionsOfOrderProps) {
   const { gk, boox, setErrMsg } = useComBooxContext();
@@ -47,7 +48,7 @@ export function PlaceMarketBuyOrder({ classOfShare, refresh }: ActionsOfOrderPro
   const {
     isLoading: placeMarketBuyOrderLoading,
     write:placeMarketBuyOrder,
-  } = useCompKeeperPlaceMarketBuyOrder({
+  } = useIlooKeeperPlaceMarketBuyOrder({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

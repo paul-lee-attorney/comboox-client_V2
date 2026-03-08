@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Divider, Stack, TextField } from "@mui/material";
 import { Recycling } from "@mui/icons-material";
 
-import { useCompKeeperCirculateSha } from "../../../../../../../../generated";
+import { useIrocKeeperCirculateSha } from "../../../../../../../../generated";
 import { Bytes32Zero, HexType } from "../../../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
@@ -37,7 +37,7 @@ export function CirculateSha({ addr, setNextStep }: FileHistoryProps) {
   const {
     isLoading,
     write
-  } = useCompKeeperCirculateSha({
+  } = useIrocKeeperCirculateSha({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

@@ -16,7 +16,7 @@ interface GenerateAuthProps {
 
 export const GenerateAuth = ({ value, escrowAcct, setAuth }: GenerateAuthProps) => {
 
-  const { boox } = useComBooxContext();
+  // const { boox } = useComBooxContext();
   const provider = usePublicClient();
   const {data: signer} = useWalletClient();
 
@@ -26,7 +26,7 @@ export const GenerateAuth = ({ value, escrowAcct, setAuth }: GenerateAuthProps) 
     setFlag(true);
     setAuth(undefined);
 
-    if (!boox || !signer) {
+    if (!signer) {
       console.log("ERR: undefined Boox or Signer");
       setFlag(false);
     } else {

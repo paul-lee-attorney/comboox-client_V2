@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bytes32Zero, HexType, MaxPrice } from "../../../../../../common";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperExecAntiDilution } from "../../../../../../../../../generated";
+import { useIshaKeeperExecAntiDilution } from "../../../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { LocalDrinkOutlined } from "@mui/icons-material";
 
@@ -31,7 +31,7 @@ export function ExecAntiDilution({addr, deal, setOpen, setDeal, refresh}:Actions
   const {
     isLoading: execAntiDilutionLoading,
     write: execAntiDilution,
-  } = useCompKeeperExecAntiDilution({
+  } = useIshaKeeperExecAntiDilution({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

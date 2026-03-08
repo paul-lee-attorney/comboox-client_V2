@@ -9,7 +9,7 @@ import {
   Typography
 } from "@mui/material";
 
-import { baseToDollar, bigIntToNum, bigIntToStrNum, dateParser, longDataParser, longSnParser, splitStrArr } from "../../../common/toolsKit";
+import { baseToDollar, bigIntToStrNum, dateParser, longSnParser, splitStrArr, userNoParser } from "../../../common/toolsKit";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { statesOfOpt } from "../../roc/sha/components/terms/Options/ContentOfOpt";
@@ -200,7 +200,7 @@ export function CertificateOfOption({open, optWrap, setOpen, refresh}: Certifica
                   id="tfRightholder" 
                   label="Rightholder" 
                   variant="outlined"
-                  value = { longSnParser(optWrap.opt.body.rightholder.toString()) }
+                  value = { userNoParser(optWrap.opt.body.rightholder.toString(16)) }
                   size='small'
                 />
               </td>
@@ -214,7 +214,7 @@ export function CertificateOfOption({open, optWrap, setOpen, refresh}: Certifica
                   sx={{ m:1 }}
                   multiline
                   rows={1}
-                  value={ splitStrArr(optWrap.obligors.map(v => longSnParser(v.toString()))) }
+                  value={ splitStrArr(optWrap.obligors.map(v => userNoParser(v.toString(16)))) }
                 />
               </td>
             </tr>

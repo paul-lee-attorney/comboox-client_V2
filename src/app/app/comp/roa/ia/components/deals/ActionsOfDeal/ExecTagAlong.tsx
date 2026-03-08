@@ -1,6 +1,6 @@
 import { Divider, Paper, Stack, TextField } from "@mui/material";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperExecTagAlong } from "../../../../../../../../../generated";
+import { useIshaKeeperExecAlongRight } from "../../../../../../../../../generated";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import { SurfingOutlined } from "@mui/icons-material";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { Bytes32Zero, HexType, MaxData, MaxPrice } from "../../../../../../commo
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
+import { dtClaimCodifier } from "../../../../roa";
 
 export interface TargetShare {
   seqOfShare: string;
@@ -40,7 +41,7 @@ export function ExecTagAlong({ addr, deal, setOpen, setDeal, refresh}: ActionsOf
   const {
     isLoading: execTagAlongLoading,
     write: execTagAlong,
-  } = useCompKeeperExecTagAlong({
+  } = useIshaKeeperExecAlongRight({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -51,15 +52,20 @@ export function ExecTagAlong({ addr, deal, setOpen, setDeal, refresh}: ActionsOf
       refreshAfterTx(hash, updateResults);
     }
   });
-      
+
+  let hexDtClaim = dtClaimCodifier(
+    deal.head.seqOfDeal, 
+    false, 
+    Number(targetShare.seqOfShare),
+    strNumToBigInt(targetShare.paid, 4),
+    strNumToBigInt(targetShare.par, 4)
+  );
+
   const handleClick = ()=> {
     execTagAlong({
       args:[ 
           addr, 
-          BigInt(deal.head.seqOfDeal), 
-          BigInt(targetShare.seqOfShare),
-          strNumToBigInt(targetShare.paid, 4),
-          strNumToBigInt(targetShare.par, 4),
+          hexDtClaim,
           sigHash
         ],
     });

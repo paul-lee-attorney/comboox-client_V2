@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 
-import { useCompKeeperCreateAction } from "../../../../../../../generated";
+import { useIbmmKeeperCreateAction } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { AddCircle, EmojiPeople, RemoveCircle } from "@mui/icons-material";
@@ -27,7 +27,7 @@ export function CreateAction({refresh}:CreateMotionProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
 
-  const updateResults = ()=> {
+  const updateResults = ()=>{
     setLoading(false);
     refresh();
   }
@@ -35,7 +35,7 @@ export function CreateAction({refresh}:CreateMotionProps) {
   const {
     isLoading: proposeActionLoading,
     write: proposeAction,
-  } = useCompKeeperCreateAction({
+  } = useIbmmKeeperCreateAction({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

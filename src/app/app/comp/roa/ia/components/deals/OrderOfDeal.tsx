@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Deal, StateOfDeal, Timeline, TypeOfDeal, defaultTimeline, getAllSwaps } from "../../ia";
+import { Deal, StateOfDeal, Timeline, TypeOfDeal, defaultTimeline } from "../../ia";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from "@mui/material";
 import { baseToDollar, dateParser, longDataParser, longSnParser, } from "../../../../../common/toolsKit";
 import { DeleteDeal } from "./DeleteDeal";
@@ -7,8 +7,8 @@ import { Bytes32Zero, HexType, booxMap } from "../../../../../common";
 import { ActionsOfDeal } from "./ActionsOfDeal";
 import { GetDTClaims } from "./GetDTClaims";
 import { GetFRClaims } from "./GetFRClaims";
-import { Swap } from "../../../../roo/roo";
-import { SwapsList } from "./SwapsList";
+// import { Swap } from "../../../../roo/roo";
+// import { SwapsList } from "./SwapsList";
 import { usePublicClient } from "wagmi";
 import { closingDeadline, dtExecDeadline, frExecDeadline, getFile, terminateStartpoint, votingDeadline } from "../../../../roc/components/filesFolder";
 import { useComBooxContext } from "../../../../../../_providers/ComBooxContextProvider";
@@ -27,16 +27,16 @@ export function OrderOfDeal({ addr, isFinalized, open, deal, setOpen, setDeal, r
 
   const { boox } = useComBooxContext();
 
-  const [ swaps, setSwaps ] = useState<readonly Swap[]>();
+  // const [ swaps, setSwaps ] = useState<readonly Swap[]>();
   
-  useEffect(()=>{
-    getAllSwaps(addr, deal.head.seqOfDeal).then(
-      res => {
-        if (res.length > 0)
-          setSwaps(res);
-      }
-    )    
-  }, [addr, deal.head.seqOfDeal]);
+  // useEffect(()=>{
+  //   getAllSwaps(addr, deal.head.seqOfDeal).then(
+  //     res => {
+  //       if (res.length > 0)
+  //         setSwaps(res);
+  //     }
+  //   )    
+  // }, [addr, deal.head.seqOfDeal]);
 
   const [ timeline, setTimeline ] = useState<Timeline>(defaultTimeline);
 
@@ -379,7 +379,7 @@ export function OrderOfDeal({ addr, isFinalized, open, deal, setOpen, setDeal, r
                 <GetFRClaims addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} timeline={timeline} timestamp={timestamp}/>
               </td>
               <td>
-                <SwapsList addr={addr} deal={deal} refresh={refresh} />
+                {/* <SwapsList addr={addr} deal={deal} refresh={refresh} /> */}
               </td>
             </tr>
 

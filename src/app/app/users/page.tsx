@@ -1,15 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { AddrOfCL } from "../common";
-import { StrLocker, User, balanceOf, balanceOfWei, defaultStrLocker, getLockersList, getUser, isOwnerOfRegCenter } from "../rc";
+import { User, balanceOf, balanceOfWei, isOwnerOfRegCenter, getMyUser } from "../rc";
 
 import { Divider, Paper, TextField, Toolbar } from "@mui/material";
-import { longDataParser, longSnParser, toPercent } from "../common/toolsKit";
+import { longDataParser, longSnParser, toPercent, userNoParser } from "../common/toolsKit";
 import { useWalletClient } from "wagmi";
 
-import { LockersList } from "./components/lockers/LockersList";
-import { HashLockerOfPoints } from "./components/lockers/HashLockerOfPoints";
 import { CopyLongStrTF } from "../common/CopyLongStr";
 import { ActionsOfUser } from "./components/ActionsOfUser";
 import { useComBooxContext } from "../../_providers/ComBooxContextProvider";
@@ -33,7 +30,7 @@ function UserInfo() {
 
   useEffect(()=>{
     if (signer) {
-      getUser(signer).then(
+      getMyUser(signer).then(
         res => {
           setUser(res);
         }
@@ -53,20 +50,10 @@ function UserInfo() {
     }
   }, [signer, time]);
 
-  const [ lockersList, setLockersList ] = useState<StrLocker[]>();
-
-  useEffect(()=>{
-    getLockersList().then(
-      res => {
-        setLockersList(res);
-      }
-    )
-  }, [time]);
-
   const [ usdLockersList, setUsdLockersList ] = useState<ItemLocker[]>();
 
   useEffect(()=>{
-    getUsdLockersList(AddrOfCL).then(
+    getUsdLockersList().then(
       list => {
         setUsdLockersList(list);
       }
@@ -107,10 +94,6 @@ function UserInfo() {
     }
   }, [user, time]);
   
-  const [ open, setOpen ] = useState(false);  
-  const [ locker, setLocker ] = useState<StrLocker>(defaultStrLocker);
-  const [ showList, setShowList ] = useState(false);
-
   const [ openUsdLocker, setOpenUsdLocker ] = useState(false);  
   const [ usdLocker, setUsdLocker ] = useState<ItemLocker>(defaultItemLocker);
   const [ showUsdList, setShowUsdList ] = useState(false);
@@ -118,7 +101,7 @@ function UserInfo() {
   return (
     <Paper elevation={3} sx={{alignContent:'center', justifyContent:'center', m:1, p:1, border:1, borderColor:'divider' }} >
       <Toolbar sx={{ textDecoration:'underline' }} >
-        <h3>User Info - ( No. { longSnParser(userNo?.toString() ?? '0') } ) </h3>
+        <h3>User Info - ( No. { userNoParser(userNo?.toString(16) ?? '0') } ) </h3>
       </Toolbar>
 
       <table >
@@ -436,23 +419,7 @@ function UserInfo() {
           <tr>
             <td colSpan={ 5 }>
               {userNo && (
-                <ActionsOfUser user={user} isOwner={isOwner} showList={showList} showUsdList={showUsdList} setShowList={setShowList} setShowUsdList={setShowUsdList} refresh={refresh} />
-              )}
-            </td>
-          </tr>
-
-          <tr>
-            <td colSpan={ 5 }>
-              {lockersList && userNo && showList && (
-                <LockersList list={ lockersList } setLocker={ setLocker } setOpen={ setOpen } />
-              )}
-            </td>
-          </tr>
-
-          <tr>
-            <td colSpan={ 5 }>
-              {locker && userNo && (
-                <HashLockerOfPoints open={ open } locker={ locker } userNo={ userNo } setOpen={ setOpen } refresh={ refresh } />
+                <ActionsOfUser user={user} isOwner={isOwner} showUsdList={showUsdList} setShowUsdList={setShowUsdList} refresh={refresh} />
               )}
             </td>
           </tr>

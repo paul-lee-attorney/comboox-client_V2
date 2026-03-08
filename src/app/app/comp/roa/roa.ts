@@ -1,6 +1,7 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../common";
-import { registerOfAgreementsABI } from "../../../../../generated";
+import { iRegisterOfAgreementsABI } from "../../../../../generated";
+import { Hex } from "viem";
 
 export interface DTClaim{
   typeOfClaim: number;
@@ -11,6 +12,27 @@ export interface DTClaim{
   sigDate: number;
   sigHash: HexType;
 }
+
+export function dtClaimCodifier(
+  seqOfDeal: number,
+  dragAlong: boolean,
+  seqOfShare: number,
+  paid: bigint,
+  par: bigint
+): HexType {
+
+  let hexDtClaim: HexType = `0x${
+    seqOfDeal.toString(16).padStart(4, '0') +
+    (dragAlong ? '01' : '00') +
+    seqOfShare.toString(16).padStart(8, '0') +
+    paid.toString(16).padStart(16, '0') +
+    par.toString(16).padStart(16, '0') +
+    '0'.padStart(18, '0')
+  }`;
+
+  return hexDtClaim;
+}
+
 
 export interface FRClaim{
   seqOfDeal: number;
@@ -27,7 +49,7 @@ export async function hasFRClaims(boa: HexType, ia: HexType, seqOfDeal: number )
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'hasFRClaims',
     args: [ia, BigInt(seqOfDeal)],
   })
@@ -39,7 +61,7 @@ export async function isFRClaimer(boa: HexType, ia: HexType, acct: number ): Pro
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'isFRClaimer',
     args: [ia, BigInt(acct)],
   })
@@ -51,7 +73,7 @@ export async function getSubjectDealsOfFR(boa: HexType, ia: HexType ): Promise<r
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'getSubjectDealsOfFR',
     args: [ia],
   })
@@ -63,7 +85,7 @@ export async function getFRClaimsOfDeal(boa: HexType, ia: HexType, seqOfDeal: nu
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'getFRClaimsOfDeal',
     args: [ia, BigInt(seqOfDeal)],
   })
@@ -75,7 +97,7 @@ export async function allFRClaimsAccepted(boa: HexType, ia: HexType ): Promise<b
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'allFRClaimsAccepted',
     args: [ia],
   })
@@ -89,7 +111,7 @@ export async function hasDTClaims(boa: HexType, ia: HexType, seqOfDeal: number )
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'hasDTClaims',
     args: [ia, BigInt(seqOfDeal)],
   })
@@ -101,7 +123,7 @@ export async function getSubjectDealsOfDT(boa: HexType, ia: HexType): Promise<re
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'getSubjectDealsOfDT',
     args: [ia],
   })
@@ -113,7 +135,7 @@ export async function getDTClaimsOfDeal(boa: HexType, ia: HexType, seqOfDeal: nu
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'getDTClaimsOfDeal',
     args: [ia, BigInt(seqOfDeal)],
   })
@@ -130,7 +152,7 @@ export async function getDTClaimForShare(
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'getDTClaimForShare',
     args: [ia, BigInt(seqOfDeal), BigInt(seqOfShare)],
   })
@@ -142,7 +164,7 @@ export async function allDTClaimsAccepted(boa: HexType, ia: HexType): Promise<bo
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'allDTClaimsAccepted',
     args: [ia],
   })
@@ -156,7 +178,7 @@ export async function mockResultsOfIA(boa: HexType, ia: HexType): Promise<readon
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'mockResultsOfIA',
     args: [ia],
   })
@@ -168,7 +190,7 @@ export async function mockResultsOfAcct(boa: HexType, ia: HexType, acct: number)
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'mockResultsOfAcct',
     args: [ia, BigInt(acct)],
   })
@@ -180,7 +202,7 @@ export async function allClaimsAccepted(boa: HexType, ia: HexType): Promise<bool
 
   let res = await readContract({
     address: boa,
-    abi: registerOfAgreementsABI,
+    abi: iRegisterOfAgreementsABI,
     functionName: 'allClaimsAccepted',
     args: [ia],
   })

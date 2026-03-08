@@ -8,8 +8,8 @@ import { LoadingButton } from "@mui/lab";
 import { AddrZero, HexType } from "../../../common";
 import { refreshAfterTx } from "../../../common/toolsKit";
 
-import { useGeneralKeeperCreateCorpSeal } from "../../../../../../generated-v1";
-import { CreateDocProps } from "./CreateDoc";
+import { useIGeneralKeeperCreateCorpSeal } from "../../../../../../generated";
+import { CreateDocProps } from "./CreateProxy";
 
 export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:CreateDocProps) {
 
@@ -24,7 +24,7 @@ export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:Crea
   const {
     isLoading: createSealLoading,
     write: createSeal, 
-   } = useGeneralKeeperCreateCorpSeal({
+   } = useIGeneralKeeperCreateCorpSeal({
     address: addr,
     onSuccess(data) {
       setLoading(true);
@@ -48,7 +48,7 @@ export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:Crea
           variant='outlined'
           label='DocAddress'
           size="small"
-          inputProps={{readonly:'true'}}
+          inputProps={{readOnly: true }}
           sx={{
             m:1,
             minWidth: 420,

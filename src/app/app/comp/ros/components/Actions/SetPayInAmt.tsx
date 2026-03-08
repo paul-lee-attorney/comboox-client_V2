@@ -2,7 +2,7 @@ import { useState } from "react";
 import { HexType, MaxData } from "../../../../common";
 
 import { 
-  useCompKeeperSetPayInAmt, 
+  useIromKeeperSetPayInAmt, 
 } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { Lock } from "@mui/icons-material";
@@ -41,7 +41,7 @@ export function SetPayInAmt({ share, setDialogOpen, refresh }: ActionsOfCapProps
   const {
     isLoading: setPayInAmtLoading,
     write: setPayInAmt,
-  } = useCompKeeperSetPayInAmt({
+  } = useIromKeeperSetPayInAmt({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

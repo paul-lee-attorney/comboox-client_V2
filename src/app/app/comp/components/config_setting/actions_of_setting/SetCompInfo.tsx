@@ -11,7 +11,7 @@ import { HexType, currencies } from "../../../../common";
 import { refreshAfterTx, toAscii } from "../../../../common/toolsKit";
 import { CompInfo } from "../../../gk";
 
-import { useCompKeeperSetCompInfo } from "../../../../../../../generated";
+import { useIGeneralKeeperSetCompInfo } from "../../../../../../../generated";
 import { defaultInfo } from "../../SetCompInfo";
 
 export interface ConfigSettingProps{
@@ -34,8 +34,8 @@ export function SetCompInfo({setOpen, setTime}:ConfigSettingProps) {
 
   const {
     isLoading: setInfoLoading,
-    write: setInfo, 
-   } = useCompKeeperSetCompInfo({
+    write: setInfo,
+   } = useIGeneralKeeperSetCompInfo({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

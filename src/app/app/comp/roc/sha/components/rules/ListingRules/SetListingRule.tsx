@@ -17,7 +17,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { AddRule } from '../AddRule';
-import { HexType, MaxPrice, MaxSeqNo } from '../../../../../../common';
+import { HexType, MaxPrice, MaxSeqNo } from '../../../../../../common/index';
 import { FormResults, bigIntToNum, defFormResults, longDataParser,
   onlyInt, onlyNum, strNumToBigInt, } from '../../../../../../common/toolsKit';
 
@@ -148,6 +148,7 @@ export function SetListingRule({ sha, seq, isFinalized, time, refresh }: RulesEd
               {!isFinalized && (
                 <AddRule
                   sha={ sha }
+                  seqOfRule={ seq }
                   rule={ lrCodifier(objLR, seq) }
                   isFinalized={ isFinalized }
                   valid={valid}

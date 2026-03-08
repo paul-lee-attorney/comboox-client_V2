@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 import { Paper, Stack, TextField } from "@mui/material";
 import { defaultDeal } from "../../../ia";
-import { useCompKeeperPayOffApprovedDeal } from "../../../../../../../../../generated";
+import { useIroaKeeperPayOffApprovedDeal } from "../../../../../../../../../generated";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import { Payment } from "@mui/icons-material";
 import { FormResults, HexParser, bigIntToStrNum, defFormResults, hasError, longDataParser, onlyHex, refreshAfterTx } from "../../../../../../common/toolsKit";
-import { AddrZero, booxMap, HexType, keepersMap } from "../../../../../../common";
+import { AddrZero, booxMap, HexType } from "../../../../../../common";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 import { usePublicClient, useWalletClient } from "wagmi";
@@ -54,7 +54,7 @@ export function PayOffInUsd({ addr, deal, setOpen, setDeal, refresh}: ActionsOfD
   const {
     isLoading: payOffInUsdLoading,
     write: payOffInUsd
-  } = useCompKeeperPayOffApprovedDeal({
+  } = useIroaKeeperPayOffApprovedDeal({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

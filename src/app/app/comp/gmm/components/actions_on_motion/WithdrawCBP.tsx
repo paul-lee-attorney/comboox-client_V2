@@ -9,7 +9,7 @@ import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, ref
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { ActionsOnMotionProps } from "../ActionsOnMotion";
-import { useCompKeeperExecActionOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperExecActionOfGm } from "../../../../../../../generated";
 
 export function WithdrawCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
 
@@ -30,7 +30,7 @@ export function WithdrawCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: withdrawCBPLoading,
     write: withdrawCBP,
-  } = useCompKeeperExecActionOfGm({
+  } = useIgmmKeeperExecActionOfGm({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

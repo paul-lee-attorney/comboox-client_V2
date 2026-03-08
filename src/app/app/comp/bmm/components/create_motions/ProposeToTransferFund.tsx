@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import { useCompKeeperProposeToTransferFund } from "../../../../../../../generated";
+import { useIbmmKeeperProposeToTransferFundWithBoard } from "../../../../../../../generated";
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
@@ -32,7 +32,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
   const {
     isLoading: proposeToTransferFundLoading,
     write: proposeToTransferFund
-  } = useCompKeeperProposeToTransferFund({
+  } = useIbmmKeeperProposeToTransferFundWithBoard({
     address: gk,
     onError(err) {
       setErrMsg(err.message);
@@ -47,12 +47,11 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
   const handleClick = ()=> {
     proposeToTransferFund({
       args: [
-        true, 
         paras.to, 
         paras.isCBP, 
         strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
-        BigInt(paras.expireDate), 
-        BigInt(seqOfVR), 
+        BigInt(paras.expireDate),
+        BigInt(seqOfVR),
         BigInt(executor)
       ],
     });

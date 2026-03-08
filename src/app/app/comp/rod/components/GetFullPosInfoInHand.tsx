@@ -5,7 +5,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/
 
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 
-import { longSnParser } from "../../../common/toolsKit";
+import { longSnParser, userNoParser } from "../../../common/toolsKit";
 import { booxMap } from "../../../common";
 
 import { Position, getFullPosInfoInHand } from "../rod";
@@ -39,7 +39,7 @@ export function GetFullPosInfoInHand({userNo}:GetFullPosInfoInHandProps) {
         sx={{ m:1, height:40 }}
         onClick={()=>setOpen(true)}      
       >
-        { longSnParser(userNo.toString()) }
+        { userNoParser(userNo.toString(16)) }
       </Button>
 
       <Dialog
@@ -49,7 +49,7 @@ export function GetFullPosInfoInHand({userNo}:GetFullPosInfoInHandProps) {
         aria-labelledby="dialog-title"
       >
         <DialogTitle id="dialog-title" sx={{ textDecoration:'underline' }} >
-          <b>Positions Inhand - UserNo: { longSnParser(userNo.toString()) }</b>
+          <b>Positions Inhand - UserNo: { userNoParser(userNo.toString(16)) }</b>
         </DialogTitle>
 
         <DialogContent>

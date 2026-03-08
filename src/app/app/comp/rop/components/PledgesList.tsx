@@ -1,7 +1,7 @@
 import { Chip, Paper, Toolbar, Typography } from "@mui/material";
 import { Pledge } from "../rop";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { baseToDollar, dateParser, longSnParser } from "../../../common/toolsKit";
+import { baseToDollar, dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { SearchPledge } from "./SearchPledge";
 
 export const statesOfPld = [
@@ -36,7 +36,7 @@ export function PledgesList({list, setPledge, setOpen}:PledgesListProps) {
     { 
       field: 'creditor', 
       headerName: 'Creditor',
-      valueGetter: p => longSnParser(p.row.head.creditor.toString()),
+      valueGetter: p => userNoParser(p.row.head.creditor.toString(16)),
       headerAlign: 'center',
       align:'center',
       width: 218,

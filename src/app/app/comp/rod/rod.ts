@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../common";
-import { registerOfDirectorsABI } from "../../../../../generated";
+import { iRegisterOfDirectorsABI } from "../../../../../generated";
 
 export interface Position {
   title: number;
@@ -19,7 +19,7 @@ export interface Position {
 export async function posExist(addr:HexType, seqOfPos: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'posExist',
     args: [BigInt(seqOfPos)],
   })
@@ -30,7 +30,7 @@ export async function posExist(addr:HexType, seqOfPos: number):Promise<boolean> 
 export async function isOccupied(addr:HexType, seqOfPos: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'isOccupied',
     args: [BigInt(seqOfPos)],
   })
@@ -41,7 +41,7 @@ export async function isOccupied(addr:HexType, seqOfPos: number):Promise<boolean
 export async function getPosition(addr:HexType, seqOfPos: number):Promise<Position> {
   let pos = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getPosition',
     args: [ BigInt(seqOfPos)],
   })
@@ -54,7 +54,7 @@ export async function getPosition(addr:HexType, seqOfPos: number):Promise<Positi
 export async function isManager(addr:HexType, acct: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'isManager',
     args: [ BigInt(acct) ],
   })
@@ -65,7 +65,7 @@ export async function isManager(addr:HexType, acct: number):Promise<boolean> {
 export async function getNumOfManagers(addr:HexType):Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getNumOfManagers',
   })
 
@@ -75,7 +75,7 @@ export async function getNumOfManagers(addr:HexType):Promise<bigint> {
 export async function getManagersList(addr:HexType):Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getManagersList',
   })
 
@@ -85,7 +85,7 @@ export async function getManagersList(addr:HexType):Promise<readonly bigint[]> {
 export async function getManagersPosList(addr:HexType):Promise<readonly bigint[]>{
   let list = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getManagersPosList',
   })
 
@@ -97,7 +97,7 @@ export async function getManagersPosList(addr:HexType):Promise<readonly bigint[]
 export async function isDirector(addr:HexType, acct: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'isDirector',
     args: [ BigInt(acct) ],
   })
@@ -108,7 +108,7 @@ export async function isDirector(addr:HexType, acct: number):Promise<boolean> {
 export async function getNumOfDirectors(addr:HexType):Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getNumOfDirectors',
   })
 
@@ -118,7 +118,7 @@ export async function getNumOfDirectors(addr:HexType):Promise<bigint> {
 export async function getDirectorsList(addr:HexType):Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getDirectorsList',
   })
 
@@ -128,7 +128,7 @@ export async function getDirectorsList(addr:HexType):Promise<readonly bigint[]> 
 export async function getDirectorsPosList(addr:HexType):Promise<readonly bigint[]>{
   let list = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getDirectorsPosList',
   })
 
@@ -140,7 +140,7 @@ export async function getDirectorsPosList(addr:HexType):Promise<readonly bigint[
 export async function hasPosition(addr:HexType, acct: number, seqOfPos: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'hasPosition',
     args: [ BigInt(acct), BigInt(seqOfPos) ],
   })
@@ -151,7 +151,7 @@ export async function hasPosition(addr:HexType, acct: number, seqOfPos: number):
 export async function getPosInHand(addr:HexType, acct: number):Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getPosInHand',
     args: [ BigInt(acct) ],
   })
@@ -162,7 +162,7 @@ export async function getPosInHand(addr:HexType, acct: number):Promise<readonly 
 export async function getFullPosInfoInHand(addr:HexType, acct: number):Promise<readonly Position[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getFullPosInfoInHand',
     args: [ BigInt(acct) ],
   })
@@ -173,7 +173,7 @@ export async function getFullPosInfoInHand(addr:HexType, acct: number):Promise<r
 export async function hasTitle(addr:HexType, acct: number, title: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'hasTitle',
     args: [ BigInt(acct), BigInt(title) ],
   })
@@ -184,7 +184,7 @@ export async function hasTitle(addr:HexType, acct: number, title: number):Promis
 export async function hasNominationRight(addr:HexType, seqOfPos:number, acct: number):Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'hasNominationRight',
     args: [ BigInt(seqOfPos), BigInt(acct) ],
   })
@@ -195,7 +195,7 @@ export async function hasNominationRight(addr:HexType, seqOfPos:number, acct: nu
 export async function getBoardSeatsOccupied(addr:HexType, acct: number):Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfDirectorsABI,
+    abi: iRegisterOfDirectorsABI,
     functionName: 'getBoardSeatsOccupied',
     args: [ BigInt(acct) ],
   })

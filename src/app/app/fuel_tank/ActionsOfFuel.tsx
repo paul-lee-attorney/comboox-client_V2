@@ -13,10 +13,11 @@ import { useState } from "react";
 import { AddrZero, HexType } from "../common";
 import { FillTank } from "./ActionsOfFuel/FillTank";
 import { SetRate } from "./ActionsOfFuel/SetRate";
-import { SetNewOwner } from "./ActionsOfFuel/SetNewOwner";
-import { RefuelUsd } from "./ActionsOfFuel/RefuelUsd";
+import { Refuel } from "./ActionsOfFuel/Refuel";
+import { WithdrawFuel } from "./ActionsOfFuel/WithdrawIncome";
 
 export interface ActionsOfFuelProps{
+  addrFT: HexType;
   user: HexType;
   isOwner: boolean;
   getFinInfo: ()=>void;
@@ -24,22 +25,23 @@ export interface ActionsOfFuelProps{
 }
 
 export interface ActionOfFuelProps{
+  addrFT: HexType;
   refresh: ()=>void;
 }
 
-export function ActionsOfFuel({ user, isOwner, getFinInfo, getSetting }: ActionsOfFuelProps) {
+export function ActionsOfFuel({ addrFT, user, isOwner, getFinInfo, getSetting }: ActionsOfFuelProps) {
 
   const [ typeOfAction, setTypeOfAction ] = useState<string>('');
   
   const actionsOfUser = [
-    'Refuel', 'Fill Tank', 'Set Rate', 'Set Owner',
+    'Refuel', 'Fill Tank', 'Withdraw Fuel', 'Set Rate', 'Set Owner',
   ]
 
   const compsOfAction = [
-    <RefuelUsd key={0} refresh={ getFinInfo } />,
-    <FillTank key={1} refresh={ getFinInfo } />,
-    <SetRate key={2} refresh={ getSetting } />,
-    <SetNewOwner key={3} refresh={ getSetting } />,
+    <Refuel key={0} refresh={ getFinInfo } addrFT={ addrFT } />,
+    <FillTank key={1} refresh={ getFinInfo } addrFT={ addrFT } />,
+    <WithdrawFuel key={2} refresh={ getFinInfo } addrFT={ addrFT } />,
+    <SetRate key={3} refresh={ getSetting } addrFT={ addrFT } />,
    ]
 
   return( 

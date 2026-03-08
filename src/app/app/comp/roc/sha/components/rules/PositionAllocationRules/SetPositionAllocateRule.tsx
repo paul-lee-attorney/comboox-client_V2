@@ -18,7 +18,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { AddRule } from '../AddRule';
-import { FormResults, defFormResults, longSnParser, onlyInt, stampToUtc, utcToStamp } from '../../../../../../common/toolsKit';
+import { FormResults, defFormResults, onlyHex, onlyInt, stampToUtc, userNoCodifier, userNoParser, utcToStamp } from '../../../../../../common/toolsKit';
 import { ListAlt } from '@mui/icons-material';
 import { HexType, MaxSeqNo, MaxUserNo } from '../../../../../../common';
 
@@ -51,7 +51,7 @@ export function prCodifier(rule: PosAllocateRule, seq:number): HexType {
     (rule.removePos ? '01' : '00' ) +
     (Number(rule.seqOfPos).toString(16).padStart(4, '0')) +
     (Number(rule.titleOfPos).toString(16).padStart(4, '0')) +
-    (Number(rule.nominator).toString(16).padStart(10, '0')) +
+    userNoCodifier(rule.nominator) +
     (Number(rule.titleOfNominator).toString(16).padStart(4, '0')) +
     (Number(rule.seqOfVR).toString(16).padStart(4, '0')) +
     (rule.endDate.toString(16).padStart(12, '0')) +
@@ -68,7 +68,7 @@ export function prParser(hexRule: HexType): PosAllocateRule {
     removePos: hexRule.substring(10, 12) === '01',
     seqOfPos: parseInt(hexRule.substring(12, 16), 16).toString(),
     titleOfPos: parseInt(hexRule.substring(16, 20), 16).toString(),
-    nominator: parseInt(hexRule.substring(20, 30), 16).toString(),
+    nominator: userNoParser(hexRule.substring(20, 30)),
     titleOfNominator: parseInt(hexRule.substring(30, 34), 16).toString(),
     seqOfVR: parseInt(hexRule.substring(34, 38), 16).toString(),
     endDate: parseInt(hexRule.substring(38, 50), 16),
@@ -153,6 +153,7 @@ export function SetPositionAllocateRule({ sha, seq, isFinalized, time, refresh }
               {!isFinalized && (
                 <AddRule 
                   sha={ sha } 
+                  seqOfRule = { seq }
                   rule={ prCodifier(objPR, seq) } 
                   isFinalized={isFinalized}
                   valid={valid}
@@ -271,13 +272,13 @@ export function SetPositionAllocateRule({ sha, seq, isFinalized, time, refresh }
                   }}
                   onChange={(e) => {
                     let input = e.target.value;
-                    onlyInt('Nominator', input, MaxUserNo, setValid);
+                    onlyHex('Nominator', input, 10, setValid);
                     setObjPR((v) => ({
                       ...v,
                       nominator: input,
                     }));
                   }}
-                  value={ isFinalized ? longSnParser(objPR.nominator) : objPR.nominator }                                        
+                  value={ objPR.nominator }                                        
                 />
 
                 <FormControl variant="outlined" size='small' sx={{ m: 1, minWidth: 218 }}>

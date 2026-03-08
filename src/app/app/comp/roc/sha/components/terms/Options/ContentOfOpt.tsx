@@ -16,7 +16,7 @@ import {
   ListAlt,
 } from "@mui/icons-material"
 
-import { bigIntToStrNum, dateParser, longSnParser } from "../../../../../../common/toolsKit";
+import { bigIntToStrNum, dateParser, longSnParser, userNoParser } from "../../../../../../common/toolsKit";
 import { Option, typeOfOpts } from "../../../../../roo/roo";
 
 export const statesOfOpt = ['Pending', 'Issued', 'Executed', 'Closed'];
@@ -137,7 +137,7 @@ export function ContentOfOpt({ opt }: ContentOfOptProps) {
                     m:1,
                     minWidth: 218,
                   }}
-                  value={ longSnParser(opt.body.rightholder.toString()) }              
+                  value={ userNoParser(opt.body.rightholder.toString(16)) }              
                 />
 
               </Stack>

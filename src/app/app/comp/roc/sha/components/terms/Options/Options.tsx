@@ -26,10 +26,10 @@ import { AddCircle, RemoveCircle, ListAlt } from "@mui/icons-material"
 import { DateTimeField } from "@mui/x-date-pickers";
 
 import {
-  useOptionsCreateOption,
-  useOptionsDelOption,
-  useOptionsAddObligorIntoOpt,
-  useOptionsRemoveObligorFromOpt,
+  useIOptionsCreateOption,
+  useIOptionsDelOption,
+  useIOptionsAddObligorIntoOpt,
+  useIOptionsRemoveObligorFromOpt,
 } from "../../../../../../../../../generated";
 
 import { Opt } from "./Opt";
@@ -44,7 +44,7 @@ import { OptWrap, comOps, condCodifier, logOps, optHeadCodifier, typeOfOpts, Str
 
 import { getOpts } from "./op";
 
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 
 
@@ -71,7 +71,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: addOptLoading,
     write: addOpt
-  } = useOptionsCreateOption({
+  } = useIOptionsCreateOption({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -87,7 +87,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
     addOpt({args:[
       optHeadCodifier(head), 
       condCodifier(cond), 
-      BigInt(body.rightholder),
+      hexToBigInt(body.rightholder),
       strNumToBigInt(body.paid, 4),
       strNumToBigInt(body.par, 4)
     ]});
@@ -102,7 +102,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: removeOptLoading, 
     write: removeOpt, 
-  } = useOptionsDelOption({
+  } = useIOptionsDelOption({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -129,7 +129,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: addObligorLoading, 
     write: addObligor, 
-  } = useOptionsAddObligorIntoOpt({
+  } = useIOptionsAddObligorIntoOpt({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -144,7 +144,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const addObligorClick = ()=>{
     addObligor({args:[
       BigInt(head.seqOfOpt),
-      BigInt(obligor),
+      hexToBigInt(obligor),
     ]});
   }
 
@@ -157,7 +157,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const { 
     isLoading: removeObligorLoading, 
     write: removeObligor 
-  } = useOptionsRemoveObligorFromOpt({
+  } = useIOptionsRemoveObligorFromOpt({
     address: term,
     onError(err) {
       setErrMsg(err.message);
@@ -172,7 +172,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
   const removeObligorClick = ()=>{
     removeObligor({args:[
       BigInt(head.seqOfOpt),
-      BigInt(obligor),
+      hexToBigInt(obligor),
     ]});
   }
 
@@ -326,13 +326,13 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
                         }}
                         onChange={(e) => {
                           let input = e.target.value;
-                          onlyInt('Rightholder', input, MaxUserNo, setValid);
+                          onlyHex('Rightholder', input, 10, setValid);
                           setBody((v) => ({
                             ...v,
                             rightholder: input,
                           }));
                         }}
-                        value={ body.rightholder }              
+                        value={ body.rightholder }
                       />
 
                     </Stack>
@@ -430,7 +430,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
                         }}
                         onChange={(e) => {
                           let input = e.target.value;
-                          onlyInt('Obligor', input, MaxUserNo, setValid);
+                          onlyHex('Obligor', input, 10, setValid);
                           setHead((v) => ({
                             ...v,
                             obligor: input,
@@ -685,7 +685,7 @@ export function Options({ sha, term, setTerms, isFinalized }: SetShaTermProps) {
                       }}
                       onChange={(e) => {
                         let input = e.target.value;
-                        onlyInt('Obligor', input, MaxUserNo, setValid);
+                        onlyHex('Obligor', input, 10, setValid);
                         setObligor(input);
                       }}
                       value={ obligor }              

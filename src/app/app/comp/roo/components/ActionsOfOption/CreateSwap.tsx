@@ -1,5 +1,5 @@
 import { ActionsOfOptionProps } from "../ActionsOfOption";
-import { useCompKeeperCreateSwap } from "../../../../../../../generated";
+import { useIrooKeeperCreateSwap } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { SwapHorizOutlined } from "@mui/icons-material";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export function CreateSwap({seqOfOpt, setOpen, refresh}:ActionsOfOptionProps) {
   const {
     isLoading: createSwapLoading,
     write: createSwap,
-  } = useCompKeeperCreateSwap({
+  } = useIrooKeeperCreateSwap({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

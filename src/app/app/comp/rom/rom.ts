@@ -1,11 +1,11 @@
 import { readContract } from "@wagmi/core";
-import { registerOfMembersABI } from "../../../../../generated";
+import { iRegisterOfMembersABI } from "../../../../../generated";
 import { HexType } from "../../common";
 
 export async function isMember(addr: HexType, acct: number):Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'isMember',
     args: [ BigInt(acct) ]
   })
@@ -16,7 +16,7 @@ export async function isMember(addr: HexType, acct: number):Promise<boolean>{
 export async function qtyOfMembers(addr: HexType):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfMembers',
   })
   
@@ -26,7 +26,7 @@ export async function qtyOfMembers(addr: HexType):Promise<bigint>{
 export async function membersList(addr: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'membersList',
   });
 
@@ -36,7 +36,7 @@ export async function membersList(addr: HexType): Promise<readonly bigint[]> {
 export async function sortedMembersList(addr: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'sortedMembersList',
   });
 
@@ -46,7 +46,7 @@ export async function sortedMembersList(addr: HexType): Promise<readonly bigint[
 export async function qtyOfTopMembers(addr: HexType): Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfTopMembers',
   });
 
@@ -56,7 +56,7 @@ export async function qtyOfTopMembers(addr: HexType): Promise<bigint> {
 export async function topMembersList(addr: HexType): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'topMembersList',
   });
 
@@ -83,7 +83,7 @@ export interface MemberShareClip {
 export async function getOwnersEquity(addr: HexType): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'ownersEquity',
   });
 
@@ -93,7 +93,7 @@ export async function getOwnersEquity(addr: HexType): Promise<ShareClip> {
 export async function getOwnersPoints(addr: HexType): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'ownersPoints',
   });
 
@@ -104,7 +104,7 @@ export async function getOwnersPoints(addr: HexType): Promise<ShareClip> {
 export async function capAtDate(addr: HexType, date: number): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'capAtDate',
     args: [ BigInt(date) ]
   });
@@ -115,7 +115,7 @@ export async function capAtDate(addr: HexType, date: number): Promise<ShareClip>
 export async function equityOfMember(addr: HexType, acct: number): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'equityOfMember',
     args: [ BigInt(acct) ],
   });
@@ -126,7 +126,7 @@ export async function equityOfMember(addr: HexType, acct: number): Promise<Share
 export async function pointsOfMember(addr: HexType, acct: number): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'pointsOfMember',
     args: [ BigInt(acct) ],
   });
@@ -137,7 +137,7 @@ export async function pointsOfMember(addr: HexType, acct: number): Promise<Share
 export async function equityAtDate(addr: HexType, acct: number, date: number): Promise<ShareClip> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'equityAtDate',
     args: [ BigInt(acct), BigInt(date) ],
   });
@@ -148,7 +148,7 @@ export async function equityAtDate(addr: HexType, acct: number, date: number): P
 export async function votesInHand(addr: HexType, acct: number): Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'votesInHand',
     args: [ BigInt(acct) ],
   });
@@ -159,7 +159,7 @@ export async function votesInHand(addr: HexType, acct: number): Promise<bigint> 
 export async function votesAtDate(addr: HexType, acct: number, date: number): Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'votesAtDate',
     args: [ BigInt(acct), BigInt(date) ],
   });
@@ -170,7 +170,7 @@ export async function votesAtDate(addr: HexType, acct: number, date: number): Pr
 export async function votesHistory(addr: HexType, acct: number): Promise< readonly ShareClip[] > {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'votesHistory',
     args: [ BigInt(acct) ],
   });
@@ -183,7 +183,7 @@ export async function votesHistory(addr: HexType, acct: number): Promise< readon
 export async function qtyOfSharesInHand(addr: HexType, acct: number): Promise< bigint > {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfSharesInHand',
     args: [ BigInt(acct) ],
   });
@@ -194,7 +194,7 @@ export async function qtyOfSharesInHand(addr: HexType, acct: number): Promise< b
 export async function sharesInHand(addr: HexType, acct: number): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'sharesInHand',
     args: [ BigInt(acct) ],
   });
@@ -207,7 +207,7 @@ export async function sharesInHand(addr: HexType, acct: number): Promise<readonl
 export async function qtyOfSharesInClass(addr: HexType, acct: number, classOfShare: number): Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfSharesInClass',
     args: [ BigInt(acct), BigInt(classOfShare) ],
   });
@@ -218,7 +218,7 @@ export async function qtyOfSharesInClass(addr: HexType, acct: number, classOfSha
 export async function sharesInClass(addr: HexType, acct: number, classOfShare: number): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'sharesInClass',
     args: [ BigInt(acct), BigInt(classOfShare) ],
   });
@@ -229,7 +229,7 @@ export async function sharesInClass(addr: HexType, acct: number, classOfShare: n
 export async function isClassMember(addr: HexType, acct: number, classOfShare: number): Promise<boolean> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'isClassMember',
     args: [ BigInt(acct), BigInt(classOfShare) ],
   });
@@ -240,7 +240,7 @@ export async function isClassMember(addr: HexType, acct: number, classOfShare: n
 export async function classesBelonged(addr: HexType, acct: number): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'classesBelonged',
     args: [ BigInt(acct) ],
   });
@@ -251,7 +251,7 @@ export async function classesBelonged(addr: HexType, acct: number): Promise<read
 export async function qtyOfClassMember(addr: HexType, classOfShare: number): Promise<bigint> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfClassMember',
     args: [ BigInt(classOfShare) ],
   });
@@ -262,7 +262,7 @@ export async function qtyOfClassMember(addr: HexType, classOfShare: number): Pro
 export async function getMembersOfClass(addr: HexType, classOfShare: number): Promise<readonly bigint[]> {
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'getMembersOfClass',
     args: [ BigInt(classOfShare) ],
   });
@@ -275,7 +275,7 @@ export async function getMembersOfClass(addr: HexType, classOfShare: number): Pr
 export async function basedOnPar(addr: HexType):Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'basedOnPar',
   })
   
@@ -285,7 +285,7 @@ export async function basedOnPar(addr: HexType):Promise<boolean>{
 export async function maxQtyOfMembers(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'maxQtyOfMembers',
   })
   
@@ -295,7 +295,7 @@ export async function maxQtyOfMembers(addr: HexType):Promise<number>{
 export async function minVoteRatioOnChain(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'minVoteRatioOnChain',
   })
   
@@ -305,7 +305,7 @@ export async function minVoteRatioOnChain(addr: HexType):Promise<number>{
 export async function totalVotes(addr: HexType):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'totalVotes',
   })
   
@@ -315,7 +315,7 @@ export async function totalVotes(addr: HexType):Promise<bigint>{
 export async function getControllor(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'controllor',
   })
   
@@ -325,7 +325,7 @@ export async function getControllor(addr: HexType):Promise<number>{
 export async function tailOfChain(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'tailOfChain',
   })
   
@@ -335,7 +335,7 @@ export async function tailOfChain(addr: HexType):Promise<number>{
 export async function headOfQueue(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'headOfQueue',
   })
   
@@ -345,7 +345,7 @@ export async function headOfQueue(addr: HexType):Promise<number>{
 export async function tailOfQueue(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'tailOfQueue',
   })
   
@@ -357,7 +357,7 @@ export async function tailOfQueue(addr: HexType):Promise<number>{
 export async function groupRep(addr: HexType, acct: number):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'groupRep',
     args: [ BigInt(acct) ]
   })
@@ -368,7 +368,7 @@ export async function groupRep(addr: HexType, acct: number):Promise<number>{
 export async function votesOfGroup(addr: HexType, acct: number):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'votesOfGroup',
     args: [ BigInt(acct) ]
   })
@@ -379,7 +379,7 @@ export async function votesOfGroup(addr: HexType, acct: number):Promise<bigint>{
 export async function deepOfGroup(addr: HexType, acct: number):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'deepOfGroup',
     args: [ BigInt(acct) ]
   })
@@ -390,7 +390,7 @@ export async function deepOfGroup(addr: HexType, acct: number):Promise<bigint>{
 export async function membersOfGroup(addr: HexType, acct: number):Promise<readonly bigint[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'membersOfGroup',
     args: [ BigInt(acct) ]
   })
@@ -401,7 +401,7 @@ export async function membersOfGroup(addr: HexType, acct: number):Promise<readon
 export async function qtyOfGroupsOnChain(addr: HexType):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfGroupsOnChain',
   })
   
@@ -411,7 +411,7 @@ export async function qtyOfGroupsOnChain(addr: HexType):Promise<number>{
 export async function qtyOfGroups(addr: HexType):Promise<bigint>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'qtyOfGroups',
   })
   
@@ -421,7 +421,7 @@ export async function qtyOfGroups(addr: HexType):Promise<bigint>{
 export async function affiliated(addr: HexType, acct1: number, acct2: number):Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: registerOfMembersABI,
+    abi: iRegisterOfMembersABI,
     functionName: 'affiliated',
     args: [ BigInt(acct1), BigInt(acct2) ]
   })

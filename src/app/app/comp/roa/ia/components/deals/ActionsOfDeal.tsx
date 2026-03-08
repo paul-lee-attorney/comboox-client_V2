@@ -14,7 +14,7 @@ import { ExecAntiDilution } from "./ActionsOfDeal/ExecAntiDilution";
 import { ExecFirstRefusal } from "./ActionsOfDeal/ExecFirstRefusal";
 import { TakeGiftShares } from "./ActionsOfDeal/TakeGiftShares";
 import { PayOffInUsd } from "./ActionsOfDeal/PayOffInUsd";
-import { RequestToBuy } from "./ActionsOfDeal/RequestToBuy";
+// import { RequestToBuy } from "./ActionsOfDeal/RequestToBuy";
 
 export interface ActionsOfDealProps{
   addr: HexType;
@@ -48,7 +48,7 @@ export function ActionsOfDeal({addr, deal, setOpen, setDeal, refresh, timeline, 
     <IssueShare key={5} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <TransferShare key={6} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <PayOffInUsd key={7} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
-    <RequestToBuy key={8} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
+    // <RequestToBuy key={8} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <PickupShare key={9} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <TerminateDeal key={10} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <TakeGiftShares key={11} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Stack, Toolbar } from "@mui/material";
 import { Calculate, ListAltOutlined } from "@mui/icons-material";
-import { useCompKeeperComputeFirstRefusal } from "../../../../../../../../generated";
-import { baseToDollar, dateParser, longSnParser, refreshAfterTx, toPercent } from "../../../../../common/toolsKit";
+import { useIshaKeeperComputeFirstRefusal } from "../../../../../../../../generated";
+import { baseToDollar, dateParser, longSnParser, refreshAfterTx, toPercent, userNoParser } from "../../../../../common/toolsKit";
 import { ActionsOfDealCenterProps } from "./ActionsOfDeal";
 import { FRClaim, getFRClaimsOfDeal, hasFRClaims } from "../../../roa";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -32,7 +32,7 @@ export function GetFRClaims({addr, deal, setOpen, setDeal, refresh, timeline, ti
     { 
       field: 'claimer', 
       headerName: 'Claimer',
-      valueGetter: p => longSnParser(p.row.claimer.toString()),
+      valueGetter: p => userNoParser(p.row.claimer.toString(16)) ,
       headerAlign:'right',
       align: 'right',
       width: 218,
@@ -102,7 +102,7 @@ export function GetFRClaims({addr, deal, setOpen, setDeal, refresh, timeline, ti
   const {
     isLoading: computeFirstRefusalLoading,
     write: computeFirstRefusal,
-  } = useCompKeeperComputeFirstRefusal({
+  } = useIshaKeeperComputeFirstRefusal({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

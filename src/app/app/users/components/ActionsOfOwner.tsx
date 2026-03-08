@@ -5,7 +5,6 @@ import { useState } from "react";
 import { SetPlatformRule } from "./ActionsOfOwner/SetPlatformRule";
 import { TransferOwnership } from "./ActionsOfOwner/TransferOwnership";
 import { HandoverCenterKey } from "./ActionsOfOwner/HandoverCenterKey";
-import { SetFeedRegistry } from "./ActionsOfOwner/SetFeedRegitry";
 
 export interface ActionsOfOwnerProps{
   refresh: ()=>void;
@@ -16,14 +15,13 @@ export function ActionsOfOwner({ refresh }: ActionsOfOwnerProps) {
   const [ typeOfAction, setTypeOfAction ] = useState<string>('');
   
   const actionsOfOwner = [
-    'Set Platform Rule', 'Set Price Feed Registry', 'Transfer Ownership', 'Handover Center Key' 
+    'Set Platform Rule', 'Transfer Ownership', 'Handover Center Key' 
   ]
 
   const compsOfAction = [
     <SetPlatformRule key={0} refresh={refresh} />,
-    <SetFeedRegistry key={1} refresh={refresh} />,
-    <TransferOwnership key={2} refresh={refresh} />,
-    <HandoverCenterKey key={3} refresh={refresh} />
+    <TransferOwnership key={1} refresh={refresh} />,
+    <HandoverCenterKey key={2} refresh={refresh} />
   ]
 
   return( 

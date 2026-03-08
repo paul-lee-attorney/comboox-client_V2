@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { HexType } from "../../../../common";
 
-import { useCompKeeperTransferFund } from "../../../../../../../generated";
+import { useIAccountantTransferFund } from "../../../../../../../generated";
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { PaymentOutlined } from "@mui/icons-material";
@@ -33,7 +33,7 @@ export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) 
   const {
     isLoading: transferFundLoading,
     write: transferFund
-  } = useCompKeeperTransferFund({
+  } = useIAccountantTransferFund({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

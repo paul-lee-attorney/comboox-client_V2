@@ -3,7 +3,7 @@ import { TableContainer, Paper, Chip,Stack, Typography} from '@mui/material';
 
 import { DataGrid, GridColDef, GridEventListener } from '@mui/x-data-grid';
 import { Deal, dealState } from '../../ia';
-import { baseToDollar, longDataParser, longSnParser, } from '../../../../../common/toolsKit';
+import { baseToDollar, longDataParser, longSnParser, userNoParser, } from '../../../../../common/toolsKit';
 import { Dispatch, SetStateAction } from 'react';
 
 interface DealsListProps {
@@ -19,7 +19,7 @@ export function DealsList({ list, setDeal, setOpen }:DealsListProps ) {
       field: 'seqOfDeal', 
       headerName: 'Seq',
       valueGetter: p => p.row.head.seqOfDeal.toString(),
-      width: 58,
+      width: 88,
       renderCell: ({ value }) => (
         <Chip
           variant="outlined"
@@ -33,14 +33,14 @@ export function DealsList({ list, setDeal, setOpen }:DealsListProps ) {
       field: 'seqOfShare',
       headerName: 'SeqOfCert',
       valueGetter: p => longSnParser(p.row.head.seqOfShare.toString()),
-      width: 128,
+      width: 88,
       headerAlign:'right',
       align: 'right',
     },
     {
       field: 'seller',
       headerName: 'Seller',
-      valueGetter: p => longSnParser(p.row.head.seller.toString()),
+      valueGetter: p => userNoParser(p.row.head.seller.toString(16)),
       width: 218,
       headerAlign:'right',
       align: 'right',
@@ -48,7 +48,7 @@ export function DealsList({ list, setDeal, setOpen }:DealsListProps ) {
     {
       field: 'buyer',
       headerName: 'Buyer',
-      valueGetter: p => longSnParser(p.row.body.buyer.toString()),
+      valueGetter: p => userNoParser(p.row.body.buyer.toString(16)),
       width: 218,
       headerAlign:'right',
       align: 'right',

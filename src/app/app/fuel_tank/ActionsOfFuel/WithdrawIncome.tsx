@@ -1,9 +1,9 @@
 
 import { Paper, Stack, TextField } from '@mui/material';
 
-import { useFuelTankWithdrawIncome } from '../../../../../generated';
+import { useUsdFuelTankWithdrawFuel } from '../../../../../generated';
 
-import { AddrOfTank, HexType } from '../../common';
+import { HexType } from '../../common';
 import { SavingsOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { FormResults, defFormResults, hasError, onlyNum, refreshAfterTx, strNumToBigInt } from '../../common/toolsKit';
@@ -11,7 +11,7 @@ import { LoadingButton } from '@mui/lab';
 import { ActionOfFuelProps } from '../ActionsOfFuel';
 import { useComBooxContext } from '../../../_providers/ComBooxContextProvider';
 
-export function WithdrawIncome({ refresh }: ActionOfFuelProps) {
+export function WithdrawFuel({ addrFT, refresh }: ActionOfFuelProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -27,12 +27,12 @@ export function WithdrawIncome({ refresh }: ActionOfFuelProps) {
   }
 
   const {
-    isLoading: withdrawIncomeLoading,
-    write: withdrawIncome
-  } = useFuelTankWithdrawIncome({
-    address: AddrOfTank,
+    isLoading: withdrawFuelLoading,
+    write: withdrawFuel
+  } = useUsdFuelTankWithdrawFuel({
+    address: addrFT,
     onError(err) {
-      setErrMsg(err.message);
+      setErrMsg(err.name);
     },
     onSuccess(data) {
       setLoading(true);
@@ -41,8 +41,8 @@ export function WithdrawIncome({ refresh }: ActionOfFuelProps) {
     }
   })
 
-  const withdrawIncomeClick = ()=>{
-    withdrawIncome({
+  const withdrawFuelClick = ()=>{
+    withdrawFuel({
       args:[
         strNumToBigInt(amt, 9) * (10n ** 9n)
       ]
@@ -72,10 +72,10 @@ export function WithdrawIncome({ refresh }: ActionOfFuelProps) {
         />
 
         <LoadingButton 
-          disabled={ withdrawIncomeLoading || hasError(valid) } 
+          disabled={ withdrawFuelLoading || hasError(valid) } 
           loading={loading}
           loadingPosition='end'
-          onClick={ withdrawIncomeClick }
+          onClick={ withdrawFuelClick }
           variant='contained'
           sx={{ m:1, mx:2, minWidth:128 }} 
           endIcon={<SavingsOutlined />}       

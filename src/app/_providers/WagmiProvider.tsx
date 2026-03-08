@@ -1,6 +1,6 @@
 import { createConfig, configureChains, WagmiConfig } from 'wagmi';
 
-import { mainnet, hardhat, sepolia, arbitrum } from 'wagmi/chains';
+import { hardhat, localhost, arbitrum } from 'wagmi/chains';
 
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
@@ -8,25 +8,28 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 
 import { alchemyProvider } from '@wagmi/core/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { waitForTransaction } from '@wagmi/core';
 import { HexType } from '../app/common';
 import { arbitrumSepolia } from 'viem/chains';
-
 
 type WagmiProviderType = {
   children: React.ReactNode
 }
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [ arbitrumSepolia, arbitrum, hardhat ],
-  // [ hardhat ],
+  // [ arbitrumSepolia, arbitrum ],
+  [ hardhat ],
   [
-    alchemyProvider({
-      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ?? '',
-      // stallTimeout: 2_000,
+    // alchemyProvider({
+    //   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ?? '',
+    //   // stallTimeout: 2_000,
+    // }),
+    jsonRpcProvider({
+      rpc: () => {
+          return { http: 'http://localhost:8545' };
+        }
     }),
-    publicProvider(),
   ],
 );
 

@@ -10,7 +10,7 @@ import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, ref
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { ActionsOnMotionProps } from "../ActionsOnMotion";
-import { useCompKeeperExecActionOfGm } from "../../../../../../../generated";
+import { useIgmmKeeperExecActionOfGm } from "../../../../../../../generated";
 
 export function MintCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
 
@@ -33,7 +33,7 @@ export function MintCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: mintCBPLoading,
     write: mintCBP,
-  } = useCompKeeperExecActionOfGm ({
+  } = useIgmmKeeperExecActionOfGm ({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

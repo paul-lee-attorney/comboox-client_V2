@@ -6,7 +6,7 @@ import { AssignmentInd } from "@mui/icons-material";
 
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { booxMap } from "../../../common";
 import { titleOfPositions } from "../../roc/sha/sha";
 
@@ -98,7 +98,7 @@ export function GetPosition({seq}: GetPositionProps) {
                     m:1,
                     width: 450,
                   }}
-                  value={ longSnParser(pos?.acct.toString() ?? '0' ) }
+                  value={ userNoParser(pos?.acct.toString(16) ?? '0' ) }
                 />
               </Stack>
 
@@ -113,7 +113,7 @@ export function GetPosition({seq}: GetPositionProps) {
                     m:1,
                     minWidth: 218,
                   }}
-                  value={ longSnParser(pos?.nominator.toString() ?? '0') }
+                  value={ userNoParser(pos?.nominator.toString(16) ?? '0') }
                 />
 
                 <TextField 

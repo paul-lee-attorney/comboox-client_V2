@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { AddrZero, booxMap, HexType, keepersMap, MaxData, } from "../../../../common";
+import { AddrZero, booxMap, HexType, MaxData, } from "../../../../common";
 
 import { Paper, Stack, TextField } from "@mui/material";
 import { Payment, } from "@mui/icons-material";
@@ -21,7 +21,7 @@ import {
 import { ActionsOfCapProps } from "../ActionsOfCap";
 
 
-import { useCompKeeperPayInCapital } from "../../../../../../../generated";
+import { useIromKeeperPayInCapital } from "../../../../../../../generated";
 import { GenerateAuth } from "../../../../components/usdc_auth/GenerateAuth";
 import { usePublicClient, useWalletClient } from "wagmi";
 import { AuthSig } from "../../../../components/usdc_auth/typedData";
@@ -63,7 +63,7 @@ export function PayInUsd({ share, setDialogOpen, refresh }: ActionsOfCapProps ) 
   const {
     isLoading: payInUsdLoading,
     write: payInUsd,
-  } = useCompKeeperPayInCapital({
+  } = useIromKeeperPayInCapital({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

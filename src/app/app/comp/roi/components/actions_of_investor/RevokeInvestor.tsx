@@ -2,7 +2,7 @@ import { Paper, Stack, TextField, } from "@mui/material";
 
 import { PersonRemoveOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { useCompKeeperRevokeInvestor } from "../../../../../../../generated";
+import { useIroiKeeperRevokeInvestor } from "../../../../../../../generated";
 import { ActionsOfInvestorProps } from "../ActionsOfInvestor";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
@@ -26,7 +26,7 @@ export function RevokeInvestor({ acct, refresh }: ActionsOfInvestorProps) {
   const {
     isLoading: revokeInvestorLoading,
     write:revokeInvestor,
-  } = useCompKeeperRevokeInvestor({
+  } = useIroiKeeperRevokeInvestor({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

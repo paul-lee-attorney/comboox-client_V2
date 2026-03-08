@@ -7,44 +7,46 @@ import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
 import { CopyLongStrSpan } from '../../common/CopyLongStr';
 
-import { DocItem, typesOfDoc } from '../../rc';
-import { dateParser, defFormResults, FormResults, longSnParser, onlyInt } from '../../common/toolsKit';
+import { DocItem, } from '../../rc';
+import { dateParser, defFormResults, FormResults, HexParser, longSnParser, onlyHex, onlyInt, userNoParser } from '../../common/toolsKit';
 import { HexType, MaxData, MaxPrice } from '../../common';
 
 interface DocsListProps {
   title: string;
   list: DocItem[];
+  titleOfTemp: string;
   typeOfDoc: number;
   version: number;
   setTypeOfDoc: Dispatch<SetStateAction<number>>;
+  setTitleOfTemp: Dispatch<SetStateAction<string>>;
   setVersion: Dispatch<SetStateAction<number>>;
   setAddr: Dispatch<SetStateAction<HexType>>;
 }
 
-export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVersion, setAddr }:DocsListProps ) {
+export function DocsList({ title, list, titleOfTemp, typeOfDoc, version, setTypeOfDoc, setTitleOfTemp, setVersion, setAddr }:DocsListProps ) {
   
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
 
   const columns: GridColDef[] = [
-    {
-      field: 'type',
-      headerName: 'Type',
-      valueGetter: p =>  p.row.doc.head.typeOfDoc.toString().padStart(2, '0'),
-      width: 88,
-      headerAlign:'center',
-      align: 'center',
-      renderCell: ({ value }) => (
-        <Chip 
-          variant='outlined'
-          label={ value }
-        />
-      ),
-    },
+    // {
+    //   field: 'type',
+    //   headerName: 'Type',
+    //   valueGetter: p =>  userNoParser(p.row.doc.head.typeOfDoc.toString(16)),
+    //   width: 88,
+    //   headerAlign:'center',
+    //   align: 'center',
+    //   renderCell: ({ value }) => (
+    //     <Chip 
+    //       variant='outlined'
+    //       label={ value }
+    //     />
+    //   ),
+    // },
     {
       field: 'title',
       headerName: 'Title',
-      valueGetter: p =>  typesOfDoc[p.row.doc.head.typeOfDoc - 1],
-      width: 168,
+      valueGetter: p =>  p.row.title,
+      width: 218,
       headerAlign:'center',
       align: 'center',
     },    
@@ -52,7 +54,7 @@ export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVer
       field: 'version',
       headerName: 'Version',
       valueGetter: p =>  longSnParser( p.row.doc.head.version.toString() ),
-      width: 128,
+      width: 88,
       headerAlign:'center',
       align: 'center',
       renderCell: ({ value }) => (
@@ -62,24 +64,24 @@ export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVer
         />
       ),
     },
-    {
-      field: 'seqOfDoc',
-      headerName: 'Sn',
-      valueGetter: p =>  longSnParser(p.row.doc.head.seqOfDoc.toString()),
-      width: 188,
-      headerAlign:'center',
-      align: 'center',
-      renderCell: ({ value }) => (
-        <Chip 
-          variant='filled'
-          label={ value }
-        />
-      ),
-    },
+    // {
+    //   field: 'seqOfDoc',
+    //   headerName: 'Sn',
+    //   valueGetter: p =>  longSnParser(p.row.doc.head.seqOfDoc.toString()),
+    //   width: 188,
+    //   headerAlign:'center',
+    //   align: 'center',
+    //   renderCell: ({ value }) => (
+    //     <Chip 
+    //       variant='filled'
+    //       label={ value }
+    //     />
+    //   ),
+    // },
     {
       field: 'author',
       headerName: 'Author',
-      valueGetter: p =>  longSnParser(p.row.doc.head.author.toString()),
+      valueGetter: p =>  userNoParser(p.row.doc.head.author.toString(16)),
       width: 188,
       headerAlign:'center',
       align: 'center',
@@ -93,9 +95,7 @@ export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVer
     {
       field: 'creator',
       headerName: 'Creator',
-      valueGetter: p => title == 'Templates' 
-          ? longSnParser(p.row.doc.head.creator.toString())
-          : p.row.doc.head.creator.toString(16),
+      valueGetter: p => userNoParser(p.row.doc.head.creator.toString(16)),
       width: 188,
       headerAlign:'center',
       align: 'center',
@@ -129,6 +129,7 @@ export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVer
   
   const handleRowClick = (p:GridRowParams)=>{
     setTypeOfDoc(p.row.doc.head.typeOfDoc);
+    setTitleOfTemp(p.row.title);
     setVersion(p.row.doc.head.version);
     setAddr(p.row.doc.body);
   }
@@ -144,44 +145,41 @@ export function DocsList({ title, list, typeOfDoc, version, setTypeOfDoc, setVer
         <Stack direction = 'row' sx={{ alignItems:'start'}} >
           <TextField 
             variant='outlined'
-            label='TypeOfDoc'
+            label='Title'
             size="small"
-            error={ valid['TypeOfDoc']?.error }
-            helperText={ valid['TypeOfDoc']?.helpTx ?? ' ' }                        
             sx={{
               m:1,
               minWidth: 218,
             }}
-            value={ typeOfDoc }
-            onChange={(e)=>{
-              let input = e.target.value;
-              onlyInt('TypeOfDoc', input, MaxPrice, setValid);
-              setTypeOfDoc(Number(input));
+            inputProps={{readOnly: true}}
+            value={ titleOfTemp }
+          />
+          <TextField 
+            variant='outlined'
+            label='TypeOfDoc'
+            size="small"
+            sx={{
+              m:1,
+              minWidth: 218,
             }}
+            inputProps={{readOnly: true}}
+            value={ HexParser(typeOfDoc.toString(16)) }
           />
 
           <TextField 
             variant='outlined'
             label='Version'
             size="small"
-            error={ valid['Version']?.error }
-            helperText={ valid['Version']?.helpTx ?? ' ' }                        
             sx={{
               m:1,
               minWidth: 218,
             }}
+            inputProps={{readOnly: true}}
             value={ version }
-            onChange={(e)=>{
-              let input = e.target.value;
-              onlyInt('Version', input, MaxPrice, setValid);
-              setVersion(Number(input));
-            }}
           />
 
         </Stack>
       )}
-
-
 
       <DataGrid
         initialState={{pagination:{paginationModel:{pageSize: 5}}}} 

@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+
+import { 
+  Button, Dialog, DialogActions, DialogContent, 
+  DialogTitle, Stack, TextField, Typography 
+} from "@mui/material";
 
 import { DealProps } from "../loo";
 import { baseToDollar, dateParser, longDataParser, longSnParser } from "../../../common/toolsKit";

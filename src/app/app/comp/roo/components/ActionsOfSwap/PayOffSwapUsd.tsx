@@ -1,8 +1,8 @@
-import { useCompKeeperPayOffSwap } from "../../../../../../../generated";
+import { useIrooKeeperPayOffSwap } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { Payment } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { AddrZero, HexType, booxMap, keepersMap } from "../../../../common";
+import { AddrZero, HexType, booxMap, } from "../../../../common";
 import { FormResults, HexParser, bigIntToStrNum, defFormResults, hasError, onlyHex, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { getSwap } from "../../roo";
@@ -55,7 +55,7 @@ export function PayOffSwapUsd({seqOfOpt, seqOfSwap, setOpen, refresh}:ActionsOfS
   const {
     isLoading: payOffSwapUsdLoading,
     write: payOffSwapUsd,
-  } = useCompKeeperPayOffSwap({
+  } = useIrooKeeperPayOffSwap({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

@@ -1,9 +1,17 @@
 import { Dispatch, SetStateAction } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from "@mui/material";
 
+import { 
+  Button, Dialog, DialogActions, DialogContent, 
+  DialogTitle, Stack, TextField 
+} from "@mui/material";
 
-import { baseToDollar, bigIntToStrNum, dateParser, longDataParser, longSnParser } from "../../../common/toolsKit";
-import { Order } from "../../../compV1/loe/loe";
+import {
+  baseToDollar, bigIntToStrNum, dateParser, longDataParser, 
+  longSnParser, 
+  userNoParser
+} from "../../../common/toolsKit";
+
+import { Order } from "../loo";
 
 interface BillOfOrderProps {
   order: Order;
@@ -42,7 +50,7 @@ export function BillOfOrder({ order, open, setOpen}: BillOfOrderProps) {
                   sx={{
                     m:1,
                   }}
-                  value={ longSnParser(order.node.issuer.toString()) }
+                  value={ userNoParser(order.node.issuer.toString(16)) }
                 />
               </td>
               <td>
@@ -153,7 +161,7 @@ export function BillOfOrder({ order, open, setOpen}: BillOfOrderProps) {
                   sx={{
                     m:1,
                   }}
-                  value={ longSnParser(order.data.groupRep.toString()) }
+                  value={ userNoParser(order.data.groupRep.toString(16)) }
                 />
               </td>
 

@@ -5,13 +5,14 @@ import { Stack, TextField } from '@mui/material';
 import { EditNote }  from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 
-import { useShareholdersAgreementAddRule } from '../../../../../../../../generated';
+import { useIShareholdersAgreementAddRule } from '../../../../../../../../generated';
 import { HexType, MaxPrice, MaxSeqNo } from '../../../../../common';
 import { defFormResults, FormResults, hasError, onlyInt, refreshAfterTx } from '../../../../../common/toolsKit';
 import { useComBooxContext } from '../../../../../../_providers/ComBooxContextProvider';
 
 interface AddRuleProps {
   sha: HexType;
+  seqOfRule: number;
   rule: HexType;
   isFinalized: boolean;
   valid: FormResults;
@@ -19,7 +20,7 @@ interface AddRuleProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export function AddRule({ sha, rule, isFinalized, valid, refresh, setOpen }: AddRuleProps) {
+export function AddRule({ sha, seqOfRule, rule, isFinalized, valid, refresh, setOpen }: AddRuleProps) {
 
   const { setErrMsg } = useComBooxContext();
   const [ loading, setLoading ] = useState(false);
@@ -33,7 +34,7 @@ export function AddRule({ sha, rule, isFinalized, valid, refresh, setOpen }: Add
   const {
     isLoading,
     write,
-  } = useShareholdersAgreementAddRule({
+  } = useIShareholdersAgreementAddRule({
     address: sha,
     onError(err) {
       setErrMsg(err.message);
@@ -47,7 +48,7 @@ export function AddRule({ sha, rule, isFinalized, valid, refresh, setOpen }: Add
 
   const handleClick = ()=>{
     write({
-      args: [rule],
+      args: [BigInt(seqOfRule), rule],
     });
   }
 

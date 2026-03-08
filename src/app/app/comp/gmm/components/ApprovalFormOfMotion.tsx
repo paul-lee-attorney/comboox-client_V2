@@ -17,7 +17,7 @@ import {
 import { Article } from "@mui/icons-material";
 
 import { HexType, booxMap } from "../../../common";
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 import { motionType, statesOfMotion, voteEnded } from "../meetingMinutes";
 import { getFile } from "../../roc/components/filesFolder";
 import { GetVotingRule } from "../../roc/sha/components/rules/VotingRules/GetVotingRule";
@@ -104,7 +104,7 @@ export function ApprovalFormOfMotion({minutes, open, motion, setOpen, refresh}: 
                 id="tfCreator" 
                 label="Creator" 
                 variant="outlined"
-                value = { longSnParser(motion.head.creator.toString()) }
+                value = { userNoParser(motion.head.creator.toString(16)) }
                 size='small'
               />
             </Grid>
@@ -128,7 +128,7 @@ export function ApprovalFormOfMotion({minutes, open, motion, setOpen, refresh}: 
                 id="tfProposer" 
                 label="Proposer" 
                 variant="outlined"
-                value = { longSnParser(motion.body.proposer.toString()) }
+                value = { userNoParser(motion.body.proposer.toString(16)) }
                 size='small'
               />
             </Grid>
@@ -208,7 +208,7 @@ export function ApprovalFormOfMotion({minutes, open, motion, setOpen, refresh}: 
                 id="tfExectuor" 
                 label={ motion.head.typeOfMotion == 1 ? "Candidate" : "Executor" } 
                 variant="outlined"
-                value = { longSnParser(motion.head.executor.toString()) }
+                value = { userNoParser(motion.head.executor.toString(16)) }
                 size='small'
               />
             </Grid>

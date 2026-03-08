@@ -10,7 +10,7 @@ import { HexType } from "../../../../common";
 import { nameOfBooks } from "../../../gk";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, refreshAfterTx } from "../../../../common/toolsKit";
 
-import { useCompKeeperRegBook } from "../../../../../../../generated";
+import { useIGeneralKeeperRegBook } from "../../../../../../../generated";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
 export interface RegBookProps{
@@ -43,7 +43,7 @@ export function RegBook({title, book, setTitle, setBook, setOpen}:RegBookProps) 
   const {
     isLoading: regBookLoading,
     write: regBook,
-  } = useCompKeeperRegBook({
+  } = useIGeneralKeeperRegBook({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

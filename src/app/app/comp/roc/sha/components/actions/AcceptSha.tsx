@@ -5,7 +5,7 @@ import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { DriveFileRenameOutline } from "@mui/icons-material";
 
-import { useCompKeeperAcceptSha } from "../../../../../../../../generated";
+import { useIrocKeeperAcceptSha } from "../../../../../../../../generated";
 import { Bytes32Zero, HexType } from "../../../../../common";
 
 import { FormResults, HexParser, defFormResults, hasError,
@@ -33,7 +33,7 @@ export function AcceptSha({ setTime }:AcceptShaProps) {
   const {
     isLoading,
     write
-  } = useCompKeeperAcceptSha({
+  } = useIrocKeeperAcceptSha({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

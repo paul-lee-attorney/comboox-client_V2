@@ -8,7 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import { Close, StopCircleOutlined }  from '@mui/icons-material';
 
 import { 
-  useInvestmentAgreementFinalizeIa,
+  useIInvestmentAgreementFinalizeIa,
 } from '../../../../../../../../generated';
 
 import { HexType } from '../../../../../common';
@@ -39,7 +39,7 @@ export function FinalizeIa({ addr, setIsFinalized, setNextStep }: FinalizeIaProp
   const {
     isLoading: finalizeIaLoading,
     write: finalizeIa,
-  } = useInvestmentAgreementFinalizeIa({
+  } = useIInvestmentAgreementFinalizeIa({
     address: addr,
     onError(err) {
       setErrMsg(err.message);

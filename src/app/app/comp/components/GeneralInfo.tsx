@@ -5,7 +5,7 @@ import { Paper, TextField, Stack, Grid, Typography } from "@mui/material";
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
 
 import { AddrZero, booxMap, currencies } from "../../common";
-import { baseToDollar, dateParser, longSnParser 
+import { baseToDollar, dateParser, longSnParser, userNoParser 
 } from "../../common/toolsKit";
 import { CopyLongStrTF } from "../../common/CopyLongStr";
 
@@ -38,21 +38,15 @@ export function GeneralInfo() {
   useEffect(()=>{
     if (gk) {
       getCompInfo(gk).then(
-        res => {
-          if (res.state > 0) {
-                res.name = 'Deprecated GK';
-                setCompInfo(res);
-          } else setCompInfo(res);
-        }
-      )      
+        res => setCompInfo(res)
+      );
       getDK(gk).then(
         res => setDK(res)
-      )
-      
+      );
     }
   }, [gk, time, client]);
 
-  const [ controllor, setControllor ] = useState<string>();
+  const [ controllor, setControllor ] = useState<number>(0);
   const [ votesOfController, setVotesOfController ] = useState<string>();
   const [ par, setPar ] = useState<string>();
   const [ paid, setPaid ] = useState<string>();
@@ -63,8 +57,8 @@ export function GeneralInfo() {
       getControllor(boox[booxMap.ROM]).then(
         res => {
           if (res > 0) {
-            setControllor(res.toString());
-            votesOfGroup(boox[booxMap.ROM], Number(res)).then(
+            setControllor(res);
+            votesOfGroup(boox[booxMap.ROM], res).then(
               votes => setVotesOfController(votes.toString())
             );
           }
@@ -144,7 +138,7 @@ export function GeneralInfo() {
 
             <Grid item xs={3} md={3} lg={3} >
               <TextField 
-                value={ longSnParser(compInfo?.regNum.toString() ?? '0') } 
+                value={ userNoParser(compInfo?.regNum.toString(16) ?? '0') } 
                 variant='outlined'
                 size='small' 
                 label="RegNum" 
@@ -177,7 +171,7 @@ export function GeneralInfo() {
 
             <Grid item xs={3} md={3} lg={3} >
               <CopyLongStrTF title="AddrOfCashier" src={boox ? boox[booxMap.Cashier] : AddrZero} />
-            </Grid>            
+            </Grid>
 
             <Grid item xs={3} md={3} lg={3} >
               <TextField 
@@ -213,7 +207,7 @@ export function GeneralInfo() {
 
             <Grid item xs={3} md={3} lg={3} >
               <TextField 
-                value={ longSnParser(controllor ?? '0') } 
+                value={ userNoParser(controllor.toString(16)) } 
                 variant='outlined'
                 size='small' 
                 label="ActualControllor" 

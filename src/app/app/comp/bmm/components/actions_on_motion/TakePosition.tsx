@@ -1,5 +1,5 @@
 
-import { useCompKeeperTakePosition } from "../../../../../../../generated";
+import { useIrodKeeperTakePosition } from "../../../../../../../generated";
 
 import { Paper } from "@mui/material";
 import { Chair } from "@mui/icons-material";
@@ -24,7 +24,7 @@ export function TakePosition({motion, setOpen, refresh}:ActionsOnMotionProps) {
   const {
     isLoading: takePositionLoading,
     write: takePosition,
-  } = useCompKeeperTakePosition({
+  } = useIrodKeeperTakePosition({
     address: gk,
     args: [motion.head.seqOfMotion, motion.contents],
     onError(err) {
@@ -41,7 +41,7 @@ export function TakePosition({motion, setOpen, refresh}:ActionsOnMotionProps) {
     <Paper elevation={3} sx={{m:1, p:1, color:'divider', border:1 }} >
 
       <LoadingButton
-        disabled={ !takePosition || takePositionLoading}
+        disabled={ !takePosition || takePositionLoading }
         loading={loading}
         loadingPosition="end"
         variant="contained"

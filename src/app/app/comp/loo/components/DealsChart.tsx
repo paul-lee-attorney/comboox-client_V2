@@ -1,14 +1,19 @@
 import { IconButton, Paper, Stack, Tooltip, Typography } from "@mui/material";
 
 import { dateParser } from "../../../common/toolsKit";
-import { AllSeriesType, axisClasses, BarPlot, ChartsAxisHighlight, ChartsTooltip, ChartsXAxis, ChartsYAxis, LineHighlightPlot, LinePlot, ResponsiveChartContainer } from "@mui/x-charts";
+
+import { 
+  AllSeriesType, axisClasses, BarPlot, ChartsAxisHighlight, 
+  ChartsTooltip, ChartsXAxis, ChartsYAxis, LineHighlightPlot, 
+  LinePlot, ResponsiveChartContainer 
+} from "@mui/x-charts";
+
 import { useEffect, useState } from "react";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 import { AddrZero, booxMap } from "../../../common";
 import { usePublicClient } from "wagmi";
 import { Refresh } from "@mui/icons-material";
-import { Deal } from "../../../compV1/loe/loe";
-import { dealParser } from "../loo";
+import { Deal, dealParser } from "../loo";
 import { ArbiscanLog, decodeArbiscanLog, getAllLogs } from "../../../../api/firebase/arbiScanLogsTool";
 import { Hex } from "viem";
 
@@ -35,11 +40,11 @@ useEffect(()=>{
 
   const getEvents = async () => {
 
-    if (!gk || !boox || boox[booxMap.UsdLOO] == AddrZero) return;
+    if (!gk || !boox || boox[booxMap.LOO] == AddrZero) return;
 
-    const addr = boox[booxMap.UsdLOO];
+    const addr = boox[booxMap.LOO];
 
-    let rawLogs = await getAllLogs(gk, 'LOU', addr, 'DealClosed');
+    let rawLogs = await getAllLogs(gk, 'LOO', addr, 'DealClosed');
 
     let abiStr = 'event DealClosed(bytes32 indexed fromSn, bytes32 indexed toSn, bytes32 qtySn, uint indexed consideration)';
 

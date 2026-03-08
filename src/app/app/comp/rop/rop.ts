@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
 import { Bytes32Zero, HexType } from "../../common";
-import { registerOfPledgesABI } from "../../../../../generated";
+import { iRegisterOfPledgesABI } from "../../../../../generated";
 
 export interface StrHead {
   seqOfShare: string;
@@ -129,7 +129,7 @@ export function codifyHeadOfPledge(head: StrHead): HexType {
 export async function counterOfPledges(addr: HexType, seqOfShare:string):Promise<number>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'counterOfPledges',
     args: [BigInt(seqOfShare)],
   });
@@ -140,7 +140,7 @@ export async function counterOfPledges(addr: HexType, seqOfShare:string):Promise
 export async function isPledge(addr: HexType, seqOfShare:string, seqOfPld:string):Promise<boolean>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'isPledge',
     args: [BigInt(seqOfShare), BigInt(seqOfPld)],
   });
@@ -151,7 +151,7 @@ export async function isPledge(addr: HexType, seqOfShare:string, seqOfPld:string
 export async function getSNList(addr: HexType):Promise<readonly HexType[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'getSNList',
   });
 
@@ -161,7 +161,7 @@ export async function getSNList(addr: HexType):Promise<readonly HexType[]>{
 export async function getPledge(addr: HexType, seqOfShare:string, seqOfPld:string):Promise<Pledge>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'getPledge',
     args: [BigInt(seqOfShare), BigInt(seqOfPld)],
   });
@@ -172,7 +172,7 @@ export async function getPledge(addr: HexType, seqOfShare:string, seqOfPld:strin
 export async function getPledgesOfShare(addr: HexType, seqOfShare:string):Promise<readonly Pledge[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'getPledgesOfShare',
     args: [BigInt(seqOfShare)],
   });
@@ -183,7 +183,7 @@ export async function getPledgesOfShare(addr: HexType, seqOfShare:string):Promis
 export async function getAllPledges(addr: HexType):Promise<readonly Pledge[]>{
   let res = await readContract({
     address: addr,
-    abi: registerOfPledgesABI,
+    abi: iRegisterOfPledgesABI,
     functionName: 'getAllPledges',
   });
 

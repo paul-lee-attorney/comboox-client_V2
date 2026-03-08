@@ -1,5 +1,5 @@
 import { ActionsOfOptionProps } from "../ActionsOfOption";
-import { useCompKeeperExecOption } from "../../../../../../../generated";
+import { useIrooKeeperExecOption } from "../../../../../../../generated";
 import { Paper, Stack } from "@mui/material";
 import { DoneOutline } from "@mui/icons-material";
 import { HexType } from "../../../../common";
@@ -22,7 +22,7 @@ export function ExecOption({seqOfOpt, setOpen, refresh}:ActionsOfOptionProps) {
   const {
     isLoading: execOptLoading,
     write: execOpt,
-  } = useCompKeeperExecOption({
+  } = useIrooKeeperExecOption({
     address: gk,
     args: [ BigInt(seqOfOpt) ],
     onError(err) {

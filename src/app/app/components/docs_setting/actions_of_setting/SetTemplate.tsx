@@ -11,14 +11,18 @@ import { AddrOfRegCenter, AddrZero, HexType, MaxUserNo } from "../../../common";
 import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, refreshAfterTx } from "../../../common/toolsKit";
 
 import { useRegCenterSetTemplate } from "../../../../../../generated";
-import { CreateDocProps } from "./CreateDoc";
+import { CreateDocProps } from "./CreateProxy";
 
-export function SetTemplate({typeOfDoc, setOpen, setTime}:CreateDocProps) {
+export interface SetTemplateProps extends CreateDocProps{
+  titleOfTemp: string;
+}
+
+export function SetTemplate({titleOfTemp, typeOfDoc, setOpen, setTime}:SetTemplateProps) {
 
   const { setErrMsg } = useComBooxContext();
 
   const [ body, setBody ] = useState<HexType>(AddrZero);
-  const [ author, setAuthor ] = useState(0);
+  const [ author, setAuthor ] = useState('0');
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
@@ -46,8 +50,8 @@ export function SetTemplate({typeOfDoc, setOpen, setTime}:CreateDocProps) {
 
   const handleClick = ()=>{
     setTemplate({
-      args: body != AddrZero && author > 0
-      ? [ BigInt(typeOfDoc), body, BigInt(author) ]
+      args: body != AddrZero && author > '0'
+      ? [ BigInt(typeOfDoc), body, BigInt(HexParser(author)) ]
       : undefined,
     });
   };
@@ -64,14 +68,26 @@ export function SetTemplate({typeOfDoc, setOpen, setTime}:CreateDocProps) {
 
         <TextField 
           variant='outlined'
-          label='TypeOfDoc'
+          label='TitleOfTemp'
           size="small"
-          inputProps={{readonly:'true'}}
+          inputProps={{readOnly: true }}
           sx={{
             m:1,
             minWidth: 128,
           }}
-          value={ typeOfDoc }
+          value={ titleOfTemp }
+        />
+
+        <TextField 
+          variant='outlined'
+          label='TypeOfDoc'
+          size="small"
+          inputProps={{readOnly: true }}
+          sx={{
+            m:1,
+            minWidth: 128,
+          }}
+          value={ HexParser(typeOfDoc.toString(16)) }
         />
 
         <TextField 
@@ -105,8 +121,8 @@ export function SetTemplate({typeOfDoc, setOpen, setTime}:CreateDocProps) {
           value={ author }
           onChange={(e)=>{
             let input = e.target.value;
-            onlyInt('Author', input, MaxUserNo, setValid);
-            setAuthor(Number(input));
+            onlyHex('Author', input, 10, setValid);
+            setAuthor(input);
           }}
         />
 

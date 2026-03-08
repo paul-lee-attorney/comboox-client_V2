@@ -1,12 +1,12 @@
 import { readContract } from "@wagmi/core";
 import { HexType } from "../../../../../../common";
-import { optionsABI } from "../../../../../../../../../generated";
+import { iOptionsABI } from "../../../../../../../../../generated";
 import { OptWrap, Option } from "../../../../../roo/roo";
 
 export async function counterOfOptions(term:HexType):Promise<number>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'counterOfOptions',
   })
 
@@ -16,7 +16,7 @@ export async function counterOfOptions(term:HexType):Promise<number>{
 export async function qtyOfOptions(term:HexType):Promise<bigint>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'qtyOfOptions',
   })
 
@@ -26,7 +26,7 @@ export async function qtyOfOptions(term:HexType):Promise<bigint>{
 export async function isOption(term:HexType, seqOfOpt: number):Promise<boolean>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'isOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -37,7 +37,7 @@ export async function isOption(term:HexType, seqOfOpt: number):Promise<boolean>{
 export async function getOption(term:HexType, seqOfOpt: number):Promise<Option>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'getOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -48,7 +48,7 @@ export async function getOption(term:HexType, seqOfOpt: number):Promise<Option>{
 export async function getAllOptions(term:HexType):Promise<readonly Option[]>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'getAllOptions',
   })
 
@@ -58,7 +58,7 @@ export async function getAllOptions(term:HexType):Promise<readonly Option[]>{
 export async function isObligor(term:HexType, seqOfOpt: number, acct: number):Promise<boolean>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'isObligor',
     args: [ BigInt(seqOfOpt), BigInt(acct) ]
   })
@@ -69,7 +69,7 @@ export async function isObligor(term:HexType, seqOfOpt: number, acct: number):Pr
 export async function getObligorsOfOption(term:HexType, seqOfOpt: number):Promise<readonly bigint[]>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'getObligorsOfOption',
     args: [ BigInt(seqOfOpt) ]
   })
@@ -80,7 +80,7 @@ export async function getObligorsOfOption(term:HexType, seqOfOpt: number):Promis
 export async function getSeqList(term:HexType):Promise<readonly bigint[]>{
   let res = await readContract({
     address: term,
-    abi: optionsABI,
+    abi: iOptionsABI,
     functionName: 'getSeqList',
   })
 

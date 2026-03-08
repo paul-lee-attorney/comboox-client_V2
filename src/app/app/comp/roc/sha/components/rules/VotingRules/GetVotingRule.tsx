@@ -7,9 +7,9 @@ import { ListAlt } from "@mui/icons-material";
 
 import { useComBooxContext } from "../../../../../../../_providers/ComBooxContextProvider";
 
-import { useRegisterOfConstitutionPointer } from "../../../../../../../../../generated";
+import { useIRegisterOfConstitutionPointer } from "../../../../../../../../../generated";
 import { AddrZero, Bytes32Zero, booxMap } from "../../../../../../common";
-import { toPercent } from "../../../../../../common/toolsKit";
+import { toPercent, userNoParser } from "../../../../../../common/toolsKit";
 import { getRule } from "../../../sha";
 
 import { VotingRule, authorities, vrParser } from "./SetVotingRule";
@@ -24,7 +24,7 @@ export function GetVotingRule({seq}: GetVotingRuleProps) {
   const [ objVr, setObjVr] = useState<VotingRule>();
   const [ open, setOpen ] = useState(false);
   
-  useRegisterOfConstitutionPointer({
+  useIRegisterOfConstitutionPointer({
     address: boox ? boox[booxMap.ROC] : undefined,
     onError(err) {
       setErrMsg(err.message);
@@ -197,7 +197,7 @@ export function GetVotingRule({seq}: GetVotingRuleProps) {
                         m:1,
                         minWidth: 218,
                       }}
-                      value={objVr.vetoers[0]}
+                      value={ objVr.vetoers[0] }
                     />
                   )}
 
@@ -211,7 +211,7 @@ export function GetVotingRule({seq}: GetVotingRuleProps) {
                         m:1,
                         minWidth: 218,
                       }}
-                      value={objVr.vetoers[1]}
+                      value={ objVr.vetoers[1] }
                     />
                   )}
 

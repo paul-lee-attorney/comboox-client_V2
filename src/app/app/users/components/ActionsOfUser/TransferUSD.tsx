@@ -50,7 +50,7 @@ export function TransferUSD({ refresh }: ActionsOfUserProps) {
             let rpt:Receipt = {
               from: r.logs[0].topics[1],
               to: r.logs[0].topics[2],
-              amt: BigInt(r.logs[0].topics[3]).toString(),
+              amt: BigInt(r.logs[0].data).toString(),
               };
             setReceipt(rpt);
             setOpen(true);

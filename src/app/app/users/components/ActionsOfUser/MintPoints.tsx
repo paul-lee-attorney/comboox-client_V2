@@ -9,7 +9,7 @@ import { AddrOfRegCenter, AddrZero, HexType, MaxUserNo } from '../../../common';
 import { Close, Flare } from '@mui/icons-material';
 import { useState } from 'react';
 
-import { FormResults, HexParser, defFormResults, hasError, longDataParser, onlyHex, onlyInt, onlyNum, strNumToBigInt } from '../../../common/toolsKit';
+import { FormResults, HexParser, defFormResults, hasError, longDataParser, onlyHex, onlyNum, strNumToBigInt } from '../../../common/toolsKit';
 import { waitForTransaction } from '@wagmi/core';
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
@@ -20,7 +20,7 @@ interface Receipt{
   amt: string;
 }
 
-export function MintPoints({getUser, getBalanceOf}:ActionsOfUserProps) {
+export function MintPoints({ refresh }:ActionsOfUserProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -52,8 +52,7 @@ export function MintPoints({getUser, getBalanceOf}:ActionsOfUserProps) {
             }
             setReceipt(rpt);
             setOpen(true);
-            getUser();
-            getBalanceOf();
+            refresh();
             setLoading(false);
           }
           console.log("Receipt: ", res);          

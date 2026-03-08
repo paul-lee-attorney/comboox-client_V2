@@ -17,7 +17,7 @@ import {
   RemoveCircle,
 } from "@mui/icons-material"
 import { SetGroupUpdateOrder } from "./SetGroupUpdateOrder";
-import { useShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
+import { useIShareholdersAgreementRemoveRule } from "../../../../../../../../../generated";
 
 import { GroupRulesSettingProps } from "../VotingRules/VotingRules";
 import { HexType } from "../../../../../../common";
@@ -72,7 +72,7 @@ export function GroupUpdateOrders({sha, initSeqList, isFinalized, time, refresh 
   const {
     isLoading: removeRuleLoading,
     write: removeRule,
-  } = useShareholdersAgreementRemoveRule({
+  } = useIShareholdersAgreementRemoveRule({
     address: sha,
     args: cp && cp.length > 0 
       ? [BigInt(cp[cp.length - 1])]

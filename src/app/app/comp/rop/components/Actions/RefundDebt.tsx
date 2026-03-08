@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCompKeeperRefundDebt } from "../../../../../../../generated";
+import { useIropKeeperRefundDebt } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { VolunteerActivismOutlined } from "@mui/icons-material";
 import { ActionsOfPledgeProps } from "../ActionsOfPledge";
@@ -26,7 +26,7 @@ export function RefundDebt({pld, setOpen, refresh}:ActionsOfPledgeProps) {
   const {
     isLoading: refundDebtLoading,
     write: refundDebt,
-  } = useCompKeeperRefundDebt({
+  } = useIropKeeperRefundDebt({
     address: gk,
     onError(err) {
       setErrMsg(err.message);

@@ -1,6 +1,6 @@
 import { Box, Paper, Toolbar, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { dateParser, longSnParser } from "../../../common/toolsKit";
+import { dateParser, longSnParser, userNoParser } from "../../../common/toolsKit";
 
 import { Position } from "../rod";
 import { titleOfPositions } from "../../roc/sha/sha";
@@ -47,7 +47,7 @@ export function GetOfficersList({ list, title }:GetOfficersListProps) {
     {
       field: 'nominator',
       headerName: 'Nominator',
-      valueGetter: p => longSnParser(p.row.nominator.toString()),
+      valueGetter: p => userNoParser(p.row.nominator.toString(16)),
       width: 218,
       headerAlign: 'center',
       align: 'center',

@@ -9,7 +9,7 @@ import {
   StepContent,
   Typography,
 } from "@mui/material";
-import { AddrZero, HexType, booxMap } from "../../../../common";
+import { HexType, booxMap } from "../../../../common";
 
 import { VoteCountingOfGm } from "../../../gmm/components/actions_on_motion/VoteCountingOfGm";
 
@@ -22,7 +22,7 @@ import { VoteForDocOfGm } from "../../../gmm/components/actions_on_motion/VoteFo
 
 import { ActivateSha } from "./actions/ActivateSha";
 import { FinalizeSha } from "./actions/FinalizeSha";
-import { getSHA } from "../../../gk";
+
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { voteEnded } from "../../../gmm/meetingMinutes";
 import { established } from "./sigPage/sigPage";
