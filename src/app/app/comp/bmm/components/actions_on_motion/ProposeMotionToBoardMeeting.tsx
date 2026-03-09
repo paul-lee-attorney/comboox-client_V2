@@ -1,14 +1,17 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { useIbmmKeeperProposeMotionToBoard } from "../../../../../../../generated";
+import { useIbmmKeeperProposeMotionToBoard, ibmmKeeperABI } from "../../../../../../../generated";
 
 import { Box, Collapse, Paper, Stack, Switch, Toolbar, Typography } from "@mui/material";
 import { EmojiPeople, } from "@mui/icons-material";
-import { HexType } from "../../../../common";
+import { HexType, AddrZero } from "../../../../common";
 import { EntrustDelegaterForBoardMeeting } from "./EntrustDelegaterForBoardMeeting";
 import { refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
+import { Hex } from "viem";
+import { getPublicClient, getWalletClient } from "@wagmi/core";
+import { useWalletClient } from "wagmi";
 
 export interface ProposeMotionProps {
   seqOfMotion: bigint,
@@ -34,7 +37,8 @@ export function ProposeMotionToBoardMeeting({ seqOfMotion, setOpen, refresh }: P
     address: gk,
     args: [ seqOfMotion ],
     onError(err) {
-      setErrMsg(err.message);
+      console.log("err:", err, "\n");
+      setErrMsg(err.message + err.name);
     },
     onSuccess(data) {
       setLoading(true);

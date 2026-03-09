@@ -5,7 +5,7 @@ import { useIbmmKeeperCreateAction } from "../../../../../../../generated";
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { AddCircle, EmojiPeople, RemoveCircle } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
@@ -55,7 +55,7 @@ export function CreateAction({refresh}:CreateMotionProps) {
           actions.map(v => (v.target)), 
           actions.map(v => (strNumToBigInt(v.value, 9) * 10n ** 9n)),
           actions.map(v => (v.params)),
-          desHash, BigInt(executor)
+          desHash, hexToBigInt(executor)
         ],
       });
     }
@@ -113,7 +113,7 @@ export function CreateAction({refresh}:CreateMotionProps) {
             }}
             onChange={(e) => {
               let input = e.target.value;
-              onlyInt('Executor', input, MaxUserNo, setValid);
+              onlyHex('Executor', input, 10, setValid);
               setExecutor(input);
             }}
             value={ executor }

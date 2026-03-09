@@ -6,6 +6,7 @@ import { BorderColor, Camera, UploadOutlined } from "@mui/icons-material";
 
 import { 
   FormResults, HexParser, defFormResults, hasError, 
+  hexToBigInt, 
   longSnParser, onlyChars, onlyEmail, onlyHex, onlyInt, 
   onlyNumOrChar, refreshAfterTx, stampToUtc, utcToStamp 
 } from "../../../../common/toolsKit";
@@ -121,7 +122,7 @@ export function RegInvestor({ refresh }: ActionsOfInvestorProps) {
     regInvestor({
       args: [
         backupKey,
-        BigInt(groupRep),
+        hexToBigInt(groupRep),
         idHash
       ],
     })

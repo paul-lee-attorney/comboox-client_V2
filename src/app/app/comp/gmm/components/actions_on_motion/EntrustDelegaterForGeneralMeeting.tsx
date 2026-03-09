@@ -8,8 +8,8 @@ import { Alert, Collapse, IconButton, Stack, TextField, } from "@mui/material";
 import { Close, HandshakeOutlined, } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-import { HexType, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, getReceipt, hasError, longSnParser, onlyInt } from "../../../../common/toolsKit";
+import { HexType,} from "../../../../common";
+import { FormResults, defFormResults, getReceipt, hasError, hexToBigInt, longSnParser, onlyHex, onlyInt, userNoParser } from "../../../../common/toolsKit";
 import { ActionsOnMotionProps } from "../ActionsOnMotion";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { EntrustEvent, defaultEvt } from "../../../bmm/components/actions_on_motion/EntrustDelegaterForBoardMeeting";
@@ -53,8 +53,8 @@ export function EntrustDelegaterForGeneralMeeting({ motion, setOpen, refresh }: 
             if (lg.topics[0] == "0xfb530b01fe8da7c67ca83c49ce04d6ca6adbb57fb2b332097e62c6fe6cc6859b") {
               setEvt({
                 seqOfMotion: BigInt(lg.topics[1]).toString(),
-                delegate: Number(lg.topics[2]).toString(),
-                principal: Number(lg.topics[3]).toString(),
+                delegate: userNoParser(Number(lg.topics[2]).toString(16)),
+                principal: userNoParser(Number(lg.topics[3]).toString(16)),
               });
               setShow(true);
             }
@@ -71,7 +71,7 @@ export function EntrustDelegaterForGeneralMeeting({ motion, setOpen, refresh }: 
     entrustDelegaterOfMember({
       args:[
         motion.head.seqOfMotion, 
-        BigInt(delegater)
+        hexToBigInt(delegater)
       ],
     });
   };
@@ -90,7 +90,7 @@ export function EntrustDelegaterForGeneralMeeting({ motion, setOpen, refresh }: 
         }}
         onChange={(e) => {
           let input = e.target.value;
-          onlyInt('Delegater', input, MaxUserNo, setValid);
+          onlyHex('Delegater', input, 10, setValid);
           setDelegater(input);
         }}
         value={ delegater }

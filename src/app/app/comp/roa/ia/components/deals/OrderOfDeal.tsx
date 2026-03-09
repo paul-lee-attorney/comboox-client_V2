@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Deal, StateOfDeal, Timeline, TypeOfDeal, defaultTimeline } from "../../ia";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from "@mui/material";
-import { baseToDollar, dateParser, longDataParser, longSnParser, } from "../../../../../common/toolsKit";
+import { baseToDollar, dateParser, longDataParser, longSnParser, userNoParser, } from "../../../../../common/toolsKit";
 import { DeleteDeal } from "./DeleteDeal";
 import { Bytes32Zero, HexType, booxMap } from "../../../../../common";
 import { ActionsOfDeal } from "./ActionsOfDeal";
@@ -192,7 +192,7 @@ export function OrderOfDeal({ addr, isFinalized, open, deal, setOpen, setDeal, r
                   sx={{
                     m:1,
                   }}
-                  value={ longSnParser(deal.head.seller.toString()) }
+                  value={ userNoParser(deal.head.seller.toString(16)) }
                 />
               </td>
               <td>
@@ -205,7 +205,7 @@ export function OrderOfDeal({ addr, isFinalized, open, deal, setOpen, setDeal, r
                   sx={{
                     m:1,
                   }}
-                  value={ longSnParser(deal.body.buyer.toString()) }
+                  value={ userNoParser(deal.body.buyer.toString(16)) }
                 />
               </td>
               <td>
@@ -218,7 +218,7 @@ export function OrderOfDeal({ addr, isFinalized, open, deal, setOpen, setDeal, r
                   sx={{
                     m:1,
                   }}
-                  value={ longSnParser(deal.body.groupOfBuyer.toString()) }
+                  value={ userNoParser(deal.body.groupOfBuyer.toString(16)) }
                 />
               </td>
             </tr>

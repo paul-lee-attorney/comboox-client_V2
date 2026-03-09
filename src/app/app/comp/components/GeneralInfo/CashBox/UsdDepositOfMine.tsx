@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 
 
-import { bigIntToStrNum, longSnParser } from "../../../../common/toolsKit";
+import { bigIntToStrNum, longSnParser, userNoParser } from "../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { booxMap } from "../../../../common";
 import { depositOfMine } from "../../../cashier";
@@ -73,7 +73,7 @@ export function UsdDepositOfMine({time}:DepositOfMineProps) {
             severity='info' 
             sx={{ height: 45, p:0.5 }} 
           >
-            Deposit of User ({longSnParser((userNo ?? 0).toString())}) : { bigIntToStrNum(deposit, 6) + ' (USDC)' }
+            Deposit of User ({userNoParser((userNo ?? 0).toString(16))}) : { bigIntToStrNum(deposit, 6) + ' (USDC)' }
           </Alert>          
         </Collapse>
 

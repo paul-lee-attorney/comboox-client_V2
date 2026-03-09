@@ -16,7 +16,7 @@ import {
 import { EmojiPeopleOutlined } from "@mui/icons-material";
 import { ActionsOfDealProps } from "../ActionsOfDeal";
 import { getFirstRefusalRules } from "../../../../../roc/sha/sha";
-import { FormResults, HexParser, defFormResults, hasError, longSnParser, onlyHex, refreshAfterTx } from "../../../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, longSnParser, onlyHex, refreshAfterTx, userNoParser } from "../../../../../../common/toolsKit";
 import { getSha } from "../../../../../roc/roc";
 import { FirstRefusalRule } from "../../../../../roc/sha/components/rules/FirstRefusalRules/SetFirstRefusalRule";
 import { LoadingButton } from "@mui/lab";
@@ -124,7 +124,7 @@ export function ExecFirstRefusal({addr, deal, setOpen, setDeal, refresh}:Actions
                   onChange={(e) => setSeqOfRightholder( Number(e.target.value ?? '0') )}
                 >
                   {rules && seqOfRule >= 512 && rules[ seqOfRule - 512 ].rightholders.map((v, i) => (
-                    <MenuItem key={i} value={i.toString()} > {longSnParser(v.toString())} </MenuItem>
+                    <MenuItem key={i} value={i.toString()} > { v } </MenuItem>
                   ))}
                 </Select>
                 <FormHelperText>{' '}</FormHelperText>

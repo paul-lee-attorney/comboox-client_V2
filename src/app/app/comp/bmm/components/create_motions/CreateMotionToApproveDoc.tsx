@@ -7,7 +7,7 @@ import {
 
 import { Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
@@ -50,7 +50,7 @@ export function CreateMotionToApproveDoc({refresh}:CreateMotionProps) {
         args:[ 
           BigInt(doc), 
           BigInt(seqOfVr), 
-          BigInt(executor) 
+          hexToBigInt(executor) 
         ],
       });
     }
@@ -110,7 +110,7 @@ export function CreateMotionToApproveDoc({refresh}:CreateMotionProps) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('Executor', input, MaxUserNo, setValid);
+            onlyHex('Executor', input, 10, setValid);
             setExecutor(input);
           }}
           value={ executor }

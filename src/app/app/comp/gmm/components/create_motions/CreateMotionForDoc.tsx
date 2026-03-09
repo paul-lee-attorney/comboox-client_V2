@@ -4,7 +4,7 @@ import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 import { useIgmmKeeperProposeDocOfGm } from "../../../../../../../generated";
 import { Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, onlyInt, refreshAfterTx, hexToBigInt, onlyHex } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
@@ -15,7 +15,7 @@ export function CreateMotionForDoc({refresh}:CreateMotionProps) {
 
   const [ doc, setDoc ] = useState<HexType>();
   const [ seqOfVr, setSeqOfVr ] = useState<string>();
-  const [ executor, setExecutor ] = useState<string>();
+  const [ executor, setExecutor ] = useState<string>('0');
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
@@ -46,7 +46,7 @@ export function CreateMotionForDoc({refresh}:CreateMotionProps) {
         args: [ 
           BigInt(doc), 
           BigInt(seqOfVr), 
-          BigInt(executor) 
+          hexToBigInt(executor) 
         ],
       });
     }
@@ -100,7 +100,7 @@ export function CreateMotionForDoc({refresh}:CreateMotionProps) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('Executor', input, MaxUserNo, setValid);
+            onlyHex('Executor', input, 10, setValid);
             setExecutor(input);
           }}
           value={ executor }

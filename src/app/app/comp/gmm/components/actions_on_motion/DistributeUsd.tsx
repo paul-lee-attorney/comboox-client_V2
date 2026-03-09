@@ -6,7 +6,11 @@ import { useIAccountantDistrProfits, useIAccountantDistrIncome } from "../../../
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { SoupKitchenOutlined } from "@mui/icons-material";
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../common/toolsKit";
+import { 
+  FormResults, defFormResults, hasError, onlyInt, 
+  onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, 
+  utcToStamp, hexToBigInt, onlyHex 
+} from "../../../../common/toolsKit";
 import { DateTimeField } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
 
@@ -85,7 +89,7 @@ export function DistributeUsd({ motion, setOpen, refresh }:ActionsOnMotionProps)
           strNumToBigInt(amt, 6), 
           BigInt(expireDate), 
           BigInt(seqOfDR),
-          BigInt(manager),
+          hexToBigInt(manager),
           BigInt(motion.head.seqOfMotion),
         ],
       });
@@ -174,7 +178,7 @@ export function DistributeUsd({ motion, setOpen, refresh }:ActionsOnMotionProps)
             }}
             onChange={(e) => {
               let input = e.target.value;
-              onlyInt('Manager', input, MaxUserNo, setValid);
+              onlyHex('Manager', input, 10, setValid);
               setManager( input );
             }}
             value={ manager }

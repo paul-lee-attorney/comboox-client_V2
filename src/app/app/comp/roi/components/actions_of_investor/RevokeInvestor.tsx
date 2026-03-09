@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useIroiKeeperRevokeInvestor } from "../../../../../../../generated";
 import { ActionsOfInvestorProps } from "../ActionsOfInvestor";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
@@ -41,7 +41,7 @@ export function RevokeInvestor({ acct, refresh }: ActionsOfInvestorProps) {
   const handleClick = ()=>{
     revokeInvestor({
       args: [ 
-        BigInt(userNo), 
+        hexToBigInt(userNo), 
         BigInt(seqOfLR)
       ],
     });
@@ -69,7 +69,7 @@ export function RevokeInvestor({ acct, refresh }: ActionsOfInvestorProps) {
             }}
             onChange={ e => {
               let input = e.target.value;
-              onlyInt('UserNo', input, MaxUserNo, setValid);
+              onlyHex('UserNo', input, 10, setValid);
               setUserNo(input); 
             }}
             value={ userNo } 

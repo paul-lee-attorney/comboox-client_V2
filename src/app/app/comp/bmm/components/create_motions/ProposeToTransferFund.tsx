@@ -5,7 +5,7 @@ import { useIbmmKeeperProposeToTransferFundWithBoard } from "../../../../../../.
 
 import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../CreateMotionOfBoardMeeting";
 import { DateTimeField } from "@mui/x-date-pickers";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
@@ -52,7 +52,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
         strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
         BigInt(paras.expireDate),
         BigInt(seqOfVR),
-        BigInt(executor)
+        hexToBigInt(executor)
       ],
     });
   }
@@ -178,7 +178,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Executor', input, MaxUserNo, setValid);
+                onlyHex('Executor', input, 10, setValid);
                 setExecutor(input);
               }}
               value={ executor }

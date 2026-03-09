@@ -1,6 +1,7 @@
 import { readContract } from "@wagmi/core";
 import { Bytes32Zero, HexType } from "../../common";
 import { iRegisterOfPledgesABI } from "../../../../../generated";
+import { userNoCodifier } from "../../common/toolsKit";
 
 export interface StrHead {
   seqOfShare: string;
@@ -115,9 +116,9 @@ export function codifyHeadOfPledge(head: StrHead): HexType {
     Number(head.createDate).toString(16).padStart(12, '0') +
     Number(head.daysToMaturity).toString(16).padStart(4, '0') +
     Number(head.guaranteeDays).toString(16).padStart(4, '0') +
-    Number(head.creditor).toString(16).padStart(10, '0') +
-    Number(head.debtor).toString(16).padStart(10, '0') +
-    Number(head.pledgor).toString(16).padStart(10, '0') +
+    userNoCodifier(head.creditor) +
+    userNoCodifier(head.debtor) +
+    userNoCodifier(head.pledgor) +
     Number(head.state).toString(16).padStart(2, '0')
   }`;
 

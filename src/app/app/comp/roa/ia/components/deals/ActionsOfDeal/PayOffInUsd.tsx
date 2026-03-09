@@ -46,7 +46,7 @@ export function PayOffInUsd({ addr, deal, setOpen, setDeal, refresh}: ActionsOfD
     setDeal(defaultDeal);
     refresh();
     setLoading(false);
-    setOpen(false);    
+    setOpen(false);
   }
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);

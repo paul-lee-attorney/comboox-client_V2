@@ -5,7 +5,7 @@ import { AddrOfTank, Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../
 
 import { Divider,  Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt, hexToBigInt, onlyHex } from "../../../../common/toolsKit";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
@@ -50,7 +50,7 @@ export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
           [AddrOfTank],
           [0n],
           [HexParser('0xbbc446ac' + strNumToBigInt(amt, 18).toString(16).padStart(64, '0'))],
-          Bytes32Zero, BigInt(executor)
+          Bytes32Zero, hexToBigInt(executor)
         ],
       });
     }
@@ -110,7 +110,7 @@ export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Executor', input, MaxUserNo, setValid);
+                onlyHex('Executor', input, 10, setValid);
                 setExecutor(input);
               }}
               value={ executor }

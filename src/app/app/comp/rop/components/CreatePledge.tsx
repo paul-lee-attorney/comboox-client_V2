@@ -5,7 +5,7 @@ import { Divider, Paper, Stack, TextField, Toolbar, Typography } from "@mui/mate
 import { getShare } from "../../ros/ros";
 import { Create } from "@mui/icons-material";
 import { HexType, MaxData, MaxPrice, MaxSeqNo, MaxUserNo, booxMap } from "../../../common";
-import { FormResults, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt, userNoParser } from "../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../_providers/ComBooxContextProvider";
 
@@ -92,7 +92,7 @@ export function CreatePledge({refresh}:CreatePledgeProps) {
                   obtainPledgor(boox[booxMap.ROS], input).then(
                     pledgor => setHead(v => ({
                       ...v,
-                      pledgor: pledgor,
+                      pledgor: userNoParser(Number(pledgor).toString(16)),
                     }))
                   );
                 };

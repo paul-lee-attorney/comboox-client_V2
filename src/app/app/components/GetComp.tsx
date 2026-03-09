@@ -6,7 +6,7 @@ import { Alert, Button, IconButton, Stack, TextField } from '@mui/material';
 import { Close, DriveFileMove, Search } from '@mui/icons-material';
 
 import { MaxUserNo } from '../common';
-import { FormResults, HexParser, defFormResults, getTypeByName, hasError, hexToBigInt, onlyHex, onlyInt, userNoParser } from '../common/toolsKit';
+import { FormResults, HexParser, defFormResults, getTypeByName, hasError, hexToBigInt, onlyHex, onlyInt, userNoCodifier, userNoParser } from '../common/toolsKit';
 import Link from 'next/link';
 import { Doc, getDocByUserNo, getHeadByBody, HeadOfDoc } from '../rc';
 
@@ -90,10 +90,11 @@ export function GetComp() {
           sx={{ m:1, mr:3, width: 218 }}
           onChange={(e) => {
             let input = e.target.value;
-            if (input.substring(0,2) == '0x') {
-              onlyHex('RegNum', input, 40, setValid);
-            } else {
-              onlyInt('RegNum', input, MaxUserNo, setValid);
+            const len = input.length;
+            if ( len == 42 || len == 40) {
+                onlyHex('RegNum', input, 40, setValid);
+            } else if ( len == 12 || len == 10 ) {
+                onlyHex('RegNum', input, 10, setValid);
             }
             setRegNum( input );
           }}

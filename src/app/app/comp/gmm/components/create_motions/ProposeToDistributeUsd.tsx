@@ -6,7 +6,11 @@ import {  useIgmmKeeperProposeToDistributeUsd } from "../../../../../../../gener
 
 import { Divider, Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
-import { FormResults, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from "../../../../common/toolsKit";
+import { 
+  FormResults, defFormResults, hasError, onlyInt, hexToBigInt,
+  onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp, 
+  onlyHex
+} from "../../../../common/toolsKit";
 import { DateTimeField } from "@mui/x-date-pickers";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
@@ -53,8 +57,8 @@ export function ProposeToDistributeUsd({ refresh }:CreateMotionProps) {
           BigInt(expireDate), 
           BigInt(seqOfVR),
           BigInt(seqOfDR),
-          BigInt(manager),
-          BigInt(executor)
+          hexToBigInt(manager),
+          hexToBigInt(executor)
         ],
       });
   };
@@ -116,7 +120,7 @@ export function ProposeToDistributeUsd({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Executor', input, MaxUserNo, setValid);
+                onlyHex('Executor', input, 10, setValid);
                 setExecutor(input);
               }}
               value={ executor }
@@ -168,7 +172,7 @@ export function ProposeToDistributeUsd({ refresh }:CreateMotionProps) {
               }}
               onChange={(e) => {
                 let input = e.target.value;
-                onlyInt('Manager', input, MaxUserNo, setValid);
+                onlyHex('Manager', input, 10, setValid);
                 setManager(input);
               }}
               value={ manager }

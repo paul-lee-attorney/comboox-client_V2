@@ -9,7 +9,7 @@ import { useIroiKeeperApproveInvestor } from "../../../../../../../generated";
 import { ActionsOfInvestorProps } from "../ActionsOfInvestor";
 
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, hasError, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { CheckPI } from "./CheckPI";
@@ -46,7 +46,7 @@ export function ApproveInvestor({acct, refresh }: ActionsOfInvestorProps) {
   const handleClick = ()=>{
     approveInvestor({
       args: [ 
-        BigInt(userNo), 
+        hexToBigInt(userNo), 
         BigInt(seqOfLR)
       ],
     });

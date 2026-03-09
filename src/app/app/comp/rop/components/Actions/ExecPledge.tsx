@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { HexType, MaxUserNo, booxMap } from "../../../../common";
 import { getShare } from "../../../ros/ros";
 import { StrBody, StrHead, defaultStrBody, defaultStrHead } from "../../../roa/ia/ia";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
@@ -69,8 +69,8 @@ export function ExecPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
       args: [ 
         BigInt(pld.head.seqOfShare),
         BigInt(pld.head.seqOfPld),
-        BigInt(body.buyer),
-        BigInt(body.groupOfBuyer)
+        hexToBigInt(body.buyer),
+        hexToBigInt(body.groupOfBuyer)
       ],
     });
   };
@@ -91,10 +91,10 @@ export function ExecPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('Buyer', input, MaxUserNo, setValid);
+            onlyHex('Buyer', input, 10, setValid);
             setBody(v=>({
               ...v,
-              buyer: e.target.value,
+              buyer: input,
             }));
           }}
           value={ body.buyer }
@@ -112,10 +112,10 @@ export function ExecPledge({pld, setOpen, refresh}:ActionsOfPledgeProps) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('GroupOfBuyer', input, MaxUserNo, setValid);
+            onlyHex('GroupOfBuyer', input, 10, setValid);
             setBody(v=>({
               ...v,
-              groupOfBuyer: e.target.value,
+              groupOfBuyer: input,
             }));
           }}
           value={ body.groupOfBuyer }

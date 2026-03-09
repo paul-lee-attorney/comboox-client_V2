@@ -35,7 +35,7 @@ export function ActionsOfDeal({addr, deal, setOpen, setDeal, refresh, timeline, 
 
   const actionsOfDeal = [
     'FirstRefusal', 'AntiDilution', 'DragAlong', 'TagAlong', 'PushToCoffer',
-    'IssueShare', 'TransferShare', 'PayOffInUsd', 'RequestToBuy', 'PickupShare', 
+    'IssueShare', 'TransferShare', 'PayOffInUsd', 'PickupShare', 
     'TerminateDeal', 'TakeGift',
   ]
 
@@ -49,9 +49,9 @@ export function ActionsOfDeal({addr, deal, setOpen, setDeal, refresh, timeline, 
     <TransferShare key={6} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     <PayOffInUsd key={7} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
     // <RequestToBuy key={8} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
-    <PickupShare key={9} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
-    <TerminateDeal key={10} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
-    <TakeGiftShares key={11} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
+    <PickupShare key={8} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
+    <TerminateDeal key={9} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
+    <TakeGiftShares key={10} addr={addr} deal={deal} setOpen={setOpen} setDeal={setDeal} refresh={refresh} />,
   ]
 
   let activeSteps:number[] = [];
@@ -81,25 +81,25 @@ export function ActionsOfDeal({addr, deal, setOpen, setDeal, refresh, timeline, 
         if (deal.body.state == 1) {
 
           if (deal.head.typeOfDeal == 1) activeSteps = [ 4, 5, 7 ];
-          else if (deal.head.typeOfDeal == 8) activeSteps = [ 10 ];
+          else if (deal.head.typeOfDeal == 8) activeSteps = [ 9 ];
           else activeSteps = [ 4, 6, 7 ];
 
         } else if (deal.body.state == 2) {
 
-          if (deal.head.typeOfDeal == 1) activeSteps = [ 5, 7, 8, 9 ];
-          else activeSteps = [ 6, 7, 8, 9 ];
+          if (deal.head.typeOfDeal == 1) activeSteps = [ 5, 7, 8 ];
+          else activeSteps = [ 6, 7, 8 ];
 
         } else activeSteps = [];
 
       } else if (timeline.stateOfFile >= 5) {
-        activeSteps = [ 9 ];
+        activeSteps = [ 8 ];
         if (deal.head.typeOfDeal == 2 || deal.head.typeOfDeal == 3) 
-          activeSteps = [ 9, 7 ];
+          activeSteps = [ 8, 7 ];
       } 
 
   } else if ( timestamp >= timeline.closingDeadline && timeline.stateOfFile > 1 ) {
-    activeSteps = [9];
-    if (deal.head.typeOfDeal == 8) activeSteps.push(10);
+    activeSteps = [8];
+    if (deal.head.typeOfDeal == 8) activeSteps.push(9);
   } 
   
   return(

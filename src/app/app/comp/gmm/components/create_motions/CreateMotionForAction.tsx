@@ -8,7 +8,7 @@ import {
 
 import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { AddCircle, EmojiPeople, RemoveCircle } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
+import { FormResults, HexParser, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
 import { Action, defaultAction } from "../../meetingMinutes";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { LoadingButton } from "@mui/lab";
@@ -58,7 +58,7 @@ export function CreateMotionForAction({refresh}:CreateMotionProps) {
           actions.map(v => (v.target)), 
           actions.map(v => (strNumToBigInt(v.value, 9) * 10n ** 9n)),
           actions.map(v => (v.params)),
-          desHash, BigInt(HexParser(executor))
+          desHash, hexToBigInt(executor)
         ],
       });
     }

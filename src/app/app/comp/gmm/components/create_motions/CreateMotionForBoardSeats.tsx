@@ -9,7 +9,7 @@ import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { PersonAdd, PersonRemove } from "@mui/icons-material";
 import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMeeting";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
 export function CreateMotionForBoardSeats({ refresh }:CreateMotionProps ) {
@@ -17,7 +17,7 @@ export function CreateMotionForBoardSeats({ refresh }:CreateMotionProps ) {
   const { gk, setErrMsg } = useComBooxContext();
 
   const [ seqOfPos, setSeqOfPos ] = useState<string>();
-  const [ candidate, setCandidate ] = useState<string>();
+  const [ candidate, setCandidate ] = useState<string>('0');
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
 
@@ -47,7 +47,7 @@ export function CreateMotionForBoardSeats({ refresh }:CreateMotionProps ) {
       addDirector({
         args: [
           BigInt(seqOfPos), 
-          BigInt(candidate)
+          hexToBigInt(candidate)
         ],
       });
     }
@@ -132,7 +132,7 @@ export function CreateMotionForBoardSeats({ refresh }:CreateMotionProps ) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('Candidate', input, MaxUserNo, setValid);
+            onlyHex('Candidate', input, 10, setValid);
             setCandidate(input);
           }}
           value={ candidate }

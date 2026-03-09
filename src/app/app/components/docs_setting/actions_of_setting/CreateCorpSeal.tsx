@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-import { Paper, Stack, TextField, } from "@mui/material";
+import { FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField, } from "@mui/material";
 import { Approval } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
@@ -10,6 +10,7 @@ import { refreshAfterTx } from "../../../common/toolsKit";
 
 import { useIGeneralKeeperCreateCorpSeal } from "../../../../../../generated";
 import { CreateDocProps } from "./CreateProxy";
+import { typesOfEntity } from "../../../rc";
 
 export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:CreateDocProps) {
 
@@ -32,6 +33,14 @@ export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:Crea
       refreshAfterTx(hash, updateResults);
     }
   });
+
+  const [ typeOfEntity, setTypeOfEntity ] = useState<number>(0);
+
+  const handleClick = ()=>{
+    createSeal({
+      args:[ BigInt(typeOfEntity) ]
+    });
+  };
 
   return (
 
@@ -56,6 +65,22 @@ export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:Crea
           value={ addr }
         />
 
+        <FormControl variant="outlined" size='small' sx={{ m: 1, minWidth: 218 }}>
+          <InputLabel id="typeOfEntity-label">TypeOfEntity</InputLabel>
+          <Select
+            labelId="typeOfEntity-label"
+            id="typeOfEntity-select"
+            label="TypeOfEntity"
+            value={ typeOfEntity }
+            onChange={(e) =>  setTypeOfEntity( Number(e.target.value) ) }
+          >
+            {typesOfEntity.map((v,i) => (
+              <MenuItem key={v} value={ i+1 } > <b>{v}</b> </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+
         <LoadingButton 
           disabled = { createSealLoading || addr == AddrZero}
           loading={loading}
@@ -63,7 +88,7 @@ export function CreateCorpSeal({typeOfDoc, version, addr, setOpen, setTime}:Crea
           sx={{ m: 1, minWidth: 120, height: 40 }} 
           variant="contained" 
           endIcon={<Approval />}
-          onClick={ ()=>createSeal() }
+          onClick={ handleClick }
           size='small'
         >
           Create Seal

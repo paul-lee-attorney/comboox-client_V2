@@ -4,7 +4,7 @@ import { useIgmmKeeperProposeDocOfGm } from "../../../../../../../generated";
 import { HexType, MaxUserNo, } from "../../../../common";
 import { EmojiPeople } from "@mui/icons-material";
 import { useState } from "react";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
@@ -46,7 +46,7 @@ export function ProposeDocOfGm({ addr, seqOfVR, setNextStep }: ProposeDocOfGmPro
       args: [ 
         BigInt(`0x${addr.substring(2).padStart(64, '0')}`), 
         BigInt(seqOfVR), 
-        BigInt(executor) 
+        hexToBigInt(executor) 
       ],
     });
   };
@@ -65,7 +65,7 @@ export function ProposeDocOfGm({ addr, seqOfVR, setNextStep }: ProposeDocOfGmPro
         }}
         onChange={(e)=>{
           let input = e.target.value;
-          onlyInt('Executor', input, MaxUserNo, setValid);
+          onlyHex('Executor', input, 10, setValid);
           setExecutor(input);
         }}
         value={ executor }

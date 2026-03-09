@@ -9,7 +9,7 @@ import { IconButton, Paper, Stack, TextField, Tooltip } from "@mui/material";
 import { PersonAdd, PersonRemove } from "@mui/icons-material";
 import { CreateMotionProps } from "../CreateMotionOfBoardMeeting";
 import { HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
-import { FormResults, defFormResults, hasError, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
+import { FormResults, defFormResults, hasError, hexToBigInt, onlyHex, onlyInt, refreshAfterTx } from "../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 
 export function CreateMotionForOfficer({ refresh }:CreateMotionProps ) {
@@ -47,7 +47,7 @@ export function CreateMotionForOfficer({ refresh }:CreateMotionProps ) {
       addOfficer({
         args: [
           BigInt(seqOfPos), 
-          BigInt(candidate)
+          hexToBigInt(candidate)
         ],
       });
     } 
@@ -135,7 +135,7 @@ export function CreateMotionForOfficer({ refresh }:CreateMotionProps ) {
           }}
           onChange={(e) => {
             let input = e.target.value;
-            onlyInt('Candidate', input, MaxUserNo, setValid);
+            onlyHex('Candidate', input, 10, setValid);
             setCandidate(input);
           }}
           value={ candidate }
