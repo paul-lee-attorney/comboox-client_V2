@@ -45,10 +45,10 @@ export function MintPoints({ refresh }:ActionsOfUserProps) {
       let hash: HexType = data.hash;
       waitForTransaction({hash}).then(
         res => {
-          if (res && res.logs[0].topics[3] && res.logs[0].topics[2]) {
+          if (res && res.logs[0].data && res.logs[0].topics[2]) {
             let rpt:Receipt = {
               to: res.logs[0].topics[2],
-              amt: BigInt(res.logs[0].topics[3]).toString(),
+              amt: BigInt(res.logs[0].data).toString(),
             }
             setReceipt(rpt);
             setOpen(true);

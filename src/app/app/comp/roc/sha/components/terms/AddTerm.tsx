@@ -11,7 +11,7 @@ import {
   useIShareholdersAgreementRemoveTerm 
 } from "../../../../../../../../generated";
 
-import { counterOfVersions, getCloneAddr, getDocAddr } from "../../../../../rc";
+import { counterOfVersions, getCloneAddr } from "../../../../../rc";
 
 import { FormResults, defFormResults, getTypeByName, hasError, refreshAfterTx } from "../../../../../common/toolsKit";
 import { useComBooxContext } from "../../../../../../_providers/ComBooxContextProvider";
