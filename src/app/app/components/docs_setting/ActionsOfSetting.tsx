@@ -27,7 +27,7 @@ export function ActionsOfSetting({ addr, titleOfTemp, typeOfDoc, version, setTim
     <InitKeepers key={1} addr={addr} typeOfDoc={typeOfDoc} version={version} setTime={setTime} setOpen={setOpen} />,
     <SetTemplate key={2} addr={addr} titleOfTemp={titleOfTemp} typeOfDoc={typeOfDoc} version={version} setTime={setTime} setOpen={setOpen} />, 
     <CreateCorpSeal key={3} addr={addr} typeOfDoc={typeOfDoc} version={version} setTime={setTime} setOpen={setOpen} />,  
-    <TransferIPR key={4} addr={addr} typeOfDoc={typeOfDoc} version={version} setTime={setTime} setOpen={setOpen} />
+    <TransferIPR key={4} addr={addr} titleOfTemp={titleOfTemp} typeOfDoc={typeOfDoc} version={version} setTime={setTime} setOpen={setOpen} />
   ]
 
   return(

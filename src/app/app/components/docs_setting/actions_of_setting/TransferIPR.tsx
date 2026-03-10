@@ -14,9 +14,9 @@ import {
 } from '../../../common/toolsKit';
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
-import { CreateDocProps } from './CreateProxy';
+import { ActionsOfSettingProps } from '../ActionsOfSetting';
 
-export function TransferIPR({addr, typeOfDoc, version, setTime, setOpen}: CreateDocProps ) {
+export function TransferIPR({addr, titleOfTemp, typeOfDoc, version, setTime, setOpen}: ActionsOfSettingProps ) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -54,8 +54,7 @@ export function TransferIPR({addr, typeOfDoc, version, setTime, setOpen}: Create
             let rVersion = BigInt(r.logs[0].topics[2]).toString();
             let rTransferee = userNoParser(Number(r.logs[0].topics[3]).toString(16));
 
-            let str = 'IPR of Doc (type:' + rType + ', version:' + rVersion 
-              + ') is transferred to User:' +  rTransferee;
+            let str = 'IPR of Temp transferred to User: ' +  rTransferee;
 
             setReceipt(str);
             updateResults();
@@ -78,6 +77,18 @@ export function TransferIPR({addr, typeOfDoc, version, setTime, setOpen}: Create
   return (
     <Paper elevation={3} sx={{m:1, p:1, color:'divider', border:1 }}  >
       <Stack direction='row' sx={{ alignItems:'start' }} >
+
+        <TextField 
+          size="small"
+          variant='outlined'
+          label='TitleOfTemp'
+          inputProps={{readOnly: true}}
+          sx={{
+            m:1,
+            minWidth: 128,
+          }}
+          value={ titleOfTemp }
+        />
 
         <TextField 
           size="small"
