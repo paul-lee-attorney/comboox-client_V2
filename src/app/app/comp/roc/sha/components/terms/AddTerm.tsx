@@ -31,10 +31,9 @@ export function AddTerm({sha, title, setTerms, isCreated}: AddTermProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
 
-  const terms = ["AntiDilution", "LockUp", "Alongs", "Alongs", "Options", "Options"];
-
   // uint typeOfDoc = title > 3 ? 21 + title : 22 + title;
   useEffect(()=>{
+    const terms = ["AntiDilution", "LockUp", "Alongs", "Alongs", "Options", "Options"];
     let typeOfDoc = getTypeByName(terms[title-1]);
     counterOfVersions(typeOfDoc).then(
       vr => setVersion(vr.toString())
