@@ -7,7 +7,6 @@ import { TransferPoints } from "./ActionsOfUser/TransferPoints";
 import { SetRoyaltyRule } from "./ActionsOfUser/SetRoyaltyRule";
 import { User } from "../../rc";
 import { AddrZero } from "../../common";
-import { TransferIPR } from "./ActionsOfUser/TransferIPR";
 import { TransferUSD } from "./ActionsOfUser/TransferUSD";
 import { LockUSD } from "./ActionsOfUser/LockUSD";
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
@@ -31,7 +30,7 @@ export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refr
   const [ typeOfAction, setTypeOfAction ] = useState<string>('1');
   
   const actionsOfUser = [
-    'Set Backup Key', 'Set Royalty Rule', 'Mint CBP', 'Transfer IPR',
+    'Set Backup Key', 'Set Royalty Rule', 'Mint CBP', 
     'Transfer CBP', 'Transfer USD', 'Lock USD', 'Lock USD Consideration',
   ]
 
@@ -39,11 +38,10 @@ export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refr
     <SetBackupKey key={0} refresh={refresh} />,
     <SetRoyaltyRule key={1} refresh={refresh} />,
     <MintPoints key={2} refresh={refresh} />,
-    <TransferIPR key={3} />,
-    <TransferPoints key={4} refresh={refresh} />,
-    <TransferUSD key={5} refresh={refresh} />,
-    <LockUSD key={6} refresh={refresh} />,
-    <LockUsdConsideration key={7} refresh={refresh} />,
+    <TransferPoints key={3} refresh={refresh} />,
+    <TransferUSD key={4} refresh={refresh} />,
+    <LockUSD key={5} refresh={refresh} />,
+    <LockUsdConsideration key={6} refresh={refresh} />,
   ]
 
   return( 
@@ -65,8 +63,8 @@ export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refr
           >
             {actionsOfUser.map((v, i) => {
               if (i==0 && user?.backupKey?.pubKey != AddrZero) return null;
-              if ((i==2 || i==3) && !isOwner ) return null;
-              if (i==7 && !boox) return null;
+              if ((i==2) && !isOwner ) return null;
+              if ( i==6 && !boox) return null;
               
               return (<MenuItem key={v} value={ i } > <b>{v}</b> </MenuItem>);
             })}
@@ -94,9 +92,9 @@ export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refr
       </Stack>
 
       { compsOfAction.map((v,i)=>{
-        if (i==0 && user?.backupKey?.pubKey != AddrZero) return null;
-        if ((i==2 || i==3) && !isOwner ) return null;
-        if (i==7 && !boox) return null;
+        if ( i==0 && user?.backupKey?.pubKey != AddrZero) return null;
+        if (( i==2 ) && !isOwner ) return null;
+        if (i==6 && !boox) return null;
         return (
           <Collapse key={i} in={ typeOfAction == i.toString() } >
             {v}

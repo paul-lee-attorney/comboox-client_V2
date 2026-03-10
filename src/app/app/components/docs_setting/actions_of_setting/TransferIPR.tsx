@@ -8,23 +8,32 @@ import {
 import { AddrOfRegCenter, HexType, MaxPrice, MaxUserNo } from '../../../common';
 import { BorderColor, Close } from '@mui/icons-material';
 import { useState } from 'react';
-import { FormResults, defFormResults, getReceipt, hasError, longSnParser, onlyInt } from '../../../common/toolsKit';
+import { 
+  FormResults, defFormResults, getReceipt, hasError, 
+  onlyHex, hexToBigInt, HexParser, userNoParser
+} from '../../../common/toolsKit';
 import { LoadingButton } from '@mui/lab';
 import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider';
+import { CreateDocProps } from './CreateProxy';
 
-export function TransferIPR() {
+export function TransferIPR({addr, typeOfDoc, version, setTime, setOpen}: CreateDocProps ) {
 
   const { setErrMsg } = useComBooxContext();
 
-  const [ typeOfDoc, setTypeOfDoc ] = useState<string>('0');
-  const [ version, setVersion ] = useState<string>('0');
   const [ transferee, setTransferee ] = useState<string>('0');
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
 
   const [ receipt, setReceipt ] = useState<string>('');
-  const [ open, setOpen ] = useState<boolean>(false);
+  const [ show, setShow ] = useState<boolean>(false);
 
   const [loading, setLoading] = useState(false);
+
+  const updateResults = ()=>{
+    setLoading(false);
+    setShow(true);
+    setTime( Date.now());
+    // setOpen(false);
+  }
 
   const {
     isLoading: transferIPRLoading,
@@ -41,16 +50,15 @@ export function TransferIPR() {
         r => {
           console.log("Receipt: ", r);
           if (r) {
-            let rType = BigInt(r.logs[0].topics[1]).toString();
+            let rType = Number(r.logs[0].topics[1]).toString(16);
             let rVersion = BigInt(r.logs[0].topics[2]).toString();
-            let rTransferee = BigInt(r.logs[0].topics[3]).toString();
+            let rTransferee = userNoParser(Number(r.logs[0].topics[3]).toString(16));
 
             let str = 'IPR of Doc (type:' + rType + ', version:' + rVersion 
-              + ') is transferred to User:' +  longSnParser(rTransferee);
+              + ') is transferred to User:' +  rTransferee;
 
             setReceipt(str);
-            setOpen(true);
-            setLoading(false);
+            updateResults();
           }
         }
       )
@@ -60,9 +68,9 @@ export function TransferIPR() {
   const transferIPRClick = ()=>{
     transferIPR({
       args:[ 
-          BigInt(typeOfDoc), 
+          BigInt(typeOfDoc),
           BigInt(version),
-          BigInt(transferee)
+          hexToBigInt(transferee)
       ],
     });
   }
@@ -75,36 +83,24 @@ export function TransferIPR() {
           size="small"
           variant='outlined'
           label='TypeOfDoc'
-          error={ valid['TypeOfDoc']?.error }
-          helperText={ valid['TypeOfDoc']?.helpTx ?? ' ' }                        
+          inputProps={{readOnly: true}}
           sx={{
             m:1,
             minWidth: 128,
           }}
-          value={ typeOfDoc }
-          onChange={e => {
-            let input = e.target.value;
-            onlyInt('TypeOfDoc', input, MaxPrice, setValid);
-            setTypeOfDoc(input);
-          }}
+          value={ HexParser(typeOfDoc.toString(16)) }
         />
 
         <TextField 
           size="small"
           variant='outlined'
           label='Version'
-          error={ valid['Version']?.error }
-          helperText={ valid['Version']?.helpTx ?? ' ' }                        
+          inputProps={{readOnly: true}}
           sx={{
             m:1,
             minWidth: 128,
           }}
           value={ version }
-          onChange={e => {
-            let input = e.target.value;
-            onlyInt('Version', input, MaxPrice, setValid); 
-            setVersion(input);
-          }}
         />
 
         <TextField 
@@ -120,13 +116,13 @@ export function TransferIPR() {
           value={ transferee }
           onChange={e => {
             let input = e.target.value;
-            onlyInt('Transferee', input, MaxUserNo, setValid);
+            onlyHex('Transferee', input, 10, setValid);
             setTransferee( input );
           }}
         />
 
         <LoadingButton 
-          disabled={ transferIPRLoading || hasError(valid)}
+          disabled={ transferIPRLoading || hasError(valid) || !typeOfDoc || !version }
           loading={loading}
           loadingPosition='end' 
           onClick={ transferIPRClick }
@@ -137,7 +133,7 @@ export function TransferIPR() {
           Transfer
         </LoadingButton>
 
-        <Collapse in={ open } sx={{ m:1 }} >
+        <Collapse in={ show } sx={{ m:1 }} >
           <Alert 
             action={
               <IconButton
@@ -145,6 +141,7 @@ export function TransferIPR() {
                 color="inherit"
                 size="small"
                 onClick={() => {
+                  setShow(false);
                   setOpen(false);
                 }}
               >
