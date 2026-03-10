@@ -9,10 +9,10 @@
 // export const AddrOfCNC:HexType = `0x${'ADdE6d6867880EEa2CA8d88EaF08732a94D572B8'}`;
 
 export const AddrOfRegCenter:HexType = `0x${process.env.NEXT_PUBLIC_RC_ADDR?.substring(2) ?? '0'}`;
-export const AddrOfTank:HexType = `0x${process.env.NEXT_PUBLIC_FT_ADDR?.substring(2) ?? '0'}`;
+// export const AddrOfTank:HexType = `0x${process.env.NEXT_PUBLIC_FT_ADDR?.substring(2) ?? '0'}`;
 // export const AddrOfCNC:HexType = `0x${process.env.NEXT_PUBLIC_CNC_ADDR?.substring(2) ?? '0'}`;
-export const AddrOfUSDC:HexType = `0x${process.env.NEXT_PUBLIC_USDC_ADDR?.substring(2) ?? '0'}`;
-export const AddrOfCL:HexType = `0x${process.env.NEXT_PUBLIC_CL_ADDR?.substring(2) ?? '0'}`;
+// export const AddrOfUSDC:HexType = `0x${process.env.NEXT_PUBLIC_USDC_ADDR?.substring(2) ?? '0'}`;
+// export const AddrOfCL:HexType = `0x${process.env.NEXT_PUBLIC_CL_ADDR?.substring(2) ?? '0'}`;
 
 export const FirstUser:HexType = `0x${process.env.NEXT_PUBLIC_FIRST_USER?.substring(2) ?? '0'}`;
 export const SecondUser:HexType = `0x${process.env.NEXT_PUBLIC_SECOND_USER?.substring(2) ?? '0'}`;

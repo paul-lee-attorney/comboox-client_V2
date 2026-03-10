@@ -18,17 +18,17 @@ type WagmiProviderType = {
 }
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  // [ arbitrumSepolia, arbitrum ],
-  [ hardhat ],
+  [ arbitrumSepolia, arbitrum ],
+  // [ hardhat ],
   [
-    // alchemyProvider({
-    //   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ?? '',
-    //   // stallTimeout: 2_000,
+    // jsonRpcProvider({
+    //   rpc: () => {
+    //       return { http: 'http://localhost:8545' };
+    //     }
     // }),
-    jsonRpcProvider({
-      rpc: () => {
-          return { http: 'http://localhost:8545' };
-        }
+    alchemyProvider({
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY ?? '',
+      // stallTimeout: 2_000,
     }),
   ],
 );
