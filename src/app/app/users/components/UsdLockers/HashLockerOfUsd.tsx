@@ -9,13 +9,14 @@ import { ItemLocker } from "../../../cl";
 
 export interface HashLockerOfUsdProps{
   open: boolean,
+  addrCL: HexType,
   locker: ItemLocker,
   primeKey: HexType,
   setOpen: Dispatch<SetStateAction<boolean>>,
   refresh: () => void,
 }
 
-export function HashLockerOfUsd({open, locker, primeKey, setOpen, refresh}: HashLockerOfUsdProps) {
+export function HashLockerOfUsd({open, addrCL, locker, primeKey, setOpen, refresh}: HashLockerOfUsdProps) {
 
   return (
     <Dialog
@@ -133,10 +134,10 @@ export function HashLockerOfUsd({open, locker, primeKey, setOpen, refresh}: Hash
               <tr>
                 <td colSpan={3}>
                   {primeKey == locker.head.to && (
-                    <PickupUsd hashLock={locker.lock} refresh={refresh} setOpen={setOpen} />
+                    <PickupUsd addrCL={addrCL} hashLock={locker.lock} refresh={refresh} setOpen={setOpen} />
                   )}
                   {primeKey == locker.head.from && (
-                    <WithdrawUsd hashLock={locker.lock} refresh={refresh} setOpen={setOpen} />
+                    <WithdrawUsd addrCL={addrCL} hashLock={locker.lock} refresh={refresh} setOpen={setOpen} />
                   )}
                 </td>
               </tr>

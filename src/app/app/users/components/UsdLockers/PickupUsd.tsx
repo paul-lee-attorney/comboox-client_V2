@@ -1,7 +1,7 @@
 
 import { Paper, Stack, TextField } from '@mui/material';
 
-import { AddrOfCL, HexType } from '../../../common';
+import { HexType } from '../../../common';
 import { Redo } from '@mui/icons-material';
 import { useState } from 'react';
 import { refreshAfterTx } from '../../../common/toolsKit';
@@ -10,12 +10,13 @@ import { useComBooxContext } from '../../../../_providers/ComBooxContextProvider
 import { useCashLockersUnlockUsd } from '../../../../../../generated';
 
 interface PickupUsdProps{
+  addrCL:HexType;
   hashLock: HexType;
   refresh: ()=>void;
   setOpen: (flag: boolean)=>void;
 }
 
-export function PickupUsd({hashLock, refresh, setOpen }:PickupUsdProps) {
+export function PickupUsd({addrCL, hashLock, refresh, setOpen }:PickupUsdProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -32,7 +33,7 @@ export function PickupUsd({hashLock, refresh, setOpen }:PickupUsdProps) {
     isLoading: pickupUsdLoading,
     write: pickupUsd
   } = useCashLockersUnlockUsd({
-    address: AddrOfCL,
+    address: addrCL,
     onError(err) {
       setErrMsg(err.message);
     },

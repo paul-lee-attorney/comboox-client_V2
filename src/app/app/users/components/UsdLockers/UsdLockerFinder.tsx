@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { AddrOfCL, Bytes32Zero, HexType } from "../../../common";
+import { Bytes32Zero, HexType } from "../../../common";
 
 import { Button, Stack, TextField } from "@mui/material";
 import { Search } from "@mui/icons-material";
@@ -17,8 +17,8 @@ export function UsdLockerFinder({setLocker, setOpen}: UsdLockerFinderProps) {
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
 
   const searchLocker = ()=>{
-    if (AddrOfCL && hashLock) {
-      getLocker(AddrOfCL, hashLock).then(
+    if (hashLock) {
+      getLocker(hashLock).then(
         locker => {
           let item: ItemLocker = parseOrgLocker(
             hashLock, locker

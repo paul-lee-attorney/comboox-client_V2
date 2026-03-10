@@ -70,7 +70,7 @@ interface UsdLocksListProps {
   setOpen: Dispatch<SetStateAction<boolean>>,
 }
 
-export function UsdLockersList({ list, setLocker, setOpen }:UsdLocksListProps ) {
+export function UsdLockersList({list, setLocker, setOpen }:UsdLocksListProps ) {
 
   const handleRowClick: GridEventListener<'rowClick'> = (p) => {
     setLocker({lock: p.row.lock, head: p.row.head, body: p.row.body});

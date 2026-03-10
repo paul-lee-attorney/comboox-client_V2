@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { User, balanceOf, balanceOfWei, isOwnerOfRegCenter, getMyUser } from "../rc";
 
 import { Divider, Paper, TextField, Toolbar } from "@mui/material";
-import { longDataParser, longSnParser, toPercent, userNoParser } from "../common/toolsKit";
+import { longDataParser, toPercent, userNoParser } from "../common/toolsKit";
 import { useWalletClient } from "wagmi";
 
 import { CopyLongStrTF } from "../common/CopyLongStr";
@@ -446,7 +446,7 @@ function UserInfo() {
           <tr>
             <td colSpan={ 5 }>
               {usdLocker && user && (
-                <HashLockerOfUsd open={ openUsdLocker } locker={ usdLocker } primeKey={ user.primeKey.pubKey } setOpen={ setOpenUsdLocker } refresh={ refresh } />
+                <HashLockerOfUsd open={ openUsdLocker } addrCL={addrCL} locker={ usdLocker } primeKey={ user.primeKey.pubKey } setOpen={ setOpenUsdLocker } refresh={ refresh } />
               )}
             </td>
           </tr>
