@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-import { AddrOfTank, Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
+import { AddrZero, Bytes32Zero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
 
 import { Divider,  Paper, Stack, TextField } from "@mui/material";
 import { EmojiPeople } from "@mui/icons-material";
@@ -10,10 +10,20 @@ import { CreateMotionProps } from "../../../bmm/components/CreateMotionOfBoardMe
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { useIgmmKeeperCreateActionOfGm } from "../../../../../../../generated";
+import { getFuelTankAddr } from "../../../../fuel_tank/ft";
 
 export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
 
   const { gk, setErrMsg } = useComBooxContext();
+
+  const [ addrFT, setAddrFT ] = useState<HexType>(AddrZero);
+  useEffect (() => {
+    const getFTAddr = async () => {
+      const addr = await getFuelTankAddr();
+      setAddrFT(addr);
+    }
+    getFTAddr();
+  });
 
   const [ amt, setAmt ] = useState('0');
   const [ seqOfVR, setSeqOfVR ] = useState<string>('9');
@@ -47,7 +57,7 @@ export function ProposeToWithdrawCBP({ refresh }:CreateMotionProps) {
       proposeToWithdrawCBP({
         args: [
           BigInt(seqOfVR), 
-          [AddrOfTank],
+          [ addrFT ],
           [0n],
           [HexParser('0xbbc446ac' + strNumToBigInt(amt, 18).toString(16).padStart(64, '0'))],
           Bytes32Zero, hexToBigInt(executor)

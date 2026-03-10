@@ -1,18 +1,20 @@
 import { Checkbox, Collapse, FormControl, FormControlLabel, InputLabel, 
   MenuItem, Paper, Select, Stack, Toolbar } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SetBackupKey } from "./ActionsOfUser/SetBackupKey";
 import { MintPoints } from "./ActionsOfUser/MintPoints";
 import { TransferPoints } from "./ActionsOfUser/TransferPoints";
 import { SetRoyaltyRule } from "./ActionsOfUser/SetRoyaltyRule";
 import { User } from "../../rc";
-import { AddrZero } from "../../common";
+import { AddrZero, HexType } from "../../common";
 import { TransferUSD } from "./ActionsOfUser/TransferUSD";
 import { LockUSD } from "./ActionsOfUser/LockUSD";
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
 import { LockUsdConsideration } from "./ActionsOfUser/LockUsdConsideration";
+import { getCashLockersAddr } from "../../cl";
 
 export interface ActionsOfUserProps{
+  addrCL: HexType;
   refresh: ()=>void;
 }
 
@@ -23,7 +25,7 @@ interface ActionsOfUserPanelProps extends ActionsOfUserProps {
   setShowUsdList: Dispatch<SetStateAction<boolean>>;
 }
 
-export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refresh}: ActionsOfUserPanelProps) {
+export function ActionsOfUser({ user, isOwner, addrCL, showUsdList, setShowUsdList, refresh}: ActionsOfUserPanelProps) {
 
   const { boox } = useComBooxContext();
 
@@ -35,13 +37,13 @@ export function ActionsOfUser({ user, isOwner, showUsdList, setShowUsdList, refr
   ]
 
   const compsOfAction = [
-    <SetBackupKey key={0} refresh={refresh} />,
-    <SetRoyaltyRule key={1} refresh={refresh} />,
-    <MintPoints key={2} refresh={refresh} />,
-    <TransferPoints key={3} refresh={refresh} />,
-    <TransferUSD key={4} refresh={refresh} />,
-    <LockUSD key={5} refresh={refresh} />,
-    <LockUsdConsideration key={6} refresh={refresh} />,
+    <SetBackupKey key={0} addrCL={addrCL} refresh={refresh} />,
+    <SetRoyaltyRule key={1} addrCL={addrCL} refresh={refresh} />,
+    <MintPoints key={2} addrCL={addrCL} refresh={refresh} />,
+    <TransferPoints key={3} addrCL={addrCL} refresh={refresh} />,
+    <TransferUSD key={4} addrCL={addrCL} refresh={refresh} />,
+    <LockUSD key={5} addrCL={addrCL} refresh={refresh} />,
+    <LockUsdConsideration key={6} addrCL={addrCL} refresh={refresh} />,
   ]
 
   return( 

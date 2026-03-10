@@ -1,10 +1,19 @@
 
-import { Divider, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from '@mui/material';
+import { 
+  Divider, FormControl, FormHelperText, InputLabel, 
+  MenuItem, Paper, Select, Stack, TextField 
+} from '@mui/material';
 
-import { AddrOfCL, AddrZero, Bytes32Zero, HexType, MaxSeqNo } from '../../../common';
+import { AddrZero, Bytes32Zero, HexType, MaxSeqNo } from '../../../common';
 import { LockClockOutlined } from '@mui/icons-material';
-import { useState } from 'react';
-import { FormResults, HexParser, defFormResults, hasError, onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, strNumToBigInt, utcToStamp } from '../../../common/toolsKit';
+import { useEffect, useState } from 'react';
+
+import { 
+  FormResults, HexParser, defFormResults, hasError, 
+  onlyHex, onlyInt, onlyNum, refreshAfterTx, stampToUtc, 
+  strNumToBigInt, utcToStamp 
+} from '../../../common/toolsKit';
+
 import { DateTimeField } from '@mui/x-date-pickers';
 
 import { LoadingButton } from '@mui/lab';
@@ -16,11 +25,11 @@ import { verifyAuthorization } from '../../../components/usdc_auth/authVerifier'
 
 import { GenerateAuth } from '../../../components/usdc_auth/GenerateAuth';
 import { calDefaultParas, constructPayload, funcNames, selectors } from '../../../common/payloadTools';
-import { defaultHead, Head } from '../../../cl';
+import { defaultHead, getCashLockersAddr, Head } from '../../../cl';
 import { useCashLockersLockConsideration } from '../../../../../../generated';
 
 
-export function LockUsdConsideration({refresh}:ActionsOfUserProps) {
+export function LockUsdConsideration({addrCL, refresh}:ActionsOfUserProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -48,7 +57,7 @@ export function LockUsdConsideration({refresh}:ActionsOfUserProps) {
     isLoading: lockConsiderationLoading,
     write: lockConsideration,
   } = useCashLockersLockConsideration({
-    address: AddrOfCL,
+    address: addrCL,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -344,7 +353,7 @@ export function LockUsdConsideration({refresh}:ActionsOfUserProps) {
 
         <Divider orientation='vertical' sx={{ m:1 }} flexItem />
 
-        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={AddrOfCL} setAuth={setAuth} />
+        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={addrCL} setAuth={setAuth} />
 
         <LoadingButton 
           disabled={ !auth || lockConsiderationLoading || hasError(valid)} 

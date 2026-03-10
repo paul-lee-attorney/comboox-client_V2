@@ -22,7 +22,7 @@ import { useCashLockersLockUsd } from '../../../../../../generated';
 import { getCashLockersAddr } from '../../../cl';
 
 
-export function LockUSD({refresh}:ActionsOfUserProps) {
+export function LockUSD({addrCL, refresh}:ActionsOfUserProps) {
 
   const { setErrMsg } = useComBooxContext();
 
@@ -44,24 +44,11 @@ export function LockUSD({refresh}:ActionsOfUserProps) {
     setLoading(false);
   }
 
-  const [ addrCashLockers, setAddrCashLockers ] = useState<HexType>(AddrZero);
-  useEffect(()=>{
-    getCashLockersAddr().then(
-      addr => {
-        if (addr != AddrZero) {
-          setAddrCashLockers(addr);
-        } else {
-          setErrMsg('CashLockers contract is not deployed yet.');
-        }
-      }
-    ) 
-  }, [setErrMsg]);
-
   const {
     isLoading: lockUSDLoading,
     write: lockUSD,
   } = useCashLockersLockUsd({
-    address: addrCashLockers,
+    address: addrCL,
     onError(err) {
       setErrMsg(err.message);
     },
@@ -178,7 +165,7 @@ export function LockUSD({refresh}:ActionsOfUserProps) {
 
         <Divider orientation='vertical' sx={{m:1}} flexItem />
 
-        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={addrCashLockers} setAuth={setAuth} />
+        <GenerateAuth value={strNumToBigInt(amt,6)} escrowAcct={addrCL} setAuth={setAuth} />
 
         <LoadingButton 
           disabled={ !auth || lockUSDLoading || hasError(valid)} 

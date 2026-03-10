@@ -72,7 +72,7 @@ export const defaultItemLocker = {
   body: defaultItemBody,
 }
 
-const addrCL = await getCashLockersAddr();
+// const addrCL = await getCashLockersAddr();
 
 export async function getCashLockersAddr(): Promise<HexType> {
 
@@ -97,7 +97,9 @@ export async function getCashLockersAddr(): Promise<HexType> {
 
 export async function isLocked(lock: HexType): Promise<boolean> {
 
-  let flag = await readContract({
+  const addrCL = await getCashLockersAddr();
+
+  const flag = await readContract({
      address: addrCL,
      abi: cashLockersABI,
      functionName: 'isLocked',
@@ -109,6 +111,8 @@ export async function isLocked(lock: HexType): Promise<boolean> {
 
 export async function counterOfLockers(): Promise<bigint> {
 
+  const addrCL = await getCashLockersAddr();
+
   let res = await readContract({
      address: addrCL,
      abi: cashLockersABI,
@@ -119,6 +123,8 @@ export async function counterOfLockers(): Promise<bigint> {
 }
 
 export async function getHeadOfLocker(lock:HexType): Promise<Head> {
+
+  const addrCL = await getCashLockersAddr();
 
   let res = await readContract({
      address: addrCL,
@@ -132,6 +138,8 @@ export async function getHeadOfLocker(lock:HexType): Promise<Head> {
 
 export async function getLocker(lock:HexType): Promise<Locker> {
 
+  const addrCL = await getCashLockersAddr();
+
   let res = await readContract({
      address: addrCL,
      abi: cashLockersABI,
@@ -144,7 +152,9 @@ export async function getLocker(lock:HexType): Promise<Locker> {
 
 export async function getLockersList(): Promise<readonly HexType[]> {
 
-  let res = await readContract({
+  const addrCL = await getCashLockersAddr();
+
+  const res = await readContract({
      address: addrCL,
      abi: cashLockersABI,
      functionName: 'getLockersList',
@@ -155,7 +165,7 @@ export async function getLockersList(): Promise<readonly HexType[]> {
 
 export function parseOrgLocker(hashLock: HexType, input: Locker): ItemLocker {
 
-  let lk: ItemLocker = {
+  const lk: ItemLocker = {
     lock: hashLock,
     head: input.head,
     body: 
@@ -193,23 +203,27 @@ export async function getUsdLockersList(): Promise<ItemLocker[]> {
 
 export async function custodyOf(acct:HexType): Promise<bigint> {
 
-  let res = await readContract({
-     address: addrCL,
-     abi: cashLockersABI,
-     functionName: 'custodyOf',
-     args: [acct]
-   })
+    const addrCL = await getCashLockersAddr();
+
+    const res = await readContract({
+      address: addrCL,
+      abi: cashLockersABI,
+      functionName: 'custodyOf',
+      args: [acct]
+    })
  
    return res; 
 }
 
 export async function totalCustody(): Promise<bigint> {
 
+  const addrCL = await getCashLockersAddr();
+
   let res = await readContract({
      address: addrCL,
      abi: cashLockersABI,
      functionName: 'totalCustody',
-   })
+  });
  
-   return res; 
+  return res; 
 }

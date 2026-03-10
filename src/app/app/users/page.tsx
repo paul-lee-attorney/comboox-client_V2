@@ -13,7 +13,8 @@ import { useComBooxContext } from "../../_providers/ComBooxContextProvider";
 import { balanceOfUsd } from "../usdc";
 import { UsdLockersList } from "./components/UsdLockers/UsdLockersList";
 import { HashLockerOfUsd } from "./components/UsdLockers/HashLockerOfUsd";
-import { defaultItemLocker, getUsdLockersList, ItemLocker } from "../cl";
+import { defaultItemLocker, getCashLockersAddr, getUsdLockersList, ItemLocker } from "../cl";
+import { AddrZero, HexType } from "../common";
 
 function UserInfo() {
 
@@ -49,6 +50,16 @@ function UserInfo() {
       )
     }
   }, [signer, time]);
+
+
+  const [ addrCL, setAddrCL ] = useState<HexType>(AddrZero);
+  useEffect(() => {
+    const getCLAddr = async () => {
+      const addr = await getCashLockersAddr();
+      setAddrCL(addr);
+    }
+    getCLAddr();
+  });
 
   const [ usdLockersList, setUsdLockersList ] = useState<ItemLocker[]>();
 
@@ -419,7 +430,7 @@ function UserInfo() {
           <tr>
             <td colSpan={ 5 }>
               {userNo && (
-                <ActionsOfUser user={user} isOwner={isOwner} showUsdList={showUsdList} setShowUsdList={setShowUsdList} refresh={refresh} />
+                <ActionsOfUser user={user} isOwner={isOwner} addrCL={addrCL} showUsdList={showUsdList} setShowUsdList={setShowUsdList} refresh={refresh} />
               )}
             </td>
           </tr>

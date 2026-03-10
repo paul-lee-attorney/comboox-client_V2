@@ -1,19 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-import { AddrOfTank, Bytes32Zero, HexType, MaxSeqNo } from "../../../../common";
+import { Bytes32Zero, HexType, MaxSeqNo, AddrZero } from "../../../../common";
 
 import { Divider,  Paper, Stack, TextField } from "@mui/material";
 import { SavingsOutlined } from "@mui/icons-material";
-import { FormResults, HexParser, defFormResults, hasError, onlyInt, onlyNum, refreshAfterTx, strNumToBigInt } from "../../../../common/toolsKit";
+import { 
+  FormResults, HexParser, defFormResults, hasError, 
+  onlyInt, onlyNum, refreshAfterTx, strNumToBigInt 
+} from "../../../../common/toolsKit";
 import { LoadingButton } from "@mui/lab";
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { ActionsOnMotionProps } from "../ActionsOnMotion";
 import { useIgmmKeeperExecActionOfGm } from "../../../../../../../generated";
+import { getFuelTankAddr } from "../../../../fuel_tank/ft";
 
 export function WithdrawCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
 
   const { gk, setErrMsg } = useComBooxContext();
+
+  const [ addrFT, setAddrFT ] = useState<HexType>(AddrZero);
+  useEffect (() => {
+    const getFTAddr = async () => {
+      const addr = await getFuelTankAddr();
+      setAddrFT(addr);
+    }
+    getFTAddr();
+  });
 
   const [ amt, setAmt ] = useState('0');
   const [ seqOfVR, setSeqOfVR ] = useState<string>('9');
@@ -47,7 +60,7 @@ export function WithdrawCBP({motion, setOpen, refresh}:ActionsOnMotionProps) {
       withdrawCBP({
         args: [
           BigInt(seqOfVR), 
-          [AddrOfTank],
+          [ addrFT ],
           [0n],
           [HexParser('0xbbc446ac' + strNumToBigInt(amt, 18).toString(16).padStart(64, '0'))],
           Bytes32Zero, motion.head.seqOfMotion
