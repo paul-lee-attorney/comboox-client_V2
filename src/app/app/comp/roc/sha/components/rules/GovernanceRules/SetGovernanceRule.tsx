@@ -13,7 +13,7 @@ import { getRule } from '../../../sha';
 import { AddRule } from '../AddRule';
 
 export interface GovernanceRule {
-  seqOfRule: string;
+  // seqOfRule: string;
   fundApprovalThreshold: string;
   basedOnPar: boolean ;
   proposeWeightRatioOfGM: string ;
@@ -32,7 +32,7 @@ export interface GovernanceRule {
 }
 
 const defGR: GovernanceRule = {
-  seqOfRule: '0',
+  // seqOfRule: '0',
   fundApprovalThreshold: '0',
   basedOnPar: false,
   proposeWeightRatioOfGM: '1000',
@@ -52,19 +52,19 @@ const defGR: GovernanceRule = {
 
 export function strGRParser(hexRule: HexType): GovernanceRule {
   let rule: GovernanceRule = {
-    seqOfRule: parseInt(hexRule.substring(2, 6), 16).toString(),
-    fundApprovalThreshold: parseInt(hexRule.substring(6, 14), 16).toString(),
-    basedOnPar: hexRule.substring(14, 16) === '01',
-    proposeWeightRatioOfGM: (Number(parseInt(hexRule.substring(16,20), 16)) / 100).toFixed(2).toString(),
-    proposeHeadRatioOfMembers: (Number(parseInt(hexRule.substring(20, 24), 16)) / 100).toFixed(2).toString(),
-    proposeHeadRatioOfDirectorsInGM: (Number(parseInt(hexRule.substring(24, 28), 16)) / 100).toFixed(2).toString(),
-    proposeHeadRatioOfDirectorsInBoard: (Number(parseInt(hexRule.substring(28, 32), 16)) / 100).toFixed(2).toString(),
-    maxQtyOfMembers: parseInt(hexRule.substring(32, 36), 16).toString(),
-    quorumOfGM: (Number(parseInt(hexRule.substring(36, 40), 16)) / 100).toFixed(2).toString(),
-    maxNumOfDirectors: parseInt(hexRule.substring(40, 42), 16).toString(),
-    tenureMonOfBoard: parseInt(hexRule.substring(42, 46), 16).toString(),
-    quorumOfBoardMeeting: (Number(parseInt(hexRule.substring(46, 50), 16)) / 100).toFixed(2).toString(),
-    establishedDate: parseInt(hexRule.substring(50, 58), 16),
+    // seqOfRule: parseInt(hexRule.substring(2, 6), 16).toString(),
+    fundApprovalThreshold: parseInt(hexRule.substring(2, 10), 16).toString(),
+    basedOnPar: hexRule.substring(10, 12) === '01',
+    proposeWeightRatioOfGM: (Number(parseInt(hexRule.substring(12,16), 16)) / 100).toFixed(2).toString(),
+    proposeHeadRatioOfMembers: (Number(parseInt(hexRule.substring(16, 20), 16)) / 100).toFixed(2).toString(),
+    proposeHeadRatioOfDirectorsInGM: (Number(parseInt(hexRule.substring(20, 24), 16)) / 100).toFixed(2).toString(),
+    proposeHeadRatioOfDirectorsInBoard: (Number(parseInt(hexRule.substring(24, 28), 16)) / 100).toFixed(2).toString(),
+    maxQtyOfMembers: parseInt(hexRule.substring(28, 32), 16).toString(),
+    quorumOfGM: (Number(parseInt(hexRule.substring(32, 36), 16)) / 100).toFixed(2).toString(),
+    maxNumOfDirectors: parseInt(hexRule.substring(36, 38), 16).toString(),
+    tenureMonOfBoard: parseInt(hexRule.substring(38, 42), 16).toString(),
+    quorumOfBoardMeeting: (Number(parseInt(hexRule.substring(42, 46), 16)) / 100).toFixed(2).toString(),
+    establishedDate: parseInt(hexRule.substring(46, 58), 16),
     businessTermInYears: parseInt(hexRule.substring(58, 60), 16).toString(),
     typeOfComp: parseInt(hexRule.substring(60, 62), 16).toString(),
     minVoteRatioOnChain: (Number(parseInt(hexRule.substring(62, 66), 16)) / 100).toFixed(2).toString(),    
@@ -75,7 +75,7 @@ export function strGRParser(hexRule: HexType): GovernanceRule {
 
 export function strGRCodifier(rule: GovernanceRule): HexType {
   let hexGR: HexType = `0x${
-    Number(rule.seqOfRule).toString(16).padStart(4, '0') +
+    // Number(rule.seqOfRule).toString(16).padStart(4, '0') +
     Number(rule.fundApprovalThreshold).toString(16).padStart(8, '0') +
     (rule.basedOnPar ? '01' : '00') +
     (Number(rule.proposeWeightRatioOfGM) * 100).toString(16).padStart(4, '0') +
@@ -87,7 +87,7 @@ export function strGRCodifier(rule: GovernanceRule): HexType {
     Number(rule.maxNumOfDirectors).toString(16).padStart(2, '0') +       
     Number(rule.tenureMonOfBoard).toString(16).padStart(4, '0') +       
     (Number(rule.quorumOfBoardMeeting) * 100).toString(16).padStart(4, '0') +       
-    Number(rule.establishedDate).toString(16).padStart(8, '0') + 
+    Number(rule.establishedDate).toString(16).padStart(12, '0') + 
     Number(rule.businessTermInYears).toString(16).padStart(2, '0') +                 
     Number(rule.typeOfComp).toString(16).padStart(2, '0')+                 
     (Number(rule.minVoteRatioOnChain) * 100).toString(16).padStart(4, '0')                 
