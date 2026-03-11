@@ -15,8 +15,12 @@ type WagmiProviderType = {
   children: React.ReactNode
 }
 
+const configuredNetwork = (process.env.NEXT_PUBLIC_CHAIN ?? 'arbitrumSepolia').toLowerCase();
+
+const activeChain = configuredNetwork === 'arbitrum' ? arbitrum : arbitrumSepolia;
+
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [ arbitrum, arbitrumSepolia ],
+  [ activeChain ],
   // [ hardhat ],
   [
     // jsonRpcProvider({
