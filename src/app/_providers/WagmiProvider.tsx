@@ -16,7 +16,7 @@ type WagmiProviderType = {
 }
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [ arbitrumSepolia, arbitrum ],
+  [ arbitrum, arbitrumSepolia ],
   // [ hardhat ],
   [
     // jsonRpcProvider({
