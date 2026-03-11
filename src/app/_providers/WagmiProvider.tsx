@@ -1,7 +1,5 @@
 import { createConfig, configureChains, WagmiConfig } from 'wagmi';
 
-import { hardhat, localhost, arbitrum } from 'wagmi/chains';
-
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -11,7 +9,7 @@ import { alchemyProvider } from '@wagmi/core/providers/alchemy';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { waitForTransaction } from '@wagmi/core';
 import { HexType } from '../app/common';
-import { arbitrumSepolia } from 'viem/chains';
+import { arbitrumSepolia, arbitrum } from 'viem/chains';
 
 type WagmiProviderType = {
   children: React.ReactNode
