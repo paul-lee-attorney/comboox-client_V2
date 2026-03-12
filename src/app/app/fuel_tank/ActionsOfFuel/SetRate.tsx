@@ -43,7 +43,7 @@ export function SetRate({ addrFT, refresh }: ActionOfFuelProps) {
 
   const setRateClick = ()=>{
     setNewRate({
-      args: [ strNumToBigInt(rate, 4) ]
+      args: [ strNumToBigInt(rate, 6) ]
     });
   }
 
@@ -64,7 +64,7 @@ export function SetRate({ addrFT, refresh }: ActionOfFuelProps) {
           value={ rate }
           onChange={e => {
             let input = (e.target.value ?? '0');
-            onlyNum('Rate(CBP/USD)', input, 0n, 4, setValid);
+            onlyNum('Rate(CBP/USD)', input, 0n, 6, setValid);
             setRate(input);
           }}
         />
