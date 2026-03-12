@@ -10,7 +10,8 @@ import {
 
 import { 
   useRegCenterBalanceOf, useUsdFuelTankRate, useUsdFuelTankCashier, 
-  useUsdFuelTankSum, useUsdFuelTankRc 
+  useUsdFuelTankSum, useUsdFuelTankRc, 
+  useRegCenterGetBookeeper
 } from "../../../../generated";
 
 import { useWalletClient } from "wagmi";
@@ -19,15 +20,14 @@ import { CopyLongStrSpan, CopyLongStrTF } from "../common/CopyLongStr";
 import { useComBooxContext } from "../../_providers/ComBooxContextProvider";
 import { ActionsOfFuel } from "./ActionsOfFuel";
 import { balanceOfUsd } from "../usdc";
-import { useRegCenterGetOwner } from "../../../../generated-v1";
 import { getFuelTankAddr } from "./ft";
 
 function FuelTank() {
 
   const { setErrMsg } = useComBooxContext();
 
-  const [ owner, setOwner ] = useState<HexType>(AddrZero);
-  const [ isOwner, setIsOwner ] = useState(false);
+  const [ keeper, setKeeper ] = useState<HexType>(AddrZero);
+  const [ isKeeper, setIsKeeper ] = useState(false);
   const { data: signer } = useWalletClient();
 
   const [ addrFT, setAddrFT ] = useState<HexType>(AddrZero);
@@ -40,17 +40,17 @@ function FuelTank() {
   });
 
   const {
-    refetch: getOwner
-  } = useRegCenterGetOwner ({
+    refetch: getKeeper
+  } = useRegCenterGetBookeeper ({
     address: AddrOfRegCenter,
     onError(err) {
       setErrMsg(err.message);
     },
     onSuccess(res) {
-      setOwner(res);
+      setKeeper(res);
       if (res == signer?.account.address) {
-        setIsOwner(true);
-      } else setIsOwner(false);
+        setIsKeeper(true);
+      } else setIsKeeper(false);
     },
   })
 
@@ -94,7 +94,7 @@ function FuelTank() {
   })
 
   const getSetting = ()=> {
-    getOwner();
+    getKeeper();
     getRegCenter();
     getCashier();
     getRate();
@@ -175,7 +175,7 @@ function FuelTank() {
         <thead >
           <tr>
             <td>
-              <CopyLongStrTF title='Owner' src={owner.toLowerCase() ?? '-'} />
+              <CopyLongStrTF title='Owner' src={keeper.toLowerCase() ?? '-'} />
             </td>
             <td>
               <CopyLongStrTF title='RegCenter' src={regCenter.toLowerCase() ?? '-'} />
@@ -345,7 +345,7 @@ function FuelTank() {
 
             <tr>
               <td colSpan={ 3 }>
-                <ActionsOfFuel addrFT={addrFT} user={signer.account.address} isOwner={isOwner} getFinInfo={getFinInfo} getSetting={getSetting} />
+                <ActionsOfFuel addrFT={addrFT} user={signer.account.address} isKeeper={isKeeper} getFinInfo={getFinInfo} getSetting={getSetting} />
               </td>
             </tr>
           </tbody>

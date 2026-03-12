@@ -19,7 +19,7 @@ import { WithdrawFuel } from "./ActionsOfFuel/WithdrawIncome";
 export interface ActionsOfFuelProps{
   addrFT: HexType;
   user: HexType;
-  isOwner: boolean;
+  isKeeper: boolean;
   getFinInfo: ()=>void;
   getSetting: ()=>void;
 }
@@ -29,7 +29,7 @@ export interface ActionOfFuelProps{
   refresh: ()=>void;
 }
 
-export function ActionsOfFuel({ addrFT, user, isOwner, getFinInfo, getSetting }: ActionsOfFuelProps) {
+export function ActionsOfFuel({ addrFT, user, isKeeper, getFinInfo, getSetting }: ActionsOfFuelProps) {
 
   const [ typeOfAction, setTypeOfAction ] = useState<string>('');
   
@@ -63,7 +63,7 @@ export function ActionsOfFuel({ addrFT, user, isOwner, getFinInfo, getSetting }:
           >
             {actionsOfUser.map((v, i) => {
               if (i==0 && user == AddrZero) return null;
-              if (i>0 && !isOwner) return null;
+              if (i>0 && !isKeeper) return null;
               return (<MenuItem key={ v } value={ i } > <b>{v}</b> </MenuItem>);
             })}
           </Select>
@@ -73,7 +73,7 @@ export function ActionsOfFuel({ addrFT, user, isOwner, getFinInfo, getSetting }:
 
       { compsOfAction.map((v,i)=>{
         if (i==0 && user == AddrZero) return null;
-        if (i>0 && !isOwner) return null;
+        if (i>0 && !isKeeper) return null;
 
         return (
           <Collapse key={i} in={ typeOfAction == i.toString() } >
