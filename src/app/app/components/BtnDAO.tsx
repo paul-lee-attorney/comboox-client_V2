@@ -13,7 +13,7 @@ import { getCompInfo } from "../comp/gk";
 
 export function BtnDAO() {
 
-  const { gk, setGK, setBoox, setCompInfo } = useComBooxContext();
+  const { setGK, setBoox, setCompInfo } = useComBooxContext();
 
   const addrOfDAO = process.env.NEXT_PUBLIC_DAO_ADDR;
 
@@ -34,7 +34,7 @@ export function BtnDAO() {
 
   return (
     <>
-    {gk && (
+    {addrOfDAO && (
 
       <Tooltip 
         title='ComBoox DAO'
