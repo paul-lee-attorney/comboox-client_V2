@@ -6,7 +6,7 @@ import { Alert, Button, IconButton, Stack, TextField } from '@mui/material';
 import { Close, DriveFileMove, Search } from '@mui/icons-material';
 
 import { MaxUserNo } from '../common';
-import { FormResults, HexParser, defFormResults, getTypeByName, hasError, hexToBigInt, onlyHex, onlyInt, userNoCodifier, userNoParser } from '../common/toolsKit';
+import { FormResults, HexParser, defFormResults, getTypeByName, hasError, hexToBigInt, onlyHex, userNoParser } from '../common/toolsKit';
 import Link from 'next/link';
 import { Doc, getDocByUserNo, getHeadByBody, HeadOfDoc } from '../rc';
 
@@ -123,7 +123,7 @@ export function GetComp() {
         
         <Link
           href={{
-            pathname: regNum == '8' ? `/app/compV1` : '/app/comp',
+            pathname: '/app/comp',
           }}
         >
           <Button variant='outlined' sx={{m:1, width: 488, height:40}} endIcon={<DriveFileMove />} >

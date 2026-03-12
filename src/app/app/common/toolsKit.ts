@@ -496,5 +496,6 @@ export function userNoCodifier(userNo: string) {
 }
 
 export function hexToBigInt(hex:string) {
-  return BigInt(`0x${hex.padStart(64,'0')}`);
+  const normalized = hex.trim().replace(/^0x/i, '');
+  return BigInt(`0x${normalized === '' ? '0' : normalized}`);
 }

@@ -7,6 +7,7 @@ import Image from "next/image"
 import Logo from '/public/assets/ComBoox_FullSlogan.png';
 import { CreateComp } from "./components/CreateComp";
 import { GetComp } from "./components/GetComp";
+import { BtnDAO } from "./components/BtnDAO";
 
 function FrontPage() {
 
@@ -15,7 +16,9 @@ function FrontPage() {
 
       <br/>
 
-      <Image src={ Logo } alt='ComBoox Logo' />
+      {/* <Image src={ Logo } alt='ComBoox Logo' /> */}
+
+      <BtnDAO />
 
       <Typography variant='h4' sx={{mt:5, mb:9}} >
         <b>A Company Book-Entry Platform On Blockchain</b>
