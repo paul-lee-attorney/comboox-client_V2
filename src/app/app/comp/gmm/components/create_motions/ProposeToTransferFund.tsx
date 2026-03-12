@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import { AddrZero, HexType, MaxSeqNo, MaxUserNo } from "../../../../common";
+import { AddrZero, HexType, MaxSeqNo } from "../../../../common";
 
 import { useIgmmKeeperProposeToTransferFundWithGm } from "../../../../../../../generated";
 
@@ -69,7 +69,7 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
       proposeToTransferFund({
         args: [
           paras.to, 
-          typeOfCurrency == typeOfCurrency,
+          typeOfCurrency == 1,
           strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
           BigInt(paras.expireDate), 
           BigInt(seqOfVR),
