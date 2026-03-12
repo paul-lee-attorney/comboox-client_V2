@@ -3,7 +3,7 @@ import { Paper, Stack, TextField } from '@mui/material';
 
 import { useUsdFuelTankSetRate } from '../../../../../generated';
 
-import { AddrOfTank, HexType } from '../../common';
+import { HexType } from '../../common';
 import { Settings } from '@mui/icons-material';
 import { useState } from 'react';
 import { FormResults, defFormResults, hasError, onlyNum, refreshAfterTx, strNumToBigInt } from '../../common/toolsKit';
@@ -54,9 +54,9 @@ export function SetRate({ addrFT, refresh }: ActionOfFuelProps) {
       <TextField 
           size="small"
           variant='outlined'
-          label='Rate (CBP/ETH)'
-          error={ valid['Rate(CBP/ETH)']?.error }
-          helperText={ valid['Rate(CBP/ETH)']?.helpTx ?? ' ' }                                  
+          label='Rate (CBP/USD)'
+          error={ valid['Rate(CBP/USD)']?.error }
+          helperText={ valid['Rate(CBP/USD)']?.helpTx ?? ' ' }                                  
           sx={{
             m:1,
             minWidth: 218,
@@ -64,7 +64,7 @@ export function SetRate({ addrFT, refresh }: ActionOfFuelProps) {
           value={ rate }
           onChange={e => {
             let input = (e.target.value ?? '0');
-            onlyNum('Rate(CBP/ETH)', input, 0n, 4, setValid);
+            onlyNum('Rate(CBP/USD)', input, 0n, 4, setValid);
             setRate(input);
           }}
         />
