@@ -11,7 +11,8 @@ import {
 import { 
   useRegCenterBalanceOf, useUsdFuelTankRate, useUsdFuelTankCashier, 
   useUsdFuelTankSum, useUsdFuelTankRc, 
-  useRegCenterGetBookeeper
+  useRegCenterGetBookeeper,
+  useRegCenterGetOwner
 } from "../../../../generated";
 
 import { useWalletClient } from "wagmi";
@@ -26,8 +27,23 @@ function FuelTank() {
 
   const { setErrMsg } = useComBooxContext();
 
+  const [ owner, setOwner ] = useState<HexType>(AddrZero);
+  const {
+    refetch: getOwner
+  } = useRegCenterGetOwner ({
+    address: AddrOfRegCenter,
+    onError(err) {
+      setErrMsg(err.message);
+    },
+    onSuccess(res) {
+      setOwner(res);
+    },
+  })
+
+
   const [ keeper, setKeeper ] = useState<HexType>(AddrZero);
   const [ isKeeper, setIsKeeper ] = useState(false);
+
   const { data: signer } = useWalletClient();
 
   const [ addrFT, setAddrFT ] = useState<HexType>(AddrZero);
@@ -94,6 +110,7 @@ function FuelTank() {
   })
 
   const getSetting = ()=> {
+    getOwner();
     getKeeper();
     getRegCenter();
     getCashier();
@@ -175,7 +192,7 @@ function FuelTank() {
         <thead >
           <tr>
             <td>
-              <CopyLongStrTF title='Owner' src={keeper.toLowerCase() ?? '-'} />
+              <CopyLongStrTF title='Owner' src={owner.toLowerCase() ?? '-'} />
             </td>
             <td>
               <CopyLongStrTF title='RegCenter' src={regCenter.toLowerCase() ?? '-'} />

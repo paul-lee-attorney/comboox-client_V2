@@ -15,6 +15,7 @@ import { FillTank } from "./ActionsOfFuel/FillTank";
 import { SetRate } from "./ActionsOfFuel/SetRate";
 import { Refuel } from "./ActionsOfFuel/Refuel";
 import { WithdrawFuel } from "./ActionsOfFuel/WithdrawIncome";
+import { SetCashier } from "./ActionsOfFuel/SetCashier";
 
 export interface ActionsOfFuelProps{
   addrFT: HexType;
@@ -34,7 +35,7 @@ export function ActionsOfFuel({ addrFT, user, isKeeper, getFinInfo, getSetting }
   const [ typeOfAction, setTypeOfAction ] = useState<string>('');
   
   const actionsOfUser = [
-    'Refuel', 'Fill Tank', 'Withdraw Fuel', 'Set Rate', 'Set Owner',
+    'Refuel', 'FillTank', 'WithdrawFuel', 'SetRate', 'SetCashier'
   ]
 
   const compsOfAction = [
@@ -42,6 +43,7 @@ export function ActionsOfFuel({ addrFT, user, isKeeper, getFinInfo, getSetting }
     <FillTank key={1} refresh={ getFinInfo } addrFT={ addrFT } />,
     <WithdrawFuel key={2} refresh={ getFinInfo } addrFT={ addrFT } />,
     <SetRate key={3} refresh={ getSetting } addrFT={ addrFT } />,
+    <SetCashier key={4} refresh={ getSetting } addrFT={ addrFT } />,
    ]
 
   return( 
