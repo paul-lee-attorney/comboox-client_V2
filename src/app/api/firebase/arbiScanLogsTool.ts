@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { decodeEventLog, Hex, keccak256, Log, parseAbiItem, toHex} from 'viem';
 import { db } from './firebase';
 import { delay, HexParser } from '../../app/common/toolsKit';
-
+import menu from '../../app/comp/components/FinStatement/data/menuOfLogs.json';
 export interface ArbiscanLog extends Omit<Log, 'blockNumber'|'logIndex'|'transactionIndex'> {
   timeStamp: string;          // 时间戳的十六进制表示
   gasPrice: string;           // Gas价格的十六进制值
@@ -357,21 +357,21 @@ export async function setLogs(
 
 export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promise<boolean> {
 
-    let menu = await getMenuOfLogs(gk);
+    let list = chainId == 42161 ? menu.arbi : menu.sepo;
 
-    if (!menu) return false;
+    if (!list) return false;
 
-    let len = menu.length;
+    let len = list.length;
 
     while (len > 0) {
-        let info = menu[len-1];
+        let info = list[len-1];
 
-        let fromBlk = await getTopBlkOf(gk, info.address);
+        let fromBlk = await getTopBlkOf(gk, HexParser(info.address));
 
         if (fromBlk == 1n || fromBlk >= toBlk) return false;
         else fromBlk++;
 
-        let data = await fetchArbiscanData(chainId, info.address, fromBlk, toBlk);
+        let data = await fetchArbiscanData(chainId, HexParser(info.address), fromBlk, toBlk);
         
         if (data) {
             let logs = data.result;
@@ -389,7 +389,7 @@ export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promi
                     });
 
                     if (events.length > 0) {
-                        let flag = await setLogs(gk, info.title, info.address, name, events);   
+                        let flag = await setLogs(gk, info.title, HexParser(info.address), name, events);   
                         if (flag) console.log('appended', events.length, ' events of ', name);
                         else return false;
                     }
@@ -398,7 +398,7 @@ export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promi
                 }
             }
 
-           let flag = await setTopBlkOf(gk, info.address, toBlk);
+           let flag = await setTopBlkOf(gk, HexParser(info.address), toBlk);
            if (!flag) return false;
             
         }

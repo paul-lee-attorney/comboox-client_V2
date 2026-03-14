@@ -5,7 +5,7 @@ import { Paper, TextField, Stack, Grid, Typography } from "@mui/material";
 import { useComBooxContext } from "../../../_providers/ComBooxContextProvider";
 
 import { AddrZero, booxMap, currencies } from "../../common";
-import { baseToDollar, dateParser, longSnParser, userNoParser 
+import { baseToDollar, dateParser, userNoParser 
 } from "../../common/toolsKit";
 import { CopyLongStrTF } from "../../common/CopyLongStr";
 
@@ -24,11 +24,30 @@ import { ConfigSetting } from "./config_setting/ConfigSetting";
 import { usePublicClient } from "wagmi";
 import { HistoryOfBoox } from "./GeneralInfo/HistoryOfBoox";
 import { CashBox } from "./GeneralInfo/CashBox";
+import { FinStatement } from "./FinStatement";
+import { autoUpdateLogs } from "../../../api/firebase/arbiScanLogsTool";
 
 export function GeneralInfo() {
   const { gk, boox } = useComBooxContext();
 
   const client = usePublicClient();
+
+  const [ logsReady, setLogsReady ] = useState(false);
+
+  useEffect(()=>{
+
+    const updateLogs = async ()=>{
+      if (!gk) return;
+      const blk = await client.getBlock();
+      let chainId = await client.getChainId();
+      let flag = await autoUpdateLogs(chainId, gk, blk.number);
+      if (flag) setLogsReady(true);
+
+    }
+
+    updateLogs();
+
+  }, [gk, client]);
 
   const [ time, setTime ] = useState<number>(0);
 
@@ -278,6 +297,10 @@ export function GeneralInfo() {
         </Grid>
 
         <CashBox />
+
+        {gk == process.env.NEXT_PUBLIC_DAO_ADDR && logsReady && (
+          <FinStatement />
+        )}
 
       </Paper>
     </>
