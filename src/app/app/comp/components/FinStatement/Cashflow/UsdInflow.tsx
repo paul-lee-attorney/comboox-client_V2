@@ -8,7 +8,7 @@ import { getFinData, getTopBlkOf, setFinData, } from "../../../../../api/firebas
 import { registerOfSharesABI } from "../../../../../../../generated-v1";
 import { getShare, parseSnOfShare } from "../../../ros/ros";
 import { addrToUint } from "../../../../common/toolsKit";
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, fetchArbiscanData, getNewLogs, } from "../../../../../api/firebase/arbiScanLogsTool";
 import { ethers } from "ethers";
 import { iromKeeperABI } from "../../../../../../../generated";
 
@@ -100,6 +100,8 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       const cashier = boox[booxMap.Cashier];
       const ros = boox[booxMap.ROS];
 
+      const chainId = await client.getChainId();
+
       let logs = await getFinData(gk, 'usdInflow');
 
       const toBlkNum = await client.getBlockNumber();
@@ -146,14 +148,14 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       }
 
       let rawLogs = await getNewLogs(gk, 'Cashier', cashier, 'ReceiveUsd', fromBlkNum);
-
-      let abiStr = 'event ReceiveUsd(address indexed from, uint indexed amt)';
+      let abiStr = 'event ReceiveUsd(address indexed from, uint indexed amt, bytes32 indexed remark)';
 
       type TypeOfReceiveUsdLog = ArbiscanLog & {
         eventName: string, 
         args: {
           from: Hex,
-          amt: bigint
+          amt: bigint,
+          remark: Hex,
         }
       }
 
@@ -322,8 +324,8 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         });
 
         let rosLog = receipt.logs
-          .filter(v => v.address === ros.toLowerCase())
-          .map(v => {
+          .filter((v:any) => v.address === ros.toLowerCase())
+          .map((v:any) => {
             try {
               return decodeEventLog({
                 abi: registerOfSharesABI,
@@ -335,7 +337,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
               return null;
             }
           }).filter(Boolean)
-          .find(v => v && v.eventName == 'IssueShare' &&
+          .find((v:any) => v && v.eventName == 'IssueShare' &&
             v.args.paid * BigInt(parseSnOfShare(
               v.args.shareNumber
             ).priceOfPaid) / 100n === log.args.amt
@@ -380,8 +382,8 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         });
 
         let rosLog = receipt.logs
-          .filter(v => v.address === ros.toLowerCase())
-          .map(v => {
+          .filter((v:any) => v.address === ros.toLowerCase())
+          .map((v:any) => {
             try {
               return decodeEventLog({
                 abi: registerOfSharesABI,
@@ -393,7 +395,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
               return null;
             }
           }).filter(Boolean)
-          .find(v => v && v.eventName == 'IssueShare' &&
+          .find((v:any) => v && v.eventName == 'IssueShare' &&
             v.args.paid * BigInt(parseSnOfShare(
               v.args.shareNumber
             ).priceOfPaid) / 100n === log.args.amt
@@ -408,27 +410,80 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         cnt++;
       }
 
-      console.log('arr in usdInflow:', arr);
+      const migrateBlk = 441062046n;
 
-      if (arr.length > 0) {
-        
-        arr = arr.sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
-        arr = arr.map((v, i) => ({...v, seq: i}));
-        console.log('add arr into usdInflow:', arr);
+      if (fromBlkNum < migrateBlk) {
 
-        await setFinData(gk, 'usdInflow', arr, toBlkNum);
-        
-        if (logs) {
-          logs = logs.concat(arr);
-        } else {
-          logs = arr;
+        let migrateLogs = await fetchArbiscanData(chainId, boox[booxMap.USDC], migrateBlk, migrateBlk);
+        abiStr = 'event Transfer(address indexed from, address indexed to, uint256 value)';
+
+        type TypeOfMigrateUsdLog = ArbiscanLog & {
+          eventName: string, 
+          args: {
+            from: Hex,
+            to: Hex,
+            value: bigint
+          }
         }
-      } 
+
+        if (migrateLogs) {
+
+          let migrateUsdLogs = migrateLogs.result.map(log => decodeArbiscanLog(log, abiStr) as TypeOfMigrateUsdLog);
+
+          migrateUsdLogs = migrateUsdLogs.filter(v => 
+            v.args.from.toLowerCase() == gk.toLowerCase() && 
+            v.args.to.toLowerCase() == cashier.toLowerCase());
+
+          console.log('migrateUsdLogs: ', migrateUsdLogs);
+
+          len = migrateUsdLogs.length;
+          cnt = 0;
+
+          while (cnt < len) {
+
+            let log = migrateUsdLogs[cnt];
+
+            let item:Cashflow = { ...defaultCashflow,
+              seq: 0,
+              blockNumber: BigInt(log.blockNumber),
+              timestamp: Number(log.timeStamp),
+              transactionHash: log.transactionHash ?? Bytes32Zero,
+              typeOfIncome: 'MigrateUSDC',
+              amt: log.args.value ?? 0n,
+              ethPrice: addrToUint(log.args.from),
+              usd: log.args.value ?? 0n,
+              addr: log.args.from,
+              acct: 0n,
+            };
+
+            arr.push(item);
+            cnt++;
+          }
+
+        }
+
+        console.log('arr in usdInflow:', arr);
+
+        if (arr.length > 0) {
+          
+          arr = arr.sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
+          arr = arr.map((v, i) => ({...v, seq: i}));
+          console.log('add arr into usdInflow:', arr);
+
+          await setFinData(gk, 'usdInflow', arr, toBlkNum);
+          
+          if (logs) {
+            logs = logs.concat(arr);
+          } else {
+            logs = arr;
+          }
+        } 
       
-      if (logs && logs.length > 0) {
-        logs = logs.map((v,i) => ({...v, seq:i}));
-        setRecords(logs);
-        console.log('logs in usdInflow:', logs);
+        if (logs && logs.length > 0) {
+          logs = logs.map((v,i) => ({...v, seq:i}));
+          setRecords(logs);
+          console.log('logs in usdInflow:', logs);
+        }
       }
     }
 
