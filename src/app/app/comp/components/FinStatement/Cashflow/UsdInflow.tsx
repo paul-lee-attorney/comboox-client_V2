@@ -177,8 +177,8 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
           hash: log.transactionHash ?? Bytes32Zero
         });
 
-        let usdRomKeeperLog = receipt.logs
-          .filter(v => v.address === gk.toLowerCase())
+        let usdRomKeeperLog = receipt?.logs
+          .filter(v => v.address.toLowerCase() == gk.toLowerCase())
           .map(v => {
             try {
               return decodeEventLog({
@@ -218,7 +218,10 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       }
 
       let gasIncomeUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
-      gasIncomeUsdLogs = gasIncomeUsdLogs.filter(v => ethers.decodeBytes32String(v.args.remark) == "CollectUSDCForRefuelCBP");
+
+      if (gasIncomeUsdLogs) {
+        gasIncomeUsdLogs = gasIncomeUsdLogs.filter(v => ethers.decodeBytes32String(v.args.remark) == "CollectUSDCForRefuelCBP");
+      }
 
       console.log('gasIncomeUsdLogs: ', gasIncomeUsdLogs);
 
@@ -243,10 +246,14 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         };
 
         arr.push(item);
+        cnt++;
       }
 
       let upgradeLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
-      upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+
+      if (upgradeLogs) {
+        upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+      }
 
       console.log('upgradeLogs: ', upgradeLogs);
 
@@ -271,6 +278,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         };
 
         arr.push(item);
+        cnt++;
       }
 
       rawLogs = await getNewLogs(gk, 'Cashier', cashier, 'ReleaseUsd', fromBlkNum);
@@ -288,7 +296,10 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       }
 
       let releaseUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
-      releaseUsdLogs = releaseUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
+
+      if (releaseUsdLogs) {
+        releaseUsdLogs = releaseUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
+      }
 
       console.log('releaseUsdLogs: ', releaseUsdLogs);
 
@@ -344,7 +355,9 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       abiStr = 'event ForwardUsd(address indexed from, address indexed to, uint indexed amt, bytes32 remark)';
 
       let forwardUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
-      releaseUsdLogs = releaseUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
+      if (forwardUsdLogs) {
+        forwardUsdLogs = forwardUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
+      }
 
       console.log('forwardUsdLogs: ', forwardUsdLogs);
 

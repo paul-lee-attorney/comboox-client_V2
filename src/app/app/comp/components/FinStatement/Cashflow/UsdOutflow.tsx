@@ -153,7 +153,9 @@ export function UsdOutflow({setRecords}:CashflowRecordsProps) {
       }
 
       let upgradeLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
-      upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+      if (upgradeLogs) {
+        upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+      }
 
       console.log('upgradeLogs: ', upgradeLogs);
 
@@ -178,6 +180,8 @@ export function UsdOutflow({setRecords}:CashflowRecordsProps) {
         };
 
         arr.push(item);
+        
+        cnt++;
       }
 
       rawLogs = await getNewLogs(gk, 'Cashier', cashier, 'DistributeUsd', fromBlkNum);

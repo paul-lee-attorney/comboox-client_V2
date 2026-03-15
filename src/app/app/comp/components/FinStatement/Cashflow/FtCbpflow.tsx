@@ -199,7 +199,7 @@ export function FtCbpflow({setRecords}:CashflowRecordsProps ) {
       let deprecateLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
       deprecateLogs = deprecateLogs?.filter((v) => 
-          v.args.from.toLowerCase() == `0x${'FE8b7e87bb5431793d2a98D3b8ae796796403fA7'}`.toLowerCase() &&
+          v.args.from?.toLowerCase() == `0xFE8b7e87bb5431793d2a98D3b8ae796796403fA7`.toLowerCase() &&
           v.args.to?.toLowerCase() == gk.toLowerCase()
       );
     
