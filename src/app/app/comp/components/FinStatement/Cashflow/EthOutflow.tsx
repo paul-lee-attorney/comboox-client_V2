@@ -141,7 +141,7 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let gmmExpenseLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
+      let gmmExpenseLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
       console.log('gmmEthExpLogs: ', gmmExpenseLogs);
       
       let len = gmmExpenseLogs.length;
@@ -173,7 +173,7 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
 
       rawLogs = await getNewLogs(gk, 'BMMKeeper', gk, 'ExecAction', fromBlkNum);
 
-      let bmmExpenseLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
+      let bmmExpenseLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
       console.log('bmmEthExpLogs: ', bmmExpenseLogs);
 
       len = bmmExpenseLogs.length;

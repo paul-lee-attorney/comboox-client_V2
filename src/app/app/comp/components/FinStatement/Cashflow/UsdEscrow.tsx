@@ -133,7 +133,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let forwardUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
+      let forwardUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
       console.log('forwardUsdLogs: ', forwardUsdLogs);
 
       let len = forwardUsdLogs.length;
@@ -164,7 +164,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
 
       abiStr = 'event ReleaseUsd(address indexed from, address indexed to, uint256 indexed amt, bytes32 remark)';
 
-      let releaseUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
+      let releaseUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
       console.log('releaseUsdLogs: ', releaseUsdLogs);
 
       len = releaseUsdLogs.length;
@@ -195,7 +195,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
 
       abiStr = 'event CustodyUsd(address indexed from, address indexed to, uint indexed amt, bytes32 remark)';
 
-      let custodyUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
+      let custodyUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfCashierLog);
 
       console.log('custodyUsdLogs: ', custodyUsdLogs);
 
@@ -237,7 +237,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let distributeUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistrProfitsLog);
+      let distributeUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistrProfitsLog);
 
       console.log('distributeUsdLogs: ', distributeUsdLogs);
 
@@ -280,7 +280,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let distrIncomeLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistrIncomeLog);
+      let distrIncomeLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistrIncomeLog);
 
       console.log('distrIncomeLogs: ', distrIncomeLogs);
 
@@ -322,7 +322,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let pickupUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfPickupUsdLog);
+      let pickupUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfPickupUsdLog);
 
       console.log('pickupUsdLogs: ', pickupUsdLogs);
 

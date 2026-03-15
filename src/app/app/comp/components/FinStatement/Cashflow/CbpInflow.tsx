@@ -166,7 +166,7 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let transferLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let transferLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
       transferLogs = transferLogs?.filter((v) => 
           v.args.to.toLowerCase() == gk.toLowerCase() &&

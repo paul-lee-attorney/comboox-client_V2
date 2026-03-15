@@ -160,7 +160,7 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let rcTransferLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let rcTransferLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
       let newUserAwardLogs = rcTransferLogs?.filter(v => 
         v.args.from.toLowerCase() == AddrZero &&
@@ -254,7 +254,7 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let fuelSoldLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
+      let fuelSoldLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
 
       console.log('fuelSoldLogs: ', fuelSoldLogs);
     

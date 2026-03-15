@@ -153,7 +153,7 @@ export function FtCbpflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let addCbpLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let addCbpLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
       addCbpLogs = addCbpLogs?.filter((v) => 
           v.args.from.toLowerCase() == gk.toLowerCase() &&
@@ -196,7 +196,7 @@ export function FtCbpflow({setRecords}:CashflowRecordsProps ) {
         cnt++;
       }
 
-      let deprecateLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let deprecateLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
       deprecateLogs = deprecateLogs?.filter((v) => 
           v.args.from?.toLowerCase() == `0xFE8b7e87bb5431793d2a98D3b8ae796796403fA7`.toLowerCase() &&
@@ -251,7 +251,7 @@ export function FtCbpflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let withdrawCbpLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfWithdrawFuelLog);
+      let withdrawCbpLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfWithdrawFuelLog);
 
       console.log('withdrawCbpLogs: ', withdrawCbpLogs);
 
@@ -304,7 +304,7 @@ export function FtCbpflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let refuelLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
+      let refuelLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
 
       console.log('refuelLogs: ', refuelLogs);
 

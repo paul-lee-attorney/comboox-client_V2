@@ -159,7 +159,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let payInCapLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfReceiveUsdLog);
+      let payInCapLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfReceiveUsdLog);
       console.log('payInCapLogs: ', payInCapLogs);
 
       let len = payInCapLogs.length;
@@ -181,7 +181,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
         let usdRomKeeperLog = receipt?.logs
           .filter(v => v.address.toLowerCase() == gk.toLowerCase())
-          .map(v => {
+          ?.map(v => {
             try {
               return decodeEventLog({
                 abi: iromKeeperABI,
@@ -219,7 +219,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let gasIncomeUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
+      let gasIncomeUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
 
       if (gasIncomeUsdLogs) {
         gasIncomeUsdLogs = gasIncomeUsdLogs.filter(v => ethers.decodeBytes32String(v.args.remark) == "CollectUSDCForRefuelCBP");
@@ -251,7 +251,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         cnt++;
       }
 
-      let upgradeLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
+      let upgradeLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
 
       if (upgradeLogs) {
         upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
@@ -297,7 +297,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let releaseUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
+      let releaseUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
 
       if (releaseUsdLogs) {
         releaseUsdLogs = releaseUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
@@ -325,7 +325,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
         let rosLog = receipt.logs
           .filter((v:any) => v.address === ros.toLowerCase())
-          .map((v:any) => {
+          ?.map((v:any) => {
             try {
               return decodeEventLog({
                 abi: registerOfSharesABI,
@@ -356,7 +356,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
       abiStr = 'event ForwardUsd(address indexed from, address indexed to, uint indexed amt, bytes32 remark)';
 
-      let forwardUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
+      let forwardUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfUsdLog);
       if (forwardUsdLogs) {
         forwardUsdLogs = forwardUsdLogs.filter(v => v.args.to.toLowerCase() == cashier.toLowerCase());
       }
@@ -383,7 +383,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
         let rosLog = receipt.logs
           .filter((v:any) => v.address === ros.toLowerCase())
-          .map((v:any) => {
+          ?.map((v:any) => {
             try {
               return decodeEventLog({
                 abi: registerOfSharesABI,
@@ -428,7 +428,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
         if (migrateLogs) {
 
-          let migrateUsdLogs = migrateLogs.result.map(log => decodeArbiscanLog(log, abiStr) as TypeOfMigrateUsdLog);
+          let migrateUsdLogs = migrateLogs.result?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfMigrateUsdLog);
 
           migrateUsdLogs = migrateUsdLogs.filter(v => 
             v.args.from.toLowerCase() == gk.toLowerCase() && 
