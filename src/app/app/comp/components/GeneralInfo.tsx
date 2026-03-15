@@ -298,7 +298,7 @@ export function GeneralInfo() {
 
         <CashBox />
 
-        {gk == process.env.NEXT_PUBLIC_DAO_ADDR && logsReady && (
+        {gk?.toLowerCase() == process.env.NEXT_PUBLIC_DAO_ADDR?.toLowerCase() && logsReady && (
           <FinStatement />
         )}
 
