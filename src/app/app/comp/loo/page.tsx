@@ -19,7 +19,11 @@ import { BillOfDeal } from "./components/BillOfDeal";
 import { DealsChart } from "./components/DealsChart";
 import { SetBookAddr } from "../../components/SetBookAddr";
 import { Deal, dealParser, DealProps, defaultOrder, getOrders, Order } from "./loo";
-import { ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, getAllLogs, getTopBlkOf, setLogs, setTopBlkOf, upsertMenuOfLogs } from "../../../api/firebase/arbiScanLogsTool";
+
+import { 
+  ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, 
+  getAllLogs, getTopBlkAtAddressNode, setLogs, setTopBlkAtAddressNode, upsertMenuOfLogs 
+} from "../../../api/firebase/arbiScanLogsTool";
 
 import { Hex, keccak256, toHex } from "viem";
 
@@ -56,17 +60,19 @@ function UsdListOfOrders() {
 
   const updateDealClosedLogs = async ()=>{
     if (!gk || !addr) return;
-    const blk = await client.getBlock();
-    const toBlk = blk.number;
-    let chainId = await client.getChainId();
-    let loo = addr;
 
-    let fromBlk = await getTopBlkOf(gk, loo);
+    let chainId = await client.getChainId();
+
+    const toBlk = await client.getBlockNumber();
+    console.log('toBlk of LOO: ', toBlk);
+
+    let fromBlk = await getTopBlkAtAddressNode(gk, 'ListOfOrders', addr);
+    console.log('fromBlk of LOO: ', fromBlk);
 
     if (fromBlk == 1n || fromBlk >= toBlk) return false;
     else fromBlk++;
 
-    let data = await fetchArbiscanData(chainId, loo, fromBlk, toBlk);
+    let data = await fetchArbiscanData(chainId, addr, fromBlk, toBlk);
       
     if (data) {
       let logs = data.result;
@@ -75,20 +81,18 @@ function UsdListOfOrders() {
         let name = "DealClosed";
         let topic0 = keccak256(toHex("DealClosed(bytes32,bytes32,bytes32,uint256)"));
         
-        let events = logs.filter((v) => {
-          return v.topics[0]?.toLowerCase() == topic0.toLowerCase();
-        });
+        let events = logs.filter((v) => v.topics[0]?.toLowerCase() == topic0.toLowerCase());
 
         if (events.length > 0) {
-            let flag = await setLogs(gk, 'LOO', loo, "DealClosed", events);   
+            let flag = await setLogs(gk, 'ListOfOrders', addr, "DealClosed", events);
             if (flag) console.log('appended', events.length, ' events of ', name);
             else return false;
         }
       }
+     
+      let flag = await setTopBlkAtAddressNode(gk, 'ListOfOrders', addr, toBlk);
+      if (!flag) return false;
     }
-
-    let flag = await setTopBlkOf(gk, loo, toBlk);
-    if (!flag) return false;
   }
 
   const [ time, setTime ] = useState<number>(0);

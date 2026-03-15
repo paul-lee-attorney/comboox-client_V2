@@ -18,10 +18,10 @@ import { usePublicClient } from "wagmi";
 
 import { 
   ArbiscanLog, autoUpdateLogs, decodeArbiscanLog, fetchArbiscanData, 
-  getAllLogs, getTopBlkOf, setLogs, setTopBlkOf, upsertMenuOfLogs 
+  getAllLogs, getTopBlkAtAddressNode, setLogs, setTopBlkAtAddressNode, upsertMenuOfLogs 
 } from "../../../api/firebase/arbiScanLogsTool";
 
-import { Hex, keccak256, toHex } from "viem";
+import { keccak256, toHex } from "viem";
 
 function RegisterOfRedemptions() {
 
@@ -35,17 +35,19 @@ function RegisterOfRedemptions() {
 
   const updateRedeemedLogs = async ()=>{
     if (!gk || !addr) return;
-    const blk = await client.getBlock();
-    const toBlk = blk.number;
-    let chainId = await client.getChainId();
-    let ror = addr;
 
-    let fromBlk = await getTopBlkOf(gk, ror);
+    let chainId = await client.getChainId();
+
+    const toBlk = await client.getBlockNumber();
+    console.log('toBlk of ROR: ', toBlk);
+
+    let fromBlk = await getTopBlkAtAddressNode(gk, 'RegisterOfRedemptions', addr);
+    console.log('fromBlk of ROR: ', fromBlk);
 
     if (fromBlk == 1n || fromBlk >= toBlk) return false;
     else fromBlk++;
 
-    let data = await fetchArbiscanData(chainId, ror, fromBlk, toBlk);
+    let data = await fetchArbiscanData(chainId, addr, fromBlk, toBlk);
       
     if (data) {
       let logs = data.result;
@@ -54,39 +56,37 @@ function RegisterOfRedemptions() {
 
         // ---- Redeemed Pack ----
 
-        let name = "RedeemedPack";
-        let topic0 = keccak256(toHex("RedeemedPack(bytes32)"));
+        let name = "RedeemClass";
+        let topic0 = keccak256(toHex("RedeemClass(uint256,uint256,uint256)"));
         
         let events = logs.filter((v) => {
           return v.topics[0]?.toLowerCase() == topic0.toLowerCase();
         });
 
         if (events.length > 0) {
-            let flag = await setLogs(gk, 'ROR', ror, "RedeemedPack", events);   
+            let flag = await setLogs(gk, 'RegisterOfRedemptions', addr, "RedeemClass", events);
             if (flag) console.log('appended', events.length, ' events of ', name);
             else return false;
         }
 
         // ---- Redeemed Share ----
 
-        name = "RedeemedShare";
-        topic0 = keccak256(toHex("RedeemedShare(bytes32)"));
+        name = "RedeemShare";
+        topic0 = keccak256(toHex("RedeemShare(uint256,uint256,uint256,uint256,uint256)"));
         
-        events = logs.filter((v) => {
-          return v.topics[0]?.toLowerCase() == topic0.toLowerCase();
-        });
+        events = logs.filter((v) => v.topics[0]?.toLowerCase() == topic0.toLowerCase());
 
         if (events.length > 0) {
-            let flag = await setLogs(gk, 'ROR', ror, "RedeemedShare", events);   
+            let flag = await setLogs(gk, 'RegisterOfRedemptions', addr, "RedeemShare", events);   
             if (flag) console.log('appended', events.length, ' events of ', name);
             else return false;
         }
-
       }
+
+      let flag = await setTopBlkAtAddressNode(gk, 'RegisterOfRedemptions', addr, toBlk);
+      if (!flag) return false;
     }
 
-    let flag = await setTopBlkOf(gk, ror, toBlk);
-    if (!flag) return false;
   }
 
   const refresh = ()=>{
@@ -137,13 +137,17 @@ function RegisterOfRedemptions() {
 
       if (!gk || addr.toLowerCase() == AddrZero.toLowerCase()) return;
 
-      let rawLogs = await getAllLogs(gk, 'ROR', addr, 'RedeemedPack');
+      let rawLogs = await getAllLogs(gk, 'RegisterOfRedemptions', addr, 'RedeemClass');
 
-      let abiStr = 'event RedeemedPack(bytes32 indexed sn)';
+      let abiStr = 'event RedeemClass(uint indexed class, uint indexed sumOfPaid, uint indexed totalValue)';
 
       type TypeOfRedeemedPackLog = ArbiscanLog & {
-        eventName: string, 
-        args: {sn: Hex}
+        eventName: string,
+        args: {
+          class: number, 
+          sumOfPaid: bigint, 
+          totalValue: bigint
+        }
       }
 
       let dealLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRedeemedPackLog) ?? [];
@@ -156,15 +160,21 @@ function RegisterOfRedemptions() {
       while (cnt > 0) {
 
         let log = dealLogs[cnt-1];
-        let pack:Request = requestParser(log.args.sn ?? Bytes32Zero);
+        // let pack:Request = requestParser(log.args.sn ?? Bytes32Zero);
 
-        if (classOfShare != pack.class) {
+        if (classOfShare != log.args.class) {
           cnt--;
           continue;
         }
 
         let item:RequestProps = {
-          ...pack,
+          class: log.args.class,
+          seqOfShare: 0,
+          navPrice: 0,
+          shareholder: 0,
+          paid: log.args.sumOfPaid,
+          value: log.args.totalValue,
+          seqOfPack: 0,
 
           seqNum: counter,
 
@@ -194,13 +204,19 @@ function RegisterOfRedemptions() {
 
       if (!gk || addr.toLowerCase() == AddrZero.toLowerCase()) return;
 
-      let rawLogs = await getAllLogs(gk, 'ROR', addr, 'RedeemedShare');
+      let rawLogs = await getAllLogs(gk, 'RegisterOfRedemptions', addr, 'RedeemShare');
 
-      let abiStr = 'event RedeemedShare(bytes32 indexed sn)';
+      let abiStr = 'event RedeemShare(uint shareholder, uint indexed class, uint seqOfShare, uint indexed paid, uint indexed value)';
 
       type TypeOfRedeemedShareLog = ArbiscanLog & {
         eventName: string, 
-        args: {sn: Hex}
+        args: {
+          shareholder: number,
+          class: number,
+          seqOfShare: number,
+          paid: bigint,
+          value: bigint
+        }
       }
 
       let dealLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRedeemedShareLog) ?? [];
@@ -213,15 +229,21 @@ function RegisterOfRedemptions() {
       while (cnt > 0) {
 
         let log = dealLogs[cnt-1];
-        let share:Request = requestParser(log.args.sn ?? Bytes32Zero);
+        // let share:Request = requestParser(log.args.sn ?? Bytes32Zero);
 
-        if (classOfShare != share.class) {
+        if (classOfShare != log.args.class) {
           cnt--;
           continue;
         }
 
         let item:RequestProps = {
-          ...share,
+          class: log.args.class,
+          seqOfShare: log.args.seqOfShare,
+          navPrice: 0,
+          shareholder: log.args.shareholder,
+          paid: log.args.paid,
+          value: log.args.value,
+          seqOfPack: 0,
 
           seqNum: counter,
 
@@ -236,7 +258,7 @@ function RegisterOfRedemptions() {
         counter++;
       }
 
-      setRedPacks(arr);
+      setRedShares(arr);
     }
 
     getEvents();
@@ -251,14 +273,14 @@ function RegisterOfRedemptions() {
         {
           title: 'ROR',
           address: addr,
-          name: 'RedeemedPack',
-          abiStr: 'RedeemedPack(bytes32)',
+          name: 'RedeemClass',
+          abiStr: 'RedeemClass(uint256,uint256,uint256)',
         },
         {
           title: 'ROR',
           address: addr,
-          name: 'RedeemedShare',
-          abiStr: 'RedeemedShare(bytes32)',
+          name: 'RedeemShare',
+          abiStr: 'RedeemShare(uint256,uint256,uint256,uint256,uint256)',
         },        
       ]
 
