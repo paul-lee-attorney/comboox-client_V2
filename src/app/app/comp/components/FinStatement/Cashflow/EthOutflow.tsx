@@ -3,9 +3,9 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { AddrZero, Bytes32Zero } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, setFinData, } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getTopBlkOf, setFinData, } from "../../../../../api/firebase/finInfoTools";
 import { EthPrice, retrieveEthPriceByTimestamp } from "../../../../../api/firebase/ethPriceTools";
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs } from "../../../../../api/firebase/arbiScanLogsTool";
 import { Hex } from "viem";
 
 export type EthOutflowSum = {
@@ -107,6 +107,10 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
 
       let logs = await getFinData(gk, 'ethOutflow');
 
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of EthOutflow: ', toBlkNum);
+
       let fromBlkNum = (await getTopBlkOf(gk, 'ethOutflow')) + 1n;
       console.log('fromBlk of EthOutflow: ', fromBlkNum);
       
@@ -206,12 +210,7 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
         arr = arr.map((v, i) => ({...v, seq:i}));
         console.log('arr added into EthOutflow:', arr);
 
-        await setFinData(gk, 'ethOutflow', arr);
-
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'ethOutflow', toBlkNum);
-        console.log('updated topBlk Of ethOutflow: ', toBlkNum);        
-
+        await setFinData(gk, 'ethOutflow', arr, toBlkNum);
 
         if (logs) {
           logs = logs.concat(arr);

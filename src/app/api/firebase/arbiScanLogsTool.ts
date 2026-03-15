@@ -52,53 +52,44 @@ export async function fetchArbiscanData(
 
 // ==== TopBlk and Menue of Logs ====
 
-export async function getTopBlkOf(
-    gk:Hex, address:string,
+export async function getTopBlkAtAddressNode(
+  gk: Hex,
+  title: string,
+  address: Hex,
 ): Promise<bigint> {
-
-    const docRef = doc(db, gk.toLowerCase(), 'topBlkOf');
-
-    try {
-        const docSnap = await getDoc(docRef);
-        const records = {...docSnap.data()} as Record<string, string>;
-
-        let top = records[address];
-        if (!top) top = '1';
-        console.log(`get topBlkOf ${address}:`, top);
-
-        return BigInt(top);
-    } catch (error) {
-        console.error(`Error fetching TopBlkOf ${address}:`, error);
-        return 1n;
-    }
-
-}
-
-export async function setTopBlkOf(
-    gk:Hex, address:string, blkNum:bigint,
-): Promise<boolean> {
-
-  const docRef = doc(db, gk.toLowerCase(), 'topBlkOf');
+  const docRef = doc(db, gk.toLowerCase(), 'logInfo', title, address.toLowerCase());
 
   try {
     const docSnap = await getDoc(docRef);
 
-    // 初始化records对象，如果文档不存在则创建空对象
-    const records = docSnap.exists() ? {...docSnap.data()} as Record<string, string> : {};
-    
-    // 无论address是否存在，直接更新或添加该地址的区块号
-    const newBlkNum = blkNum.toString();
-    records[address] = newBlkNum;
+    if (!docSnap.exists()) {
+      return 1n;
+    }
 
-    await setDoc(docRef, records);
-    console.log(`updated topBlkOf ${address}:`, newBlkNum);
+    const topBlk = docSnap.data()?.topBlk as string | undefined;
+    return topBlk ? BigInt(topBlk) : 1n;
+  } catch (error) {
+    console.error(`Error fetching topBlk at address node ${address}:`, error);
+    return 1n;
+  }
+}
 
+export async function setTopBlkAtAddressNode(
+  gk: Hex,
+  title: string,
+  address: Hex,
+  blkNum: bigint,
+): Promise<boolean> {
+  const docRef = doc(db, gk.toLowerCase(), 'logInfo', title, address.toLowerCase());
+
+  try {
+    await setDoc(docRef, { topBlk: blkNum.toString() }, { merge: true });
+    console.log(`updated logInfo/${title}/${address.toLowerCase()} topBlk:`, blkNum.toString());
     return true;
-  } catch (error: any) {
-    console.error(`Error set topBlkOf ${address}:`, error);
+  } catch (error) {
+    console.error(`Error setting topBlk at address node ${address}:`, error);
     return false;
   }
-
 }
 
 // ---- Menu ----
@@ -108,28 +99,6 @@ interface EventInfo {
     address: Hex,
     name: string[],
     abiStr: string[],
-}
-
-export async function getMenuOfLogs(
-    gk:Hex
-): Promise<EventInfo[] | undefined> {
-    const docRef = doc(db, gk.toLowerCase(), 'menuOfLogs');
-
-    try {
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-            // 不存在则创建一个空的 menuOfLogs
-          await setDoc(docRef, { list: [] });
-          return [];
-        }
-
-        let out = docSnap.data()?.list as EventInfo[];
-        return out.map(v => ({...v, address: HexParser(v.address)}));
-    } catch (error) {
-        console.error("Error fetching financial data: ", error);
-        return undefined;
-    }
 }
 
 export async function upsertMenuOfLogs(
@@ -365,13 +334,16 @@ export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promi
 
     while (len > 0) {
         let info = list[len-1];
+      const addr = HexParser(info.address);
 
-        let fromBlk = await getTopBlkOf(gk, HexParser(info.address));
+      let fromBlk = await getTopBlkAtAddressNode(gk, info.title, addr);
 
-        if (fromBlk == 1n || fromBlk >= toBlk) return false;
-        else fromBlk++;
+      if (fromBlk >= toBlk) {
+        len--;
+        continue;
+      }
 
-        let data = await fetchArbiscanData(chainId, HexParser(info.address), fromBlk, toBlk);
+      let data = await fetchArbiscanData(chainId, addr, fromBlk, toBlk);
         
         if (data) {
             let logs = data.result;
@@ -389,7 +361,7 @@ export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promi
                     });
 
                     if (events.length > 0) {
-                        let flag = await setLogs(gk, info.title, HexParser(info.address), name, events);   
+                      let flag = await setLogs(gk, info.title, addr, name, events);   
                         if (flag) console.log('appended', events.length, ' events of ', name);
                         else return false;
                     }
@@ -398,8 +370,8 @@ export async function autoUpdateLogs(chainId:number, gk:Hex, toBlk:bigint):Promi
                 }
             }
 
-           let flag = await setTopBlkOf(gk, HexParser(info.address), toBlk);
-           if (!flag) return false;
+            let flag = await setTopBlkAtAddressNode(gk, info.title, addr, toBlk);
+            if (!flag) return false;
             
         }
 

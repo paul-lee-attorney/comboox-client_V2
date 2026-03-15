@@ -1,7 +1,7 @@
 import { db } from './firebase';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { HexType } from '../../app/common';
-import { Cashflow } from '../../app/compV1/components/FinStatement';
+import { Cashflow } from '../../app/comp/components/FinStatement';
 import { HexParser } from '../../app/common/toolsKit';
 
 
@@ -67,21 +67,54 @@ export function cashflowStringToData(input:CashflowStrProps[]): Cashflow[] {
   return output;
 }
 
-// export async function getFinDataTopBlk(gk: HexType, typeOfInfo:string): Promise<bigint | undefined> {
+export async function getTopBlkOf(
+    gk:HexType, title:string
+): Promise<bigint> {
 
-//   // 获取特定文档
-//   const docRef = doc(db, gk.toLowerCase(), 'finInfo', typeOfInfo, 'topBlk');
-//   const docSnap = await getDoc(docRef);
+    const docRef = doc(db, gk.toLowerCase(), 'finInfo', title, 'topBlkOf');
 
-//   if (docSnap.exists()) {
-//     let res = docSnap.data();
-//     return BigInt(res.blockNumber);
-//   } else {
-//     console.log("no financial data found!");
-//     return undefined;
-//   }
+    try {
+        const docSnap = await getDoc(docRef);
+        const records = {...docSnap.data()} as Record<string, string>;
 
-// }
+        let top = records['blkNum'];
+        if (!top) top = '1';
+        console.log(`get topBlkOf ${title}:`, top);
+
+        return BigInt(top);
+    } catch (error) {
+        console.error(`Error fetching TopBlkOf ${title}:`, error);
+        return 1n;
+    }
+
+}
+
+export async function setTopBlkOf(
+    gk:HexType, title:string, blkNum:bigint,
+): Promise<boolean> {
+
+  const docRef = doc(db, gk.toLowerCase(), 'finInfo', title, 'topBlkOf');
+
+  try {
+    const docSnap = await getDoc(docRef);
+
+    // 初始化records对象，如果文档不存在则创建空对象
+    const records = docSnap.exists() ? {...docSnap.data()} as Record<string, string> : {};
+    
+    // 无论address是否存在，直接更新或添加该地址的区块号
+    const newBlkNum = blkNum.toString();
+    records['blkNum'] = newBlkNum;
+
+    await setDoc(docRef, records);
+    console.log(`updated topBlkOf ${title}:`, newBlkNum);
+
+    return true;
+  } catch (error: any) {
+    console.error(`Error set topBlkOf ${title}:`, error);
+    return false;
+  }
+
+}
 
 export async function getFinDataByMonth(gk: HexType, typeOfInfo:string, month:string): Promise<Cashflow[] | undefined> {
 
@@ -130,21 +163,6 @@ export async function getFinData(gk: HexType, typeOfInfo: string): Promise<Cashf
     return undefined;
   }
 }
-
-// export async function setFinDataTopBlk(gk: HexType, typeOfInfo:string, blkNum:bigint): Promise<boolean> {
-
-//   // 创建一个文档引用
-//   const docRef = doc(db, gk.toLowerCase(), 'finInfo', typeOfInfo, 'topBlk');
-
-//   try {
-//     await setDoc(docRef, {blockNumber: blkNum.toString()});
-//     return true;
-//   } catch (error: any) {
-//     console.error("Error set financial data: ", error);
-//     return false;
-//   }
-
-// }
 
 const mergeAndSort = (a: Cashflow[], b: Cashflow[]): Cashflow[] => {
   const mergedMap = new Map<string, Cashflow>();
@@ -232,7 +250,7 @@ export function getMonthLableByTimestamp(stamp:number):string {
   return key; 
 }
 
-export async function setFinData(gk: HexType, typeOfInfo:string, data:Cashflow[]): Promise<boolean> {
+export async function setFinData(gk: HexType, typeOfInfo:string, data:Cashflow[], toBlkNum: bigint): Promise<boolean> {
 
   if (!data || data.length === 0) {
     console.log("No cashflow data to process.");
@@ -262,8 +280,6 @@ export async function setFinData(gk: HexType, typeOfInfo:string, data:Cashflow[]
     if (Object.hasOwnProperty.call(groupedByMonth, key)) {
 
       const dataForMonth = groupedByMonth[key];
-      // console.log('key', key);
-      // console.log('dataForMonth: ', dataForMonth);
 
       promises.push(setFinDataByMonth(gk, typeOfInfo, key, dataForMonth));
 
@@ -274,5 +290,12 @@ export async function setFinData(gk: HexType, typeOfInfo:string, data:Cashflow[]
   const results = await Promise.all(promises);
 
   // Check if all operations were successful
-  return results.every(result => result === true);
+  const flag = results.every(result => result === true);
+
+  if (flag) {
+    await setTopBlkOf(gk, typeOfInfo, toBlkNum);
+    console.log(`updated topBlk Of ${typeOfInfo}: `, toBlkNum);
+  }
+
+  return flag;
 }

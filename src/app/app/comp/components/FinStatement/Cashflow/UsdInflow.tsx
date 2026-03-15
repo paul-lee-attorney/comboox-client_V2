@@ -4,11 +4,11 @@ import { AddrZero, booxMap, Bytes32Zero, HexType } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { decodeEventLog, Hex } from "viem";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, setFinData, } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getTopBlkOf, setFinData, } from "../../../../../api/firebase/finInfoTools";
 import { registerOfSharesABI } from "../../../../../../../generated-v1";
 import { getShare, parseSnOfShare } from "../../../ros/ros";
 import { addrToUint } from "../../../../common/toolsKit";
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs, } from "../../../../../api/firebase/arbiScanLogsTool";
 import { ethers } from "ethers";
 import { iromKeeperABI } from "../../../../../../../generated";
 
@@ -101,6 +101,9 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       const ros = boox[booxMap.ROS];
 
       let logs = await getFinData(gk, 'usdInflow');
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of UsdInflow: ', toBlkNum);
 
       let fromBlkNum = (await getTopBlkOf(gk, 'usdInflow')) + 1n;
       console.log('fromBlk of usdInflow: ', fromBlkNum);
@@ -400,11 +403,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
         arr = arr.map((v, i) => ({...v, seq: i}));
         console.log('add arr into usdInflow:', arr);
 
-        await setFinData(gk, 'usdInflow', arr);
-
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'usdInflow', toBlkNum);
-        console.log('updated topBlk Of usdInflow: ', toBlkNum);        
+        await setFinData(gk, 'usdInflow', arr, toBlkNum);
         
         if (logs) {
           logs = logs.concat(arr);

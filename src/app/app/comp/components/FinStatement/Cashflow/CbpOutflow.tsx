@@ -3,10 +3,10 @@ import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvi
 import { AddrOfRegCenter, AddrZero, Bytes32Zero, FirstUser, SecondUser } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, setFinData, } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getTopBlkOf, setFinData, } from "../../../../../api/firebase/finInfoTools";
 import { EthPrice, getPriceAtTimestamp, retrieveMonthlyEthPriceByTimestamp } from "../../../../../api/firebase/ethPriceTools";
 
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs } from "../../../../../api/firebase/arbiScanLogsTool";
 import { Hex } from "viem";
 import { rate } from "../../../../fuel_tank/ft";
 import fuelTanks from "../data/fuelTanks.json";
@@ -115,6 +115,9 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
       const cbpRate = await rate();
 
       let logs = await getFinData(gk, 'cbpOutflow');
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of CbpOutflow:', toBlkNum);
 
       let fromBlkNum = (await getTopBlkOf(gk, 'cbpOutflow')) + 1n;
       console.log('fromBlk of CbpOutflow: ', fromBlkNum);
@@ -293,11 +296,7 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         arr = arr.map((v, i) => ({...v, seq:i}));
         console.log('arr added into cbpOutflow:', arr);
 
-        await setFinData(gk, 'cbpOutflow', arr);
-
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'cbpOutflow', toBlkNum);
-        console.log('updated topBlk Of cbpOutflow: ', toBlkNum);        
+        await setFinData(gk, 'cbpOutflow', arr, toBlkNum);
 
         if (logs) {
           logs = logs.concat(arr);

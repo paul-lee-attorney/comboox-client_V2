@@ -4,10 +4,10 @@ import { AddrZero, Bytes32Zero, HexType } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { Hex } from "viem";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, setFinData } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getTopBlkOf, setFinData, setTopBlkOf } from "../../../../../api/firebase/finInfoTools";
 import { EthPrice,  retrieveEthPriceByTimestamp } from "../../../../../api/firebase/ethPriceTools";
 
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs } from "../../../../../api/firebase/arbiScanLogsTool";
 
 export type EthInflowSum = {
   totalAmt: bigint;
@@ -113,6 +113,10 @@ export function EthInflow({setRecords}:CashflowRecordsProps ) {
 
       let logs = await getFinData(gk, 'ethInflow');
 
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of EthInflow: ', toBlkNum);
+
       let fromBlkNum = (await getTopBlkOf(gk, 'ethInflow')) + 1n;
       console.log('fromBlk of ethInflow: ', fromBlkNum);
 
@@ -174,11 +178,7 @@ export function EthInflow({setRecords}:CashflowRecordsProps ) {
         arr = arr.map((v, i) => ({...v, seq:i}));
         console.log('arr added into EthInflow:', arr);
 
-        await setFinData(gk, 'ethInflow', arr);
-
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'ethInflow', toBlkNum);
-        console.log('updated topBlk Of ethInflow: ', toBlkNum);        
+        await setFinData(gk, 'ethInflow', arr, toBlkNum);
 
         if (logs) {
           logs = logs.concat(arr);

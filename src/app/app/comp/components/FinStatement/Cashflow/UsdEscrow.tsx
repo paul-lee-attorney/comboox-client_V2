@@ -4,9 +4,9 @@ import { AddrZero, booxMap, Bytes32Zero } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { Hex, hexToString } from "viem";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, setFinData, } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getTopBlkOf, setFinData, } from "../../../../../api/firebase/finInfoTools";
 import { addrToUint } from "../../../../common/toolsKit";
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs } from "../../../../../api/firebase/arbiScanLogsTool";
 
 export type UsdEscrowSum = {
   totalAmt: bigint;
@@ -110,6 +110,9 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
       const cashier = boox[booxMap.Cashier];
 
       let logs = await getFinData(gk, 'usdEscrow');
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of UsdEscrow: ', toBlkNum);
 
       let fromBlkNum = (await getTopBlkOf(gk, 'usdEscrow')) + 1n;
       console.log('fromBlk of usdEscrow: ', fromBlkNum);
@@ -356,11 +359,7 @@ export function UsdEscrow({setRecords}:CashflowRecordsProps) {
         arr = arr.map((v, i) => ({...v, seq: i}));
         console.log('add arr into usdEscrow:', arr);
 
-        await setFinData(gk, 'usdEscrow', arr);
-
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'usdEscrow', toBlkNum);
-        console.log('updated topBlk Of usdEscrow: ', toBlkNum);        
+        await setFinData(gk, 'usdEscrow', arr, toBlkNum);
         
         if (logs) {
           logs = logs.concat(arr);

@@ -4,9 +4,9 @@ import { AddrOfRegCenter, AddrZero, Bytes32Zero } from "../../../../common";
 import { usePublicClient } from "wagmi";
 import { Hex, } from "viem";
 import { Cashflow, CashflowRecordsProps, defaultCashflow } from "../../FinStatement";
-import { getFinData, getMonthLableByTimestamp, setFinData, updateRoyaltyByItem } from "../../../../../api/firebase/finInfoTools";
+import { getFinData, getMonthLableByTimestamp, getTopBlkOf, setFinData, setTopBlkOf, updateRoyaltyByItem } from "../../../../../api/firebase/finInfoTools";
 import { EthPrice, retrieveMonthlyEthPriceByTimestamp } from "../../../../../api/firebase/ethPriceTools";
-import { ArbiscanLog, decodeArbiscanLog, getNewLogs, getTopBlkOf, setTopBlkOf } from "../../../../../api/firebase/arbiScanLogsTool";
+import { ArbiscanLog, decodeArbiscanLog, getNewLogs } from "../../../../../api/firebase/arbiScanLogsTool";
 import { rate } from "../../../../fuel_tank/ft";
 import fuelTanks from "../data/fuelTanks.json";
 import selectorToFunctionName from "../data/selector_to_function_name.json";
@@ -120,7 +120,10 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
 
       let logs = await getFinData(gk, 'cbpInflow');
       console.log('obtained FinData of cbpInflow logs:', logs);
-      
+
+      const toBlkNum = await client.getBlockNumber();
+      console.log('toBlkNum of CbpInflow: ', toBlkNum);
+
       let fromBlkNum = (await getTopBlkOf(gk, 'cbpInflow')) + 1n;
 
       console.log('fromBlk of CbpInflow: ', fromBlkNum);
@@ -142,7 +145,7 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
       const appendItem = (newItem: Cashflow, refPrices: EthPrice[]) => {
         if (newItem.amt > 0n && refPrices.length > 0) {
           newItem.ethPrice = cbpRate * 10n ** 3n;
-          newItem.usd = newItem.amt * newItem.ethPrice / 10n ** 9n;  
+          newItem.usd = newItem.amt * newItem.ethPrice / 10n ** 9n;
 
           console.log('cbpRate:', newItem.ethPrice);
           
@@ -230,12 +233,8 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
         arr = arr.map((v, i) => ({...v, seq: i}));
         console.log('sorted arr added into FinData cbpInflow:', arr);
 
-        await setFinData(gk, 'cbpInflow', arr);
+        await setFinData(gk, 'cbpInflow', arr, toBlkNum);
 
-        let toBlkNum = arr[arr.length - 1].blockNumber;
-        await setTopBlkOf(gk, 'cbpInflow', toBlkNum);
-        console.log('updated topBlk Of cbpInflow: ', toBlkNum);
-        
         if (logs) {
           logs = logs.concat(arr);
         } else {
@@ -247,6 +246,11 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
         logs = logs.map((v,i) => ({...v, seq:i}));
         setRecords(logs);
         console.log('set records of cbpInflow:', logs);
+
+        // if (arr.length == 0) {
+        //   await setTopBlkOf(gk, 'cbpInflow', toBlkNum);
+        //   console.log('updated topBlk Of cbpInflow: ', toBlkNum);
+        // }
       }
       
     }
