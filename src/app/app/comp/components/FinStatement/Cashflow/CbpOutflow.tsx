@@ -162,7 +162,7 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
 
       let rcTransferLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
 
-      let newUserAwardLogs = rcTransferLogs.filter(v => 
+      let newUserAwardLogs = rcTransferLogs?.filter(v => 
         v.args.from.toLowerCase() == AddrZero &&
         v.args.to?.toLowerCase() != gk.toLowerCase()
       );
@@ -206,7 +206,7 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         cnt++;
       }
     
-      let gkTransferLogs = rcTransferLogs.filter(v => 
+      let gkTransferLogs = rcTransferLogs?.filter(v => 
           v.args.from.toLowerCase() == gk.toLowerCase() &&
           v.args.to?.toLowerCase() != fuelTanks.FT0.toLowerCase());
       console.log('gkTransferLogs: ', gkTransferLogs);

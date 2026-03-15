@@ -228,8 +228,9 @@ export async function getNewLogs(
     }
 
     let millions = millionDocsSnap.docs.map(coll => Number(coll.id)).sort();
-    millions = millions.filter(v => v >= fromMillion);
-
+    if (millions) {
+      millions = millions.filter(v => v >= fromMillion);
+    }
     for (const million of millions) {
       const queryData = await getLogsByMillion(gk, titleOfSM, address, name, million.toString());
       if (queryData && queryData.length > 0) {
