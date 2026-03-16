@@ -21,7 +21,7 @@ export default function Copyright() {
 
       <Typography variant="body2" color="primary" align="center" sx={{mt:20}}>
         <Link href={{pathname:'https://jingtian.com/Content/2020/03-11/1525064223.html'}}>
-          Copyright (c) 2021-2024 Li Li
+          Copyright (c) 2021-2026 Li Li
         </Link>
       </Typography>
 
