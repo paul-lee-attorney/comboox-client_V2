@@ -103,6 +103,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
       const chainId = await client.getChainId();
 
       let logs = await getFinData(gk, 'usdInflow');
+      console.log('get finInfo of usdInflow: ', logs);
 
       const toBlkNum = await client.getBlockNumber();
       console.log('toBlkNum of UsdInflow: ', toBlkNum);
@@ -209,10 +210,6 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
 
         cnt++;
       }
-
-      rawLogs = await getNewLogs(gk, 'Cashier', cashier, 'ReceiveUsd', fromBlkNum);
-
-      abiStr = 'ReceiveUsd(address indexed from, uint256 indexed amt, bytes32 indexed remark)';
 
       type TypeOfGasIncomeUsdLog = ArbiscanLog & {
         eventName: string, 
@@ -415,7 +412,7 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
             } catch {
               return null;
             }
-          }).filter(Boolean)
+          })?.filter(Boolean)
           .find((v:any) => v && v.eventName == 'IssueShare' &&
             v.args.paid * BigInt(parseSnOfShare(
               v.args.shareNumber
@@ -482,30 +479,30 @@ export function UsdInflow({setRecords}:CashflowRecordsProps) {
           }
 
         }
-
-        console.log('arr in usdInflow:', arr);
-
-        if (arr.length > 0) {
-          
-          arr = arr.sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
-          arr = arr.map((v, i) => ({...v, seq: i}));
-          console.log('add arr into usdInflow:', arr);
-
-          await setFinData(gk, 'usdInflow', arr, toBlkNum);
-          
-          if (logs) {
-            logs = logs.concat(arr);
-          } else {
-            logs = arr;
-          }
-        } 
-      
-        if (logs && logs.length > 0) {
-          logs = logs.map((v,i) => ({...v, seq:i}));
-          setRecords(logs);
-          console.log('logs in usdInflow:', logs);
-        }
       }
+
+      console.log('arr in usdInflow:', arr);
+
+      if (arr.length > 0) {        
+        arr = arr.sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
+        arr = arr.map((v, i) => ({...v, seq: i}));
+        console.log('add arr into usdInflow:', arr);
+
+        await setFinData(gk, 'usdInflow', arr, toBlkNum);
+        
+        if (logs) {
+          logs = logs.concat(arr);
+        } else {
+          logs = arr;
+        }
+      } 
+    
+      if (logs && logs.length > 0) {
+        logs = logs.map((v,i) => ({...v, seq:i}));
+        setRecords(logs);
+        console.log('logs in usdInflow:', logs);
+      }
+
     }
 
     getUsdInflow();
