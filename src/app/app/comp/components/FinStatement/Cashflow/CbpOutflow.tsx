@@ -160,12 +160,20 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let rcTransferLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let rcTransferLogs: TypeOfTransferLog[] = [];
 
-      let newUserAwardLogs = rcTransferLogs?.filter(v => 
-        v.args.from.toLowerCase() == AddrZero &&
-        v.args.to?.toLowerCase() != gk.toLowerCase()
-      );
+      if (rawLogs && rawLogs.length > 0) {
+        rcTransferLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      }
+
+      let newUserAwardLogs: TypeOfTransferLog[] = [];
+
+      if (rcTransferLogs.length > 0) {
+        newUserAwardLogs = rcTransferLogs.filter(v => 
+          v.args.from.toLowerCase() == AddrZero &&
+          v.args.to.toLowerCase() != gk.toLowerCase()
+        );
+      }
 
       console.log('newUserAwardlogs: ', newUserAwardLogs);
 
@@ -206,9 +214,15 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         cnt++;
       }
     
-      let gkTransferLogs = rcTransferLogs?.filter(v => 
+      let gkTransferLogs: TypeOfTransferLog[] = [];
+
+      if (rcTransferLogs.length > 0) {
+        gkTransferLogs = rcTransferLogs.filter(v => 
           v.args.from.toLowerCase() == gk.toLowerCase() &&
-          v.args.to?.toLowerCase() != fuelTanks.FT0.toLowerCase());
+          v.args.to?.toLowerCase() != fuelTanks.FT0.toLowerCase()
+        );
+      }
+
       console.log('gkTransferLogs: ', gkTransferLogs);
 
       len = gkTransferLogs.length;
@@ -254,7 +268,11 @@ export function CbpOutflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let fuelSoldLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
+      let fuelSoldLogs: TypeOfRefuelLog[] = [];
+
+      if (rawLogs && rawLogs.length > 0) {
+        fuelSoldLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfRefuelLog);
+      }
 
       console.log('fuelSoldLogs: ', fuelSoldLogs);
     

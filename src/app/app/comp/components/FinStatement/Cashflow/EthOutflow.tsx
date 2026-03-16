@@ -127,7 +127,7 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
         }
       } 
 
-      let rawLogs = await getNewLogs(gk, 'GMMKeeper', gk, 'ExecAction', fromBlkNum);
+      let rawLogs = await getNewLogs(gk, 'GeneralKeeper', gk, 'ExecAction', fromBlkNum);
       let abiStr = 'event ExecAction(address indexed targets, uint indexed values, bytes indexed params, uint seqOfMotion, uint caller)';
 
       type TypeOfExecActionLog = ArbiscanLog & {
@@ -141,7 +141,11 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let gmmExpenseLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
+      let gmmExpenseLogs: TypeOfExecActionLog[] = [];
+
+      if (rawLogs && rawLogs.length > 0) {
+        gmmExpenseLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
+      }
       console.log('gmmEthExpLogs: ', gmmExpenseLogs);
       
       let len = gmmExpenseLogs.length;
@@ -157,38 +161,6 @@ export function EthOutflow({ setRecords}:CashflowRecordsProps ) {
           timestamp: Number(log.timeStamp),
           transactionHash: log.transactionHash ?? Bytes32Zero,
           typeOfIncome: 'GmmExpense',
-          amt: log.args.values ?? 0n,
-          ethPrice: 0n,
-          usd: 0n,
-          addr: log.args.targets ?? AddrZero,
-          acct: 0n,
-        }
-
-        ethPrice = await retrieveEthPriceByTimestamp(item.timestamp);
-        if (!ethPrice) return;
-
-        appendItem(item, ethPrice);
-        cnt++;
-      }
-
-      rawLogs = await getNewLogs(gk, 'BMMKeeper', gk, 'ExecAction', fromBlkNum);
-
-      let bmmExpenseLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfExecActionLog);
-      console.log('bmmEthExpLogs: ', bmmExpenseLogs);
-
-      len = bmmExpenseLogs.length;
-      cnt = 0;
-
-      while(cnt < len) {
-
-        let log = bmmExpenseLogs[cnt];
-     
-        let item:Cashflow = {...defaultCashflow,
-          seq: 0,
-          blockNumber: BigInt(log.blockNumber),
-          timestamp: Number(log.timeStamp),
-          transactionHash: log.transactionHash ?? Bytes32Zero,
-          typeOfIncome: 'BmmExpense',
           amt: log.args.values ?? 0n,
           ethPrice: 0n,
           usd: 0n,

@@ -111,8 +111,11 @@ export function UsdOutflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let transferUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferUsdLog);
-
+      let transferUsdLogs: TypeOfTransferUsdLog[] = [];
+      
+      if (rawLogs && rawLogs.length > 0) {
+        transferUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferUsdLog);
+      }
       console.log('transferUsdLogs: ', transferUsdLogs);
 
       let len = transferUsdLogs.length;
@@ -152,11 +155,15 @@ export function UsdOutflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let upgradeLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
-      if (upgradeLogs) {
-        upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+      let upgradeLogs: TypeOfGasIncomeUsdLog[] = [];
+      
+      if (rawLogs && rawLogs.length > 0) {
+        upgradeLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfGasIncomeUsdLog);
       }
 
+      if (upgradeLogs.length > 0) {
+        upgradeLogs = upgradeLogs.filter(v => v.args.from.toLowerCase() == gk.toLowerCase());
+      }
       console.log('upgradeLogs: ', upgradeLogs);
 
       len = upgradeLogs.length;
@@ -195,7 +202,11 @@ export function UsdOutflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let distributeUsdLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistributeUsdLog);
+      let distributeUsdLogs: TypeOfDistributeUsdLog[] = [];
+      
+      if (rawLogs && rawLogs.length > 0) {
+        distributeUsdLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfDistributeUsdLog);
+      }
 
       console.log('distributeUsdLogs: ', distributeUsdLogs);
 

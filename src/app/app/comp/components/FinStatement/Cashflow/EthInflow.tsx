@@ -135,9 +135,13 @@ export function EthInflow({setRecords}:CashflowRecordsProps ) {
         }
       }
 
-      let recievedCashLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfReceivedCashLog);
-      console.log('recievedCashLogs: ', recievedCashLogs);
+      let recievedCashLogs: TypeOfReceivedCashLog[] = [];
 
+      if (rawLogs && rawLogs.length > 0) {
+        recievedCashLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfReceivedCashLog);
+      }
+      console.log('recievedCashLogs: ', recievedCashLogs);
+      
       let len = recievedCashLogs.length;
       let cnt = 0;
 

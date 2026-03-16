@@ -166,11 +166,17 @@ export function CbpInflow({setRecords}:CashflowRecordsProps) {
         }
       }
 
-      let transferLogs = rawLogs?.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      let transferLogs: TypeOfTransferLog[] = [];
 
-      transferLogs = transferLogs?.filter((v) => 
-          v.args.to.toLowerCase() == gk.toLowerCase() &&
-          v.args.from?.toLowerCase() != fuelTanks.FT0.toLowerCase());
+      if (rawLogs && rawLogs.length > 0) {
+        transferLogs = rawLogs.map(log => decodeArbiscanLog(log, abiStr) as TypeOfTransferLog);
+      }
+
+      if (transferLogs.length > 0) {
+        transferLogs = transferLogs?.filter((v) => 
+            v.args.to.toLowerCase() == gk.toLowerCase() &&
+            v.args.from?.toLowerCase() != fuelTanks.FT0.toLowerCase());
+      }
 
       console.log('transferLogs: ', transferLogs);
 
