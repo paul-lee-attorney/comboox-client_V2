@@ -38,7 +38,7 @@ export default function Copyright() {
       </Typography>
 
       <Typography variant="body2" color="text.secondary" align="center" sx={{mt:20, ml:10}}>
-        <Link href="https://github.com/paul-lee-attorney/comboox-client">
+        <Link href="https://github.com/paul-lee-attorney/comboox-client_V2">
           GitHub (Dapp UI)
         </Link>
       </Typography>
