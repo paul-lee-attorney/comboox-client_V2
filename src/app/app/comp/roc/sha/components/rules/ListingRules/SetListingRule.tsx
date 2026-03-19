@@ -39,6 +39,7 @@ export interface ListingRule {
   offPrice: string;
   votingWeight: string;
   distrWeight: string;
+  titleOfEnforcer: string;
 }
 
 export var defaultLR: ListingRule = {
@@ -54,6 +55,7 @@ export var defaultLR: ListingRule = {
   offPrice: '0',
   votingWeight: '100',
   distrWeight: '100',
+  titleOfEnforcer: '0',
 }
 
 export function lrParser(hexLr: HexType):ListingRule {
@@ -70,6 +72,7 @@ export function lrParser(hexLr: HexType):ListingRule {
     offPrice: bigIntToNum(BigInt('0x' + hexLr.substring(50, 54)), 4),
     votingWeight: parseInt(hexLr.substring(54, 58), 16).toString(),
     distrWeight: parseInt(hexLr.substring(58, 62), 16).toString(),
+    titleOfEnforcer: parseInt(hexLr.substring(62, 66), 16).toString(),
   }
   return rule;
 }
@@ -88,7 +91,7 @@ export function lrCodifier( objLr: ListingRule, seq:number ): HexType {
     (strNumToBigInt(objLr.offPrice, 4).toString(16).padStart(4, '0')) +
     Number(objLr.votingWeight).toString(16).padStart(4, '0') +
     Number(objLr.distrWeight).toString(16).padStart(4, '0') +
-    '0000'
+    Number(objLr.titleOfEnforcer).toString(16).padStart(4, '0')
   }`;
   return hexLr;
 }
@@ -242,6 +245,28 @@ export function SetListingRule({ sha, seq, isFinalized, time, refresh }: RulesEd
                     onChange={(e) => setObjLR((v) => ({
                       ...v,
                       titleOfVerifier: e.target.value.toString(),
+                    }))}
+                  >
+                
+                    {titleOfPositions.map((v, i) => (
+                      <MenuItem key={i} value={i+1}>{v}</MenuItem>
+                    )) }
+
+                  </Select>
+                  <FormHelperText>{' '}</FormHelperText>
+                </FormControl>
+
+                <FormControl variant="outlined" size='small' sx={{ m: 1, minWidth: 218 }}>
+                  <InputLabel id="titleOfEnforcer-label">TitleOfEnforcer</InputLabel>
+                  <Select
+                    labelId="titleOfEnforcer-label"
+                    id="titleOfEnforcer-select"
+                    label="TitleOfEnforcer"
+                    inputProps={{readOnly:isFinalized}}
+                    value={ objLR.titleOfEnforcer == '0' ? '' : objLR.titleOfEnforcer }
+                    onChange={(e) => setObjLR((v) => ({
+                      ...v,
+                      titleOfEnforcer: e.target.value.toString(),
                     }))}
                   >
                 
