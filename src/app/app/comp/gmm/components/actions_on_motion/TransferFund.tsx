@@ -54,7 +54,7 @@ export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) 
         args: [
           false, 
           paras.to,
-          typeOfCurrency == typeOfCurrency, 
+          typeOfCurrency == 1, 
           strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
           BigInt(paras.expireDate), 
           BigInt(motion.head.seqOfMotion)
