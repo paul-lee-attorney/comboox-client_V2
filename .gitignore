@@ -19,6 +19,10 @@
 
 /build
 
+# dsh rollback records
+
+/.dsh/
+
 # misc
 
 .DS_Store
