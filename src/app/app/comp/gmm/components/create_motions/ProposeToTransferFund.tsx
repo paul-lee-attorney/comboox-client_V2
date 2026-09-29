@@ -70,7 +70,9 @@ export function ProposeToTransferFund({ refresh }:CreateMotionProps) {
         args: [
           paras.to, 
           typeOfCurrency == 1,
-          strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
+          typeOfCurrency == 1 
+            ? strNumToBigInt(paras.amt, 9) * 10n ** 9n
+            : strNumToBigInt(paras.amt, 6), 
           BigInt(paras.expireDate), 
           BigInt(seqOfVR),
           hexToBigInt(executor)
