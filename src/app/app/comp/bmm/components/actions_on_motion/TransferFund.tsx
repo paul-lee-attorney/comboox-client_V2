@@ -12,7 +12,7 @@ import { LoadingButton } from "@mui/lab";
 
 import { useComBooxContext } from "../../../../../_providers/ComBooxContextProvider";
 import { ActionsOnMotionProps } from "../../../gmm/components/ActionsOnMotion";
-import { ParasOfTransfer, defaultParasOfTransfer } from "../../../gmm/components/create_motions/ProposeToTransferFund";
+import { ParasOfTransfer, defaultParasOfTransfer, typesOfCurrency } from "../../../gmm/components/create_motions/ProposeToTransferFund";
 
 
 export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) {
@@ -20,6 +20,8 @@ export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) 
   const { gk, setErrMsg } = useComBooxContext();
 
   const [ paras, setParas ] = useState<ParasOfTransfer>(defaultParasOfTransfer);
+
+  const [ typeOfCurrency, setTypeOfCurrency ] = useState(0);
 
   const [ valid, setValid ] = useState<FormResults>(defFormResults);
   const [ loading, setLoading ] = useState(false);
@@ -49,9 +51,11 @@ export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) 
     transferFund({
       args: [
         true, 
-        paras.to, 
-        paras.isCBP, 
-        strNumToBigInt(paras.amt, 9) * 10n ** 9n, 
+        paras.to,
+        typeOfCurrency == 1, 
+        typeOfCurrency == 1 
+          ? strNumToBigInt(paras.amt, 9) * 10n ** 9n
+          : strNumToBigInt(paras.amt, 6), 
         BigInt(paras.expireDate), 
         motion.head.seqOfMotion
       ],
@@ -74,14 +78,12 @@ export function TransferFund({ motion, setOpen, refresh }:ActionsOnMotionProps) 
                 labelId="symbolOfToken-label"
                 id="symbolOfToken-select"
                 label="Token"
-                value={ paras.isCBP ? '1' : '0' }
-                onChange={(e) => setParas( v => ({
-                  ...v,
-                  isCBP: e.target.value == '1',
-                }))}
+                value={ typeOfCurrency }
+                onChange={(e) => setTypeOfCurrency(Number(e.target.value))}
               >
-                  <MenuItem value={ '0' } > <b>{'ETH'}</b> </MenuItem>
-                  <MenuItem value={ '1' } > <b>{'CBP'}</b> </MenuItem>
+                {typesOfCurrency.map((v,i) => (
+                  <MenuItem key={v} value={i} ><b>{v}</b></MenuItem>
+                ))}
               </Select>
               <FormHelperText>{' '}</FormHelperText>
             </FormControl>
